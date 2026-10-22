@@ -1,0 +1,80 @@
+{%- comment -%}
+  Home hero: headline, one line of text and the page's single primary button.
+  All copy comes from the section settings, whose defaults are the t: keys in
+  locales/es.default.schema.json (source: docs/content/catalogo-y-copy.md).
+
+  The heading is an h2, not an h1: sections/header.liquid already renders the one h1 of
+  the home page (the wordmark). Two h1s would break the one-h1-per-page rule.
+
+  General page: bg only. No line colors here.
+{%- endcomment -%}
+
+{{ 'section-hero-home.css' | asset_url | stylesheet_tag }}
+
+<section class="hero-home">
+  <div class="container hero-home__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="hero-home__heading text-display-lg">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <p class="hero-home__text text-body-lg">{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      {% render 'button', label: section.settings.button_label, url: section.settings.button_link %}
+    {%- endif -%}
+
+    {%- if section.settings.image != blank -%}
+      <div class="hero-home__media">
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            widths: '600, 900, 1200, 1600',
+            sizes: '(min-width: 1024px) 1200px, 100vw',
+            class: 'hero-home__image',
+            loading: 'eager',
+            fetchpriority: 'high'
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.hero-home.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.hero-home.settings.heading.label",
+      "default": "t:sections.hero-home.settings.heading.default"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.hero-home.settings.text.label",
+      "default": "t:sections.hero-home.settings.text.default"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.hero-home.settings.button_label.label",
+      "default": "t:sections.hero-home.settings.button_label.default"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.hero-home.settings.button_link.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero-home.settings.image.label",
+      "info": "t:sections.hero-home.settings.image.info"
+    }
+  ]
+}
+{% endschema %}

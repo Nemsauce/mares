@@ -105,6 +105,105 @@
     },
     "main-password": {
       "name": "Página de contraseña"
+    },
+    "hero-home": {
+      "name": "Portada del inicio",
+      "settings": {
+        "heading": {
+          "label": "Titular",
+          "default": "Hecha con amor para las que más amamos"
+        },
+        "text": {
+          "label": "Texto bajo el titular",
+          "default": "Ropa de bebé bordada a mano, suave para su piel y pensada para durar."
+        },
+        "button_label": {
+          "label": "Texto del botón",
+          "default": "Ver la línea Descanso"
+        },
+        "button_link": {
+          "label": "Enlace del botón"
+        },
+        "image": {
+          "label": "Imagen",
+          "info": "Opcional. Sin imagen, la portada se muestra solo con texto."
+        }
+      }
+    },
+    "lines-entry": {
+      "name": "Entrada a las líneas",
+      "settings": {
+        "heading": {
+          "label": "Encabezado",
+          "default": "Dos formas de mirar el mar"
+        }
+      },
+      "blocks": {
+        "line_descanso": {
+          "name": "Línea Descanso",
+          "settings": {
+            "title": {
+              "label": "Título",
+              "default": "Descanso"
+            },
+            "text": {
+              "label": "Texto",
+              "default": "Para dormir tranquila. Verdes de agua, lavanda y rosa arena, en prendas que abrazan sin apretar."
+            },
+            "link_label": {
+              "label": "Texto del enlace",
+              "default": "Ver la línea Descanso"
+            },
+            "link": {
+              "label": "Enlace"
+            },
+            "image": {
+              "label": "Imagen",
+              "info": "Opcional."
+            }
+          }
+        },
+        "line_dia": {
+          "name": "Línea Día",
+          "settings": {
+            "title": {
+              "label": "Título",
+              "default": "Día"
+            },
+            "text": {
+              "label": "Texto",
+              "default": "Para jugar y descubrir. Turquesa, coral y amarillo sol, con bordados que sacan una sonrisa."
+            },
+            "link_label": {
+              "label": "Texto del enlace",
+              "default": "Ver la línea Día"
+            },
+            "link": {
+              "label": "Enlace"
+            },
+            "image": {
+              "label": "Imagen",
+              "info": "Opcional."
+            }
+          }
+        }
+      }
+    },
+    "text-feature": {
+      "name": "Texto destacado",
+      "settings": {
+        "heading": {
+          "label": "Encabezado",
+          "default": "Por qué bordamos a mano"
+        },
+        "text": {
+          "label": "Texto",
+          "default": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+        }
+      },
+      "presets": {
+        "name": "Texto destacado"
+      }
     }
   }
 }

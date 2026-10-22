@@ -1,0 +1,57 @@
+/* section-hero-home.css: home hero (docs/THEME_PLAN.md 4 and 6.7b). General page:
+   bg only, tokens only. Type only when no image is set, and still centered and spaced. */
+
+@layer sections {
+  .hero-home {
+    background: var(--color-bg);
+    /* PROPOSAL: the docs give no mobile or tablet hero padding. space-12 vertical. */
+    padding-block: var(--space-12);
+  }
+
+  .hero-home__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    text-align: center;
+  }
+
+  .hero-home__heading {
+    max-inline-size: 18ch; /* PROPOSAL: headline measure */
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .hero-home__text {
+    max-inline-size: 52ch; /* PROPOSAL: readable measure */
+    color: var(--color-ink-muted);
+  }
+
+  .hero-home__media {
+    inline-size: 100%;
+    margin-block-start: var(--space-6);
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 9; /* brief: 16:9 for hero images */
+    overflow: hidden;
+  }
+
+  .hero-home__image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Desktop: display-xl, and the generous space-24 above and below. Below 1024px the
+     class text-display-lg applies as is. */
+  @media (min-width: 1024px) {
+    .hero-home {
+      padding-block: var(--space-24);
+    }
+
+    .hero-home__heading {
+      font-size: var(--type-display-xl-size);
+      line-height: var(--type-display-xl-line);
+      font-weight: var(--type-display-xl-weight);
+    }
+  }
+}

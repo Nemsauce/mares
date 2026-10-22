@@ -1,0 +1,34 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-home",
+      "settings": {
+        "button_link": "/collections/descanso"
+      }
+    },
+    "lines": {
+      "type": "lines-entry",
+      "blocks": {
+        "descanso": {
+          "type": "line_descanso",
+          "settings": {
+            "link": "/collections/descanso"
+          }
+        },
+        "dia": {
+          "type": "line_dia",
+          "settings": {
+            "link": "/collections/dia"
+          }
+        }
+      },
+      "block_order": ["descanso", "dia"],
+      "settings": {}
+    },
+    "closing": {
+      "type": "text-feature",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "lines", "closing"]
+}

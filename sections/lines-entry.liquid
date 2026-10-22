@@ -1,0 +1,142 @@
+{%- comment -%}
+  Entry to the two lines: a heading and one card per line (blocks line_descanso and
+  line_dia, which differ only in their default copy). Copy comes from the settings, whose
+  defaults are t: keys in locales/es.default.schema.json
+  (source: docs/content/catalogo-y-copy.md).
+
+  The home page is a general page: bg-raised cards, ink text, brand link. No line colors
+  and no data-line attribute here, not even for the two lines.
+{%- endcomment -%}
+
+{{ 'section-lines-entry.css' | asset_url | stylesheet_tag }}
+
+<section class="lines-entry">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lines-entry__heading text-display-md">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="grid lines-entry__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li class="lines-entry__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="lines-entry__media">
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag:
+                    widths: '400, 600, 800',
+                    sizes: '(min-width: 1024px) 560px, (min-width: 600px) 50vw, 100vw',
+                    class: 'lines-entry__image',
+                    loading: 'lazy'
+                }}
+              </div>
+            {%- endif -%}
+
+            <div class="lines-entry__body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="lines-entry__title text-display-md">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="lines-entry__text text-body">{{ block.settings.text }}</p>
+              {%- endif -%}
+              {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+                <a class="lines-entry__link text-button" href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.lines-entry.name",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.lines-entry.settings.heading.label",
+      "default": "t:sections.lines-entry.settings.heading.default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "line_descanso",
+      "name": "t:sections.lines-entry.blocks.line_descanso.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.lines-entry.blocks.line_descanso.settings.title.label",
+          "default": "t:sections.lines-entry.blocks.line_descanso.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.lines-entry.blocks.line_descanso.settings.text.label",
+          "default": "t:sections.lines-entry.blocks.line_descanso.settings.text.default"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:sections.lines-entry.blocks.line_descanso.settings.link_label.label",
+          "default": "t:sections.lines-entry.blocks.line_descanso.settings.link_label.default"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.lines-entry.blocks.line_descanso.settings.link.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.lines-entry.blocks.line_descanso.settings.image.label",
+          "info": "t:sections.lines-entry.blocks.line_descanso.settings.image.info"
+        }
+      ]
+    },
+    {
+      "type": "line_dia",
+      "name": "t:sections.lines-entry.blocks.line_dia.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.lines-entry.blocks.line_dia.settings.title.label",
+          "default": "t:sections.lines-entry.blocks.line_dia.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.lines-entry.blocks.line_dia.settings.text.label",
+          "default": "t:sections.lines-entry.blocks.line_dia.settings.text.default"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:sections.lines-entry.blocks.line_dia.settings.link_label.label",
+          "default": "t:sections.lines-entry.blocks.line_dia.settings.link_label.default"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.lines-entry.blocks.line_dia.settings.link.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.lines-entry.blocks.line_dia.settings.image.label",
+          "info": "t:sections.lines-entry.blocks.line_dia.settings.image.info"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
