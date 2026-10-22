@@ -1,0 +1,123 @@
+/* GENERATED from docs/design/tokens.json v1. Do not edit by hand. Run scripts/build-tokens.mjs. */
+@layer tokens {
+  :root {
+    color-scheme: light;
+
+    /* Color (themed) */
+    --color-bg: #F5F1EC;
+    --color-bg-raised: #FFFFFF;
+    --color-line: #DCD3C8;
+    --color-ink: #24404F;
+    --color-ink-muted: #4F6878;
+    --color-brand: #3E6A85;
+    --color-on-brand: #F5F1EC;
+    --color-focus: #3E6A85;
+    --color-error: #B3463C;
+    --color-success: #2F6B54;
+
+    /* Color (line palette, same in both themes) */
+    --color-sea-glass: #A8CFC2;
+    --color-lavender: #C9BFDD;
+    --color-blush: #EBCFC4;
+    --color-turquoise: #4FB8C4;
+    --color-coral: #F2A68F;
+    --color-sun: #F6D77A;
+
+    /* Derived: primary button hover, brand darkened 8% (see @supports block below) */
+    --color-brand-hover: #39627A;
+
+    /* Font families */
+    --font-display: "Fraunces", Georgia, serif;
+    --font-sans: "Nunito", system-ui, -apple-system, sans-serif;
+
+    /* Type: Titulos */
+    --type-display-xl-size: 56px;
+    --type-display-xl-line: 60px;
+    --type-display-xl-weight: 600;
+    --type-display-lg-size: 40px;
+    --type-display-lg-line: 46px;
+    --type-display-lg-weight: 600;
+    --type-display-md-size: 28px;
+    --type-display-md-line: 34px;
+    --type-display-md-weight: 600;
+    --type-display-sm-size: 22px;
+    --type-display-sm-line: 28px;
+    --type-display-sm-weight: 600;
+
+    /* Type: Texto */
+    --type-body-lg-size: 18px;
+    --type-body-lg-line: 28px;
+    --type-body-lg-weight: 400;
+    --type-body-size: 16px;
+    --type-body-line: 26px;
+    --type-body-weight: 400;
+    --type-body-sm-size: 14px;
+    --type-body-sm-line: 22px;
+    --type-body-sm-weight: 400;
+    --type-label-size: 13px;
+    --type-label-line: 18px;
+    --type-label-weight: 700;
+    --type-label-tracking: 0.06em;
+    --type-button-size: 16px;
+    --type-button-line: 20px;
+    --type-button-weight: 700;
+    --type-price-size: 20px;
+    --type-price-line: 24px;
+    --type-price-weight: 700;
+
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-24: 96px;
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+
+    /* Shadow (themed) */
+    --shadow-soft: 0 8px 24px rgba(36, 64, 79, 0.10);
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Color (themed) */
+    --color-bg: #14232C;
+    --color-bg-raised: #1D3340;
+    --color-line: #34505F;
+    --color-ink: #F2EEE8;
+    --color-ink-muted: #B6C5CE;
+    --color-brand: #8FC0DA;
+    --color-on-brand: #14232C;
+    --color-focus: #8FC0DA;
+    --color-error: #F29B91;
+    --color-success: #8FD1B5;
+
+    /* Derived: primary button hover, brand darkened 8% (see @supports block below) */
+    /* WARNING: darkening is the wrong direction for the dark theme (brand is light on a dark surface). */
+    /* Revisit this rule when dark mode ships. */
+    --color-brand-hover: #84B1C9;
+
+    /* Shadow (themed) */
+    --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Derived: exact mix where color-mix() is supported, overriding the static hex fallbacks above. */
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root {
+      --color-brand-hover: color-mix(in srgb, var(--color-brand) 92%, black);
+    }
+    :root[data-theme="dark"] {
+      /* Darkening is the wrong direction here; revisit when dark mode ships. */
+      --color-brand-hover: color-mix(in srgb, var(--color-brand) 92%, black);
+    }
+  }
+}
