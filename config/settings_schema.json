@@ -1,0 +1,71 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Mares",
+    "theme_version": "0.1.0",
+    "theme_author": "Mares",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "t:settings_schema.brand.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings_schema.brand.settings.favicon.label",
+        "info": "t:settings_schema.brand.settings.favicon.info"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings_schema.brand.settings.logo.label",
+        "info": "t:settings_schema.brand.settings.logo.info"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.pages.name",
+    "settings": [
+      {
+        "type": "page",
+        "id": "page_returns",
+        "label": "t:settings_schema.pages.settings.page_returns.label",
+        "info": "t:settings_schema.pages.settings.page_returns.info"
+      },
+      {
+        "type": "page",
+        "id": "page_care",
+        "label": "t:settings_schema.pages.settings.page_care.label",
+        "info": "t:settings_schema.pages.settings.page_care.info"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.social.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings_schema.social.settings.header.content"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram_url",
+        "label": "t:settings_schema.social.settings.social_instagram_url.label",
+        "info": "t:settings_schema.social.settings.info"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok_url",
+        "label": "t:settings_schema.social.settings.social_tiktok_url.label",
+        "info": "t:settings_schema.social.settings.info"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_url",
+        "label": "t:settings_schema.social.settings.social_facebook_url.label",
+        "info": "t:settings_schema.social.settings.info"
+      }
+    ]
+  }
+]
