@@ -4,7 +4,6 @@
     "text": "Puede que el enlace haya cambiado. Mira nuestras líneas.",
     "button": "Volver al inicio"
   },
-  "todo_copy": "TODO(copy): owner must review the wording of these keys. 404.title, 404.text, 404.button, general.view_line_dia, general.menu, general.search, general.back_to_home, general.copyright, accessibility.skip_to_content, accessibility.open_menu, accessibility.close_menu, accessibility.cart, accessibility.cart_count, accessibility.loading, accessibility.error, accessibility.opens_in_new_window, accessibility.pagination, accessibility.page, accessibility.current_page, products.adding, products.added, products.sold_out, products.unavailable, products.unavailable_reason, products.quantity, products.quantity_decrease, products.quantity_increase, products.size, products.price, products.compare_at_price, products.stock_error, cart.empty_heading, cart.empty_text, cart.remove, cart.subtotal, cart.checkout, cart.shipping_notice, cart.update_error, search.title, search.label, search.placeholder, search.submit, search.results_count, search.no_results, pagination.previous, pagination.next",
   "general": {
     "brand_tagline": "Hecha con amor para las que más amamos.",
     "line_descanso": "Descanso",
