@@ -1,0 +1,46 @@
+/* grid.css: container, 4/8/12 column grid and section spacing (docs/THEME_PLAN.md 4).
+   Breakpoints are exactly 600px and 1024px, as min-width queries. Media queries cannot
+   read custom properties, so the literals are repeated here and enforced by
+   scripts/check-no-hex.sh.
+
+   Range          Columns  Side margin  Max content
+   0 to 599px     4        space-4      fluid
+   600 to 1023px  8        space-8      fluid
+   1024px and up  12       space-8      1200px centered */
+
+@layer base {
+  :root {
+    --content-max: 1200px; /* from the guide; not in tokens.json */
+    --page-margin: var(--space-4);
+    --grid-cols: 4;
+    /* PROPOSAL (Q-1): the docs do not define the gutter. space-4 below 600px, space-6 from 600px. */
+    --grid-gap: var(--space-4);
+    --section-gap: var(--space-12);
+  }
+
+  @media (min-width: 600px) {
+    :root {
+      --page-margin: var(--space-8);
+      --grid-cols: 8;
+      --grid-gap: var(--space-6); /* PROPOSAL (Q-1) */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --grid-cols: 12;
+      --section-gap: var(--space-16);
+    }
+  }
+
+  .container {
+    width: min(100% - 2 * var(--page-margin), var(--content-max));
+    margin-inline: auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+}

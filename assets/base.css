@@ -1,0 +1,235 @@
+/* base.css: reset, element defaults, type classes, focus ring, reduced motion, utilities.
+   Layers reset, base and utilities (order is declared once in snippets/head-assets.liquid).
+   Design values come from tokens.css only. See docs/THEME_PLAN.md sections 2.2 and 4.
+   Breakpoints, defined where used (grid.css): min-width 600px and min-width 1024px only. */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    height: auto;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  ul[role="list"],
+  ol[role="list"] {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  /* Important declarations: the earliest layer wins, so this holds against any component. */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Guide: prefers-reduced-motion removes smooth scroll, auto zoom and non-essential motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer base {
+  body {
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Body token, never below 16px (also stops iOS zooming into fields). */
+    font-size: max(var(--type-body-size), 16px);
+    line-height: var(--type-body-line);
+    font-weight: var(--type-body-weight);
+  }
+
+  /* Headings use the display family. Their size is chosen with a .text-display-* class;
+     the docs give no size per heading level, so none is invented here. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: var(--type-display-md-weight);
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Focus ring: color from --focus-ring-color (base-lines.css, R-6). */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+
+  /* Type classes: one per token style. */
+  .text-display-xl,
+  .text-display-lg,
+  .text-display-md,
+  .text-display-sm {
+    font-family: var(--font-display);
+  }
+
+  .text-body-lg,
+  .text-body,
+  .text-body-sm,
+  .text-label,
+  .text-button,
+  .text-price {
+    font-family: var(--font-sans);
+  }
+
+  .text-display-xl {
+    font-size: var(--type-display-xl-size);
+    line-height: var(--type-display-xl-line);
+    font-weight: var(--type-display-xl-weight);
+  }
+
+  .text-display-lg {
+    font-size: var(--type-display-lg-size);
+    line-height: var(--type-display-lg-line);
+    font-weight: var(--type-display-lg-weight);
+  }
+
+  .text-display-md {
+    font-size: var(--type-display-md-size);
+    line-height: var(--type-display-md-line);
+    font-weight: var(--type-display-md-weight);
+  }
+
+  .text-display-sm {
+    font-size: var(--type-display-sm-size);
+    line-height: var(--type-display-sm-line);
+    font-weight: var(--type-display-sm-weight);
+  }
+
+  .text-body-lg {
+    font-size: var(--type-body-lg-size);
+    line-height: var(--type-body-lg-line);
+    font-weight: var(--type-body-lg-weight);
+  }
+
+  .text-body {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-line);
+    font-weight: var(--type-body-weight);
+  }
+
+  .text-body-sm {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-line);
+    font-weight: var(--type-body-sm-weight);
+  }
+
+  /* Uppercase is done here, not typed in capitals, so screen readers read normal text. */
+  .text-label {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-line);
+    font-weight: var(--type-label-weight);
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+  }
+
+  .text-button {
+    font-size: var(--type-button-size);
+    line-height: var(--type-button-line);
+    font-weight: var(--type-button-weight);
+  }
+
+  .text-price {
+    font-size: var(--type-price-size);
+    line-height: var(--type-price-line);
+    font-weight: var(--type-price-weight);
+  }
+}
+
+@layer utilities {
+  /* The 1px, -1px and inset(50%) values are the standard visually-hidden technique,
+     not design values. */
+  .visually-hidden,
+  .skip-link:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Visible on focus; the focus ring comes from the global :focus-visible rule. */
+  .skip-link {
+    position: fixed;
+    inset-block-start: var(--space-4);
+    inset-inline-start: var(--space-4);
+    z-index: 1;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    font-family: var(--font-sans);
+    font-size: var(--type-button-size);
+    line-height: var(--type-button-line);
+    font-weight: var(--type-button-weight);
+    text-decoration: none;
+  }
+}

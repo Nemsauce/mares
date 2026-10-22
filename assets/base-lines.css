@@ -1,0 +1,43 @@
+/* base-lines.css: semantic aliases and the [data-line] mapping.
+   References to tokens only (var()); no color literals. See docs/THEME_PLAN.md 2.5.
+   A line is activated by data-line="descanso" or data-line="dia" on a section
+   wrapper. One line per page, by convention and by which sections a template includes. */
+
+@layer base {
+  :root {
+    /* Text on line colors. Ink on the six line colors is fine in light only (R-5);
+       the dark override below must be in place before dark mode ships. */
+    --color-on-line: var(--color-ink);
+
+    /* Resolved decision R-4: control borders (fields, chips) use ink-muted, not line.
+       line is 1.32:1 on bg, under the 3:1 needed for controls; ink-muted is 5.21:1.
+       line stays for dividers only. */
+    --control-border: var(--color-ink-muted);
+
+    /* Resolved decision R-6: global focus ring color. Overridden inside [data-line]. */
+    --focus-ring-color: var(--color-focus);
+  }
+
+  :root[data-theme="dark"] {
+    --color-on-line: var(--color-on-brand);
+  }
+
+  [data-line="descanso"] {
+    --line-main: var(--color-sea-glass);
+    --line-accent: var(--color-lavender);
+    --line-soft: var(--color-blush);
+  }
+
+  [data-line="dia"] {
+    --line-main: var(--color-turquoise);
+    --line-accent: var(--color-coral);
+    --line-soft: var(--color-sun);
+  }
+
+  /* Resolved decision R-6: the focus ring is 2.49:1 on turquoise and 2.95:1 on coral,
+     under the 3:1 minimum. ink is 4.68:1 or better on all six line colors (light theme).
+     Revisit with dark mode: ink is light there, see --color-on-line. */
+  [data-line] {
+    --focus-ring-color: var(--color-ink);
+  }
+}
