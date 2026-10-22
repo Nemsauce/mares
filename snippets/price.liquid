@@ -1,0 +1,24 @@
+{%- comment -%}
+  Price and, when it is higher, the struck compare-at price. Money is rendered only with
+  Shopify's money filter, so the format is whatever the store's money setting says. No
+  arithmetic or string work on the amounts here.
+
+  Parameters:
+    price             the amount in cents, e.g. product.price.
+    compare_at_price  optional, e.g. product.compare_at_price.
+    show_compare_at   pass false to hide the previous price. Default true.
+
+  Usage:
+    {% render 'price', price: product.price, compare_at_price: product.compare_at_price %}
+{%- endcomment -%}
+
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<div class="price">
+  <span class="visually-hidden">{{ 'products.price' | t }}</span>
+  <span class="price__current text-price">{{ price | money }}</span>
+  {%- if show_compare_at != false and compare_at_price > price -%}
+    <span class="visually-hidden">{{ 'products.compare_at_price' | t }}</span>
+    <s class="price__compare text-body">{{ compare_at_price | money }}</s>
+  {%- endif -%}
+</div>

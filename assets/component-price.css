@@ -1,0 +1,21 @@
+/* component-price.css: current price and struck compare-at price (docs/THEME_PLAN.md 6.4).
+   The type styles come from the token classes; the previous price is ink-muted [T]. */
+
+@layer components {
+  .price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .price__current {
+    color: var(--color-ink);
+  }
+
+  /* Struck through, and also labelled for screen readers in the snippet. */
+  .price__compare {
+    color: var(--color-ink-muted);
+    text-decoration: line-through;
+  }
+}

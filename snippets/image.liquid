@@ -1,0 +1,72 @@
+{%- comment -%}
+  Responsive image from a Shopify image object, or a neutral placeholder when there is
+  none. One place for srcset, sizes, dimensions and loading rules.
+
+  Parameters:
+    image         the Shopify image object (product.featured_image, media.preview_image...).
+                  Blank renders a placeholder box that keeps the aspect ratio.
+    alt           alternative text, chosen by the caller (media alt, falling back to the
+                  product title). Blank means decorative.
+    sizes         the sizes attribute.
+    widths        comma separated pixel widths for srcset. Default '200, 400, 600, 800'.
+                  The largest one is also the src.
+    aspect_ratio  CSS aspect-ratio, e.g. '4 / 5'. The image is cropped to it with
+                  object-fit: cover. Default: the image's own ratio.
+    eager         true for the first visible image: loading="eager" plus
+                  fetchpriority="high". Otherwise loading="lazy" and no fetchpriority.
+    class         extra classes.
+
+  image_tag always writes width and height, so the browser reserves the space before the
+  file arrives (no layout shift). The aspect-ratio and fill rules are inline because the
+  ratio is a per-call value.
+
+  Usage:
+    {% render 'image', image: product.featured_image, alt: product.title, sizes: '50vw', aspect_ratio: '4 / 5' %}
+{%- endcomment -%}
+
+{%- assign image_ratio = aspect_ratio | default: '1 / 1' -%}
+
+{%- if image != blank -%}
+  {%- assign image_widths = widths | default: '200, 400, 600, 800' -%}
+  {%- assign image_max_width = image_widths | split: ',' | last | strip | plus: 0 -%}
+  {%- assign image_alt = alt | default: '' -%}
+  {%- if aspect_ratio != blank -%}
+    {%- assign image_style = 'aspect-ratio: ' | append: aspect_ratio | append: '; width: 100%; height: auto; object-fit: cover;' -%}
+  {%- else -%}
+    {%- assign image_style = 'width: 100%; height: auto;' -%}
+  {%- endif -%}
+
+  {%- if eager -%}
+    {{
+      image
+      | image_url: width: image_max_width
+      | image_tag:
+        widths: image_widths,
+        sizes: sizes,
+        alt: image_alt,
+        class: class,
+        style: image_style,
+        loading: 'eager',
+        fetchpriority: 'high'
+    }}
+  {%- else -%}
+    {{
+      image
+      | image_url: width: image_max_width
+      | image_tag:
+        widths: image_widths,
+        sizes: sizes,
+        alt: image_alt,
+        class: class,
+        style: image_style,
+        loading: 'lazy'
+    }}
+  {%- endif -%}
+{%- else -%}
+  {%- comment -%} No image: a quiet box that keeps the ratio. Decorative, tokens only. {%- endcomment -%}
+  <div
+    class="image-placeholder{% if class != blank %} {{ class }}{% endif %}"
+    style="aspect-ratio: {{ image_ratio }}; width: 100%; background: var(--color-bg);"
+    aria-hidden="true"
+  ></div>
+{%- endif -%}
