@@ -1,0 +1,163 @@
+{%- comment -%}
+  Line hero (docs/THEME_PLAN.md 6.3): a radius-lg block in the line's main color, with the
+  page heading, optional short text, an optional embroidery motif, an optional image and
+  the page's single primary button.
+
+  data-line on the wrapper (descanso or dia) is what maps --line-main, --line-accent,
+  --line-soft and switches the focus ring to ink inside it (base-lines.css, R-6).
+
+  The heading is the h1 of the collection page. Empty heading falls back to the
+  collection title. For that to be the only h1, the line templates set the
+  main-collection section's show_title to false (see sections/main-collection.liquid).
+  The neutral collection template keeps show_title on and has no hero.
+
+  Contrast rule: never put a secondary button or brand-colored text in this block. Brand
+  text fails 4.5:1 on the line colors (R-6). Text here is ink; the only button is the
+  primary one, whose fill is brand with on-brand text.
+
+  Text fallback: when the text setting is empty, the line's description from the locale
+  file (source: docs/content/catalogo-y-copy.md) is shown.
+{%- endcomment -%}
+
+{{ 'section-hero-line.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_line = section.settings.line
+  if hero_line != 'dia'
+    assign hero_line = 'descanso'
+  endif
+
+  assign hero_heading = section.settings.heading
+  if hero_heading == blank
+    assign hero_heading = collection.title
+  endif
+
+  assign hero_text = section.settings.text
+  if hero_text == blank
+    if hero_line == 'dia'
+      assign hero_text = 'lines.dia.description' | t
+    else
+      assign hero_text = 'lines.descanso.description' | t
+    endif
+  endif
+
+  # Only the motif setting of the chosen line counts, so a stale choice for the other
+  # line can never show.
+  if hero_line == 'dia'
+    assign hero_motif = section.settings.motif_dia
+  else
+    assign hero_motif = section.settings.motif_descanso
+  endif
+-%}
+
+<section class="hero-line" data-line="{{ hero_line }}">
+  <div class="container">
+    <div class="hero-line__block">
+      {%- if hero_motif != blank and hero_motif != 'none' -%}
+        {%- comment -%} PROPOSAL: 96px, larger than the 48px default; the docs give no hero motif size. {%- endcomment -%}
+        <div class="hero-line__motif">
+          {% render 'embroidery-motif', name: hero_motif, size: 96 %}
+        </div>
+      {%- endif -%}
+
+      {%- if hero_heading != blank -%}
+        <h1 class="hero-line__heading text-display-lg">{{ hero_heading }}</h1>
+      {%- endif -%}
+
+      {%- if hero_text != blank -%}
+        <p class="hero-line__text text-body-lg">{{ hero_text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        {% render 'button', label: section.settings.button_label, url: section.settings.button_link %}
+      {%- endif -%}
+
+      {%- if section.settings.image != blank -%}
+        <div class="hero-line__media">
+          {% render 'image',
+            image: section.settings.image,
+            alt: section.settings.image.alt,
+            sizes: '(min-width: 1024px) 1136px, 100vw',
+            widths: '600, 900, 1200, 1600',
+            aspect_ratio: '16 / 9',
+            eager: true
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.hero-line.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "line",
+      "label": "t:sections.hero-line.settings.line.label",
+      "options": [
+        { "value": "descanso", "label": "t:sections.hero-line.settings.line.options__1.label" },
+        { "value": "dia", "label": "t:sections.hero-line.settings.line.options__2.label" }
+      ],
+      "default": "descanso"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.hero-line.settings.heading.label",
+      "info": "t:sections.hero-line.settings.heading.info"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.hero-line.settings.text.label",
+      "info": "t:sections.hero-line.settings.text.info"
+    },
+    {
+      "type": "select",
+      "id": "motif_descanso",
+      "label": "t:sections.hero-line.settings.motif_descanso.label",
+      "options": [
+        { "value": "none", "label": "t:sections.hero-line.settings.motif_descanso.options__1.label" },
+        { "value": "ola-suave", "label": "t:sections.hero-line.settings.motif_descanso.options__2.label" },
+        { "value": "luna-sobre-el-mar", "label": "t:sections.hero-line.settings.motif_descanso.options__3.label" },
+        { "value": "conchitas-nacaradas", "label": "t:sections.hero-line.settings.motif_descanso.options__4.label" }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.line == 'descanso' }}"
+    },
+    {
+      "type": "select",
+      "id": "motif_dia",
+      "label": "t:sections.hero-line.settings.motif_dia.label",
+      "options": [
+        { "value": "none", "label": "t:sections.hero-line.settings.motif_dia.options__1.label" },
+        { "value": "estrella-de-mar", "label": "t:sections.hero-line.settings.motif_dia.options__2.label" },
+        { "value": "caballito-de-mar", "label": "t:sections.hero-line.settings.motif_dia.options__3.label" },
+        { "value": "palmita", "label": "t:sections.hero-line.settings.motif_dia.options__4.label" },
+        { "value": "sol", "label": "t:sections.hero-line.settings.motif_dia.options__5.label" }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.line == 'dia' }}"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.hero-line.settings.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.hero-line.settings.button_link.label",
+      "info": "t:sections.hero-line.settings.button_link.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero-line.settings.image.label",
+      "info": "t:sections.hero-line.settings.image.info"
+    }
+  ]
+}
+{% endschema %}

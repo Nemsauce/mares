@@ -2,6 +2,11 @@
   Collection page (docs/THEME_PLAN.md 6.5): title (the page's h1), description, sort
   links, a grid of product cards and numeric pagination.
 
+  The title is the page's h1, and show_title controls it (default on). The line
+  collection templates put a hero-line section first, whose heading is the h1, and set
+  show_title to false here, so each page has exactly one h1 (see sections/hero-line.liquid).
+  The neutral template has no hero and keeps show_title on.
+
   This is the neutral template: it never assumes a line. A card shows a line tag only
   when show_tag is on and the product has the mares.line metafield.
 
@@ -59,12 +64,16 @@
 {%- paginate collection.products by section.settings.products_per_page -%}
   <section class="collection">
     <div class="container">
-      <header class="collection__header">
-        <h1 class="collection__title text-display-lg">{{ collection.title }}</h1>
-        {%- if collection.description != blank -%}
-          <div class="collection__description text-body-lg">{{ collection.description }}</div>
-        {%- endif -%}
-      </header>
+      {%- if section.settings.show_title or collection.description != blank -%}
+        <header class="collection__header">
+          {%- if section.settings.show_title -%}
+            <h1 class="collection__title text-display-lg">{{ collection.title }}</h1>
+          {%- endif -%}
+          {%- if collection.description != blank -%}
+            <div class="collection__description text-body-lg">{{ collection.description }}</div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
 
       {%- if section.settings.show_sort and collection.products_count > 1 and collection.sort_options.size > 1 -%}
         <nav class="collection__sort" aria-labelledby="collection-sort-label">
@@ -117,6 +126,13 @@
 {
   "name": "t:sections.main-collection.name",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.main-collection.settings.show_title.label",
+      "info": "t:sections.main-collection.settings.show_title.info",
+      "default": true
+    },
     {
       "type": "range",
       "id": "products_per_page",

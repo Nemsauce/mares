@@ -230,6 +230,76 @@
         "empty_text": {
           "label": "Texto si no hay productos",
           "info": "Si lo dejas vacío, se muestra el texto por defecto."
+        },
+        "show_title": {
+          "label": "Mostrar título",
+          "info": "Desactívalo cuando la portada de la línea ya muestra el título (es el h1 de la página)."
+        }
+      }
+    },
+    "hero-line": {
+      "name": "Portada de línea",
+      "settings": {
+        "line": {
+          "label": "Línea",
+          "options__1": {
+            "label": "Descanso"
+          },
+          "options__2": {
+            "label": "Día"
+          }
+        },
+        "heading": {
+          "label": "Titular",
+          "info": "Si lo dejas vacío, se usa el título de la colección."
+        },
+        "text": {
+          "label": "Texto",
+          "info": "Si lo dejas vacío, se muestra la descripción de la línea."
+        },
+        "motif_descanso": {
+          "label": "Bordado",
+          "options__1": {
+            "label": "Ninguno"
+          },
+          "options__2": {
+            "label": "Ola suave"
+          },
+          "options__3": {
+            "label": "Luna sobre el mar"
+          },
+          "options__4": {
+            "label": "Conchitas nacaradas"
+          }
+        },
+        "motif_dia": {
+          "label": "Bordado",
+          "options__1": {
+            "label": "Ninguno"
+          },
+          "options__2": {
+            "label": "Estrella de mar"
+          },
+          "options__3": {
+            "label": "Caballito de mar"
+          },
+          "options__4": {
+            "label": "Palmita"
+          },
+          "options__5": {
+            "label": "Sol"
+          }
+        },
+        "button_label": {
+          "label": "Texto del botón"
+        },
+        "button_link": {
+          "label": "Enlace del botón",
+          "info": "El botón solo aparece si tiene texto y enlace."
+        },
+        "image": {
+          "label": "Imagen",
+          "info": "Opcional."
         }
       }
     }

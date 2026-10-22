@@ -1,0 +1,59 @@
+/* section-hero-line.css: line hero (docs/THEME_PLAN.md 4 and 6.3). Tokens only.
+   Background is --line-main, which data-line on the section provides (base-lines.css). */
+
+@layer sections {
+  .hero-line {
+    /* PROPOSAL: the docs give no space around the block. space-6 above and below. */
+    padding-block: var(--space-6);
+  }
+
+  .hero-line__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--line-main);
+    color: var(--color-ink);
+    text-align: center;
+    /* PROPOSAL (plan 4): below 1024px the block has space-12 vertical and space-8 inside. */
+    padding: var(--space-12) var(--space-8);
+  }
+
+  /* ink-muted, not a line color: a line color would vanish on the same-colored block. */
+  .hero-line__motif {
+    color: var(--color-ink-muted);
+  }
+
+  /* Type style swap: display-lg below 1024px, display-xl from 1024px. Both from the
+     --type-* tokens; the text-display-lg class in the markup is the same style. */
+  .hero-line__heading {
+    max-inline-size: 18ch; /* PROPOSAL: headline measure */
+    font-size: var(--type-display-lg-size);
+    line-height: var(--type-display-lg-line);
+    font-weight: var(--type-display-lg-weight);
+    text-wrap: balance;
+  }
+
+  .hero-line__text {
+    max-inline-size: 52ch; /* PROPOSAL: readable measure */
+  }
+
+  .hero-line__media {
+    inline-size: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-line__block {
+      padding-block: var(--space-24);
+    }
+
+    .hero-line__heading {
+      font-size: var(--type-display-xl-size);
+      line-height: var(--type-display-xl-line);
+      font-weight: var(--type-display-xl-weight);
+    }
+  }
+}

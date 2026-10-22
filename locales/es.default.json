@@ -91,5 +91,13 @@
   "collections": {
     "sort_by": "Ordenar por",
     "empty": "No hay productos en esta colección."
+  },
+  "lines": {
+    "descanso": {
+      "description": "El mar sereno. Olas suaves, la luna sobre el agua y conchas nacaradas, bordadas en tonos que bajan el ruido del día."
+    },
+    "dia": {
+      "description": "La playa a mediodía. Estrellas de mar, caballitos y palmas, bordados en colores que acompañan el juego."
+    }
   }
 }
