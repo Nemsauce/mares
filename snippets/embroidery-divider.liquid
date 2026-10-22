@@ -1,0 +1,37 @@
+{%- comment -%}
+  Section separator in the embroidery stroke: one thin wavy line across the whole width of
+  its container. Decorative: aria-hidden. PLACEHOLDER ARTWORK, like the motifs, until the
+  designer delivers the real one.
+
+  The line is stretched to the container width (preserveAspectRatio="none") and every
+  shape is vector-effect="non-scaling-stroke", so stretching never changes the 2px weight.
+  Color is currentColor: the caller sets it with a token.
+
+  Parameters:
+    class  (optional) extra classes.
+
+  Usage:
+    <div style="color: var(--color-ink-muted)">{% render 'embroidery-divider' %}</div>
+{%- endcomment -%}
+
+<svg
+  class="embroidery-divider{% if class != blank %} {{ class }}{% endif %}"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="12"
+  viewBox="0 0 386 12"
+  preserveAspectRatio="none"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  style="display: block;"
+>
+  <path
+    d="M1 6 q12 -6 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
+    vector-effect="non-scaling-stroke"
+  />
+</svg>

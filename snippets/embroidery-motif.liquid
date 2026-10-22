@@ -1,0 +1,91 @@
+{%- comment -%}
+  Embroidery motif: one thin line, no fills, in the brand's single-stroke embroidery
+  style (docs/design/README.md, "Bordado como motivo"). Decorative: aria-hidden.
+
+  PLACEHOLDER ARTWORK. These simple drawings stand in until the designer delivers the
+  real motifs (Q-6). Replace the paths inside each `when`; the rest of the snippet stays.
+
+  Parameters:
+    name   (required) one of the seven motifs of README:
+             Descanso: ola-suave, luna-sobre-el-mar, conchitas-nacaradas
+             Dia:      estrella-de-mar, caballito-de-mar, palmita, sol
+           Unknown names render nothing.
+    size   (optional) pixel width and height. Default 48.
+    class  (optional) extra classes.
+
+  Color: stroke is currentColor. The caller sets it with a token, for example
+  color: var(--color-ink-muted) on the wrapper.
+
+  Stroke: 2px at every size. The shapes are drawn on a 48 unit grid and every shape is
+  marked vector-effect="non-scaling-stroke", so a 200px motif keeps the same 2px line.
+
+  Usage:
+    {% render 'embroidery-motif', name: 'ola-suave' %}
+    {% render 'embroidery-motif', name: 'sol', size: 200 %}
+{%- endcomment -%}
+
+{%- capture motif_shapes -%}
+  {%- case name -%}
+    {%- when 'ola-suave' -%}
+      <path d="M4 16 q5 -8 10 0 t10 0 t10 0 t10 0"/>
+      <path d="M4 26 q5 -8 10 0 t10 0 t10 0 t10 0"/>
+      <path d="M4 36 q5 -8 10 0 t10 0 t10 0 t10 0"/>
+    {%- when 'luna-sobre-el-mar' -%}
+      <path d="M30 3 A14 14 0 1 0 41 23 A11 11 0 0 1 30 3 Z"/>
+      <path d="M4 40 q5 -8 10 0 t10 0 t10 0 t10 0"/>
+    {%- when 'conchitas-nacaradas' -%}
+      <path d="M24 40 L9 24 C9 14 16 9 24 9 C32 9 39 14 39 24 Z"/>
+      <path d="M24 40 L16 11"/>
+      <path d="M24 40 L32 11"/>
+      <path d="M24 40 L11 17"/>
+      <path d="M24 40 L37 17"/>
+    {%- when 'estrella-de-mar' -%}
+      <path d="M24.0 6.0 L29.3 17.7 L42.1 19.1 L32.6 27.8 L35.2 40.4 L24.0 34.0 L12.8 40.4 L15.4 27.8 L5.9 19.1 L18.7 17.7 Z"/>
+      <path d="M24.0 22.0 L24.0 16.0"/>
+      <path d="M26.9 24.1 L32.6 22.2"/>
+      <path d="M25.8 27.4 L29.3 32.3"/>
+      <path d="M22.2 27.4 L18.7 32.3"/>
+      <path d="M21.1 24.1 L15.4 22.2"/>
+    {%- when 'caballito-de-mar' -%}
+      <path d="M20 5 C27 2 33 7 31 14 C30 18 36 21 35 28 C34 35 27 36 27 41 C27 46 18 46 18 41 C18 37 23 37 23 40"/>
+      <path d="M20 5 C16 5 12 7 8 9 L12 12 C15 13 17 14 18 16 C21 22 15 25 18 31 C20 34 23 35 24 37"/>
+      <circle cx="24" cy="9" r="0.6"/>
+    {%- when 'palmita' -%}
+      <path d="M24 42 C24 34 25 28 24 20"/>
+      <path d="M24 20 C18 12 10 12 6 18"/>
+      <path d="M24 20 C30 12 38 12 42 18"/>
+      <path d="M24 20 C22 12 20 8 14 6"/>
+      <path d="M24 20 C26 12 28 8 34 6"/>
+      <path d="M14 42 H34"/>
+    {%- when 'sol' -%}
+      <circle cx="24" cy="24" r="8"/>
+      <path d="M37.0 24.0 L43.0 24.0"/>
+      <path d="M33.2 33.2 L37.4 37.4"/>
+      <path d="M24.0 37.0 L24.0 43.0"/>
+      <path d="M14.8 33.2 L10.6 37.4"/>
+      <path d="M11.0 24.0 L5.0 24.0"/>
+      <path d="M14.8 14.8 L10.6 10.6"/>
+      <path d="M24.0 11.0 L24.0 5.0"/>
+      <path d="M33.2 14.8 L37.4 10.6"/>
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- if motif_shapes != blank -%}
+  {%- assign motif_size = size | default: 48 -%}
+  <svg
+    class="embroidery-motif embroidery-motif--{{ name }}{% if class != blank %} {{ class }}{% endif %}"
+    xmlns="http://www.w3.org/2000/svg"
+    width="{{ motif_size }}"
+    height="{{ motif_size }}"
+    viewBox="0 0 48 48"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    {{- motif_shapes | replace: '/>', ' vector-effect="non-scaling-stroke"/>' -}}
+  </svg>
+{%- endif -%}
