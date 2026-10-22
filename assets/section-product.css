@@ -1,0 +1,91 @@
+/* section-product.css: product page and its blocks (docs/THEME_PLAN.md 6.6). Tokens only.
+   The chip, field and button looks come from their component files. */
+
+@layer sections {
+  .product {
+    /* PROPOSAL: the docs give no space above and below the product. space-8. */
+    padding-block: var(--space-8);
+  }
+
+  .product__grid {
+    row-gap: var(--space-8);
+  }
+
+  /* Stacked below 1024px: both columns take the full row. */
+  .product__media,
+  .product__info {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .product__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+  }
+
+  /* Gallery: scroll snap, no script. Images are 4:5 with radius-lg. */
+  .product__gallery {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  .product__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  /* No images: a quiet framed box at the same ratio, so the page still looks deliberate. */
+  .product__slide--empty {
+    border: 1px solid var(--color-line);
+  }
+
+  .product-title {
+    color: var(--color-ink);
+    overflow-wrap: break-word;
+  }
+
+  .product-description {
+    max-inline-size: 65ch; /* PROPOSAL: readable measure */
+  }
+
+  .product-description > * + * {
+    margin-block-start: var(--space-4);
+  }
+
+  .product-description ul,
+  .product-description ol {
+    padding-inline-start: var(--space-6);
+  }
+
+  .product-quantity {
+    inline-size: var(--space-24); /* PROPOSAL: a narrow field; the docs give no width */
+  }
+
+  .product-buy__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .product-buy__reason {
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 1024px) {
+    .product__media {
+      grid-column: span 7;
+    }
+
+    .product__info {
+      grid-column: span 5;
+    }
+  }
+}

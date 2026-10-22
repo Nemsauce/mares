@@ -1,0 +1,33 @@
+{%- comment -%}
+  Price of the selected variant, through snippets/price.liquid (money filter only), with
+  the struck compare-at price when it is higher.
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="product-price" {{ block.shopify_attributes }}>
+  {% render 'price',
+    price: current_variant.price,
+    compare_at_price: current_variant.compare_at_price,
+    show_compare_at: block.settings.show_compare_at
+  %}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.product-price.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_compare_at",
+      "label": "t:blocks.product-price.settings.show_compare_at.label",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.product-price.name"
+    }
+  ]
+}
+{% endschema %}

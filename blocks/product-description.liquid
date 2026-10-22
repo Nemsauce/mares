@@ -1,0 +1,17 @@
+{%- comment -%} Product description: rich text from the admin, body size, readable measure. {%- endcomment -%}
+
+{%- if product.description != blank -%}
+  <div class="product-description text-body" {{ block.shopify_attributes }}>{{ product.description }}</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.product-description.name",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:blocks.product-description.name"
+    }
+  ]
+}
+{% endschema %}

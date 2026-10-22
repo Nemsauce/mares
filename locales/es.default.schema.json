@@ -302,6 +302,31 @@
           "info": "Opcional."
         }
       }
+    },
+    "main-product": {
+      "name": "Producto"
+    }
+  },
+  "blocks": {
+    "product-title": {
+      "name": "Título del producto"
+    },
+    "product-price": {
+      "name": "Precio",
+      "settings": {
+        "show_compare_at": {
+          "label": "Mostrar precio anterior"
+        }
+      }
+    },
+    "product-description": {
+      "name": "Descripción"
+    },
+    "quantity": {
+      "name": "Cantidad"
+    },
+    "buy-buttons": {
+      "name": "Botón de compra"
     }
   }
 }

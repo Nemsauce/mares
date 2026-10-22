@@ -1,0 +1,42 @@
+{%- comment -%}
+  Add to cart: a Shopify product form that posts to the cart and then goes to the cart
+  page (full page load, no script). The page's single primary button.
+
+  The hidden id is the selected variant (product.selected_or_first_available_variant), so
+  the variant chosen with the picker, or the only variant of a single-variant product,
+  is what reaches the cart. The quantity input in blocks/quantity.liquid joins this form
+  through the form attribute and the shared id.
+
+  When the variant is sold out the button is disabled and a text message says why. No
+  dynamic checkout button: the payment gateway is undecided.
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign form_id = 'product-form-' | append: product.id -%}
+{%- assign add_label = 'products.add_to_cart' | t -%}
+{%- assign unavailable = true -%}
+{%- if current_variant.available -%}
+  {%- assign unavailable = false -%}
+{%- endif -%}
+
+<div class="product-buy" {{ block.shopify_attributes }}>
+  {%- form 'product', product, id: form_id, class: 'product-buy__form' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+    {% render 'button', label: add_label, type: 'submit', disabled: unavailable %}
+    {%- if unavailable -%}
+      <p class="product-buy__reason text-body-sm">{{ 'products.sold_out' | t }}</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.buy-buttons.name",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:blocks.buy-buttons.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Product title: the page's h1, in the display-sm style that tokens.json assigns to the
+  product name on the product page.
+{%- endcomment -%}
+
+<h1 class="product-title text-display-sm" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+
+{% schema %}
+{
+  "name": "t:blocks.product-title.name",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:blocks.product-title.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+{%- comment -%}
+  Product page (docs/THEME_PLAN.md 6.6). Stacked below 1024px; from 1024px the media
+  column spans 7 of 12 columns and the information column 5 of 12 (PROPOSAL, plan 6.6).
+
+  The information column renders the section's theme blocks (blocks/*.liquid) with
+  content_for 'blocks'. Theme blocks are current Shopify syntax: each block is its own
+  file, and the template lists them.
+
+  No JavaScript: the gallery is a CSS scroll-snap strip, the variant picker is a plain GET
+  form and the add to cart is a plain POST form (see the blocks).
+
+  data-line comes from the product metafield mares.line ('descanso' or 'dia'). Without it
+  the page is neutral and no line is assumed.
+{%- endcomment -%}
+
+{{ 'section-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign product_line = product.metafields.mares.line.value
+  if product_line != 'descanso' and product_line != 'dia'
+    assign product_line = ''
+  endif
+  assign gallery_images = product.media | where: 'media_type', 'image'
+-%}
+
+<section class="product"{% if product_line != blank %} data-line="{{ product_line }}"{% endif %}>
+  <div class="container">
+    <div class="grid product__grid">
+      <div class="product__media">
+        {%- if gallery_images.size > 0 -%}
+          {%- comment -%}
+            A scrollable region must be reachable by keyboard, hence tabindex="0".
+            Named after the product, so no extra string is needed.
+          {%- endcomment -%}
+          <div class="product__gallery" role="group" aria-label="{{ product.title }}" tabindex="0">
+            {%- for media in gallery_images -%}
+              {%- assign media_alt = media.alt | default: product.title -%}
+              <div class="product__slide">
+                {% render 'image',
+                  image: media.preview_image,
+                  alt: media_alt,
+                  sizes: '(min-width: 1024px) min(58vw, 700px), 100vw',
+                  widths: '400, 600, 800, 1200',
+                  aspect_ratio: '4 / 5',
+                  eager: forloop.first
+                %}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          {%- comment -%} No images: one placeholder at the same ratio, no thumbnail strip. {%- endcomment -%}
+          <div class="product__slide product__slide--empty">
+            {% render 'image', aspect_ratio: '4 / 5' %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{%- comment -%}
+  Quantity: a number input using the field component. There are no stepper buttons
+  because there is no script yet. The input sits outside the add to cart <form>, so it
+  joins it with the form attribute; the form id is the same one buy-buttons.liquid sets.
+{%- endcomment -%}
+
+{{ 'component-field.css' | asset_url | stylesheet_tag }}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="field product-quantity" {{ block.shopify_attributes }}>
+  <label class="field__label" for="product-quantity-{{ product.id }}">{{ 'products.quantity' | t }}</label>
+  <input
+    class="field__input"
+    type="number"
+    id="product-quantity-{{ product.id }}"
+    name="quantity"
+    value="1"
+    min="1"
+    inputmode="numeric"
+    form="product-form-{{ product.id }}"
+    {% unless current_variant.available %}disabled{% endunless %}
+  >
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.quantity.name",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:blocks.quantity.name"
+    }
+  ]
+}
+{% endschema %}
