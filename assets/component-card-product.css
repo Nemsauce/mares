@@ -1,0 +1,70 @@
+/* component-card-product.css: product card (docs/THEME_PLAN.md 6.4). Tokens only. */
+
+@layer components {
+  .product-card {
+    position: relative; /* anchors the stretched link */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-raised);
+    color: var(--color-ink);
+    overflow: hidden;
+  }
+
+  .product-card__media {
+    /* Reserves the 4:5 box even before an image arrives; image.liquid sets the same ratio. */
+    aspect-ratio: 4 / 5;
+  }
+
+  .product-card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  /* The name wraps to as many lines as it needs (about 163px wide cards at 375px). It is
+     never truncated. */
+  .product-card__title {
+    overflow-wrap: break-word;
+  }
+
+  .product-card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* The whole card is the click target. */
+  .product-card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Sold out is text, never opacity alone. */
+  .product-card__status {
+    color: var(--color-ink);
+  }
+
+  /* Focus ring on the card, not on the small name link. Browsers without :has() keep the
+     link's own global ring. */
+  @supports selector(:has(*)) {
+    .product-card__link:focus-visible {
+      outline: none;
+    }
+
+    .product-card:has(.product-card__link:focus-visible) {
+      outline: 2px solid var(--focus-ring-color);
+      outline-offset: 2px;
+    }
+  }
+
+  /* No shadow at rest; hover only where hover exists. */
+  @media (hover: hover) {
+    .product-card:hover {
+      box-shadow: var(--shadow-soft);
+    }
+  }
+}

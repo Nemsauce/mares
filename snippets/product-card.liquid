@@ -1,0 +1,74 @@
+{%- comment -%}
+  Product card (docs/THEME_PLAN.md 6.4). The whole card is one link (stretched
+  pseudo-element on the product name link).
+
+  Parameters:
+    product          (required) the product.
+    sizes            the sizes attribute for the image.
+    eager            true for the first row: eager image with fetchpriority high.
+    show_tag         true to show the line tag. The line comes from the product
+                     metafield mares.line ('descanso' or 'dia'); a product without it
+                     shows no tag, so no line is ever assumed.
+    show_compare_at  false hides the previous price. Default true.
+    heading_tag      'h2' (default, under a page h1) or 'h3'.
+
+  Works with no product image: image.liquid renders a placeholder at the same 4 / 5.
+
+  Usage:
+    {% render 'product-card', product: product, sizes: '50vw', show_tag: true %}
+{%- endcomment -%}
+
+{{ 'component-card-product.css' | asset_url | stylesheet_tag }}
+
+{%- assign card_heading = heading_tag | default: 'h2' -%}
+{%- assign card_alt = product.featured_image.alt | default: product.title -%}
+
+{%- liquid
+  assign card_line = product.metafields.mares.line.value
+  assign card_line_label = ''
+  case card_line
+    when 'descanso'
+      assign card_line_label = 'general.line_descanso' | t
+    when 'dia'
+      assign card_line_label = 'general.line_dia' | t
+  endcase
+-%}
+
+<div class="product-card">
+  <div class="product-card__media">
+    {% render 'image',
+      image: product.featured_image,
+      alt: card_alt,
+      sizes: sizes,
+      aspect_ratio: '4 / 5',
+      eager: eager
+    %}
+  </div>
+
+  <div class="product-card__body">
+    {%- if show_tag and card_line_label != blank -%}
+      {%- comment -%} collection-tag needs a data-line surface for its background. {%- endcomment -%}
+      <div class="product-card__tag" data-line="{{ card_line }}">
+        {% render 'collection-tag', label: card_line_label %}
+      </div>
+    {%- endif -%}
+
+    <{{ card_heading }} class="product-card__title text-display-sm">
+      <a
+        class="product-card__link"
+        href="{{ product.url }}"
+        {% unless product.available %}aria-describedby="product-card-status-{{ product.id }}"{% endunless %}
+      >{{ product.title }}</a>
+    </{{ card_heading }}>
+
+    {% render 'price',
+      price: product.price,
+      compare_at_price: product.compare_at_price,
+      show_compare_at: show_compare_at
+    %}
+
+    {%- unless product.available -%}
+      <p class="product-card__status text-label" id="product-card-status-{{ product.id }}">{{ 'products.sold_out' | t }}</p>
+    {%- endunless -%}
+  </div>
+</div>
