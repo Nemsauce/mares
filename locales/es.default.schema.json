@@ -96,6 +96,15 @@
           }
         }
       }
+    },
+    "main-page": {
+      "name": "Página"
+    },
+    "main-404": {
+      "name": "Página no encontrada"
+    },
+    "main-password": {
+      "name": "Página de contraseña"
     }
   }
 }

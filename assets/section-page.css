@@ -1,0 +1,95 @@
+/* section-page.css: generic page, 404 and password page (docs/THEME_PLAN.md 6.7b).
+   Tokens only. General surfaces only: bg, bg-raised, ink, brand, error. */
+
+@layer sections {
+  .page {
+    padding-block: var(--section-gap);
+  }
+
+  .page__title {
+    max-inline-size: 20ch; /* PROPOSAL: readable title measure */
+    text-wrap: balance;
+  }
+
+  /* Readable measure on wide screens. PROPOSAL: the docs give no measure. */
+  .page__content,
+  .page__lead {
+    max-inline-size: 65ch;
+  }
+
+  .page__content {
+    margin-block-start: var(--space-6);
+  }
+
+  .page__lead {
+    margin-block-start: var(--space-4);
+  }
+
+  /* Rich text from the admin. */
+  .page__content > * + * {
+    margin-block-start: var(--space-4);
+  }
+
+  .page__content h2 {
+    margin-block-start: var(--space-8);
+    font-size: var(--type-display-md-size);
+    line-height: var(--type-display-md-line);
+  }
+
+  .page__content h3 {
+    margin-block-start: var(--space-6);
+    font-size: var(--type-display-sm-size);
+    line-height: var(--type-display-sm-line);
+  }
+
+  .page__content ul,
+  .page__content ol {
+    padding-inline-start: var(--space-6);
+  }
+
+  .page__content a {
+    color: var(--color-brand);
+  }
+
+  .page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-block-start: var(--space-8);
+  }
+
+  /* Password page: one centered panel. */
+  .password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-8) var(--page-margin);
+  }
+
+  .password__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    inline-size: 100%;
+    max-inline-size: 40ch; /* PROPOSAL */
+    text-align: center;
+  }
+
+  .password__brand {
+    color: var(--color-brand);
+  }
+
+  .password__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    inline-size: 100%;
+    text-align: start;
+  }
+
+  .password__admin-link {
+    color: var(--color-ink-muted);
+  }
+}

@@ -82,5 +82,10 @@
   "pagination": {
     "previous": "Anterior",
     "next": "Siguiente"
+  },
+  "password": {
+    "label": "Contraseña",
+    "submit": "Entrar",
+    "admin_link": "Entrar como administrador"
   }
 }

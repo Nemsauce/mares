@@ -1,0 +1,35 @@
+{%- comment -%}
+  Not found page. Copy comes from the existing 404.* locale keys.
+  The home page button is the only primary button here; the two lines are secondary.
+
+  NOTE: the collections /collections/descanso and /collections/dia do not exist yet
+  (they are created in the admin with the line templates). Until then both links
+  lead to Shopify's own "collection not found" page.
+{%- endcomment -%}
+
+{{ 'section-page.css' | asset_url | stylesheet_tag }}
+
+{%- assign label_home = '404.button' | t -%}
+{%- assign label_descanso = 'general.view_line_descanso' | t -%}
+{%- assign label_dia = 'general.view_line_dia' | t -%}
+{%- assign url_descanso = routes.collections_url | append: '/descanso' -%}
+{%- assign url_dia = routes.collections_url | append: '/dia' -%}
+
+<div class="page">
+  <div class="container">
+    <h1 class="page__title text-display-lg">{{ '404.title' | t }}</h1>
+    <p class="page__lead text-body-lg">{{ '404.text' | t }}</p>
+
+    <div class="page__actions">
+      {% render 'button', label: label_home, url: routes.root_url %}
+      {% render 'button', label: label_descanso, url: url_descanso, variant: 'secondary' %}
+      {% render 'button', label: label_dia, url: url_dia, variant: 'secondary' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-404.name"
+}
+{% endschema %}

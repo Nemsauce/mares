@@ -1,0 +1,21 @@
+{%- comment -%}
+  Generic content page (docs/THEME_PLAN.md 6.7b). Renders any Shopify page, such as
+  Cambios and Cuidado de la prenda. Their text lives in the Shopify admin, not here.
+{%- endcomment -%}
+
+{{ 'section-page.css' | asset_url | stylesheet_tag }}
+
+<div class="page">
+  <div class="container">
+    <h1 class="page__title text-display-lg">{{ page.title }}</h1>
+    {%- if page.content != blank -%}
+      <div class="page__content text-body">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name"
+}
+{% endschema %}
