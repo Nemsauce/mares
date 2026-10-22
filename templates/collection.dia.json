@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-line",
+      "settings": {
+        "line": "dia",
+        "motif_dia": "sol"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_title": false,
+        "show_tag": true
+      }
+    }
+  },
+  "order": ["hero", "main"]
+}
