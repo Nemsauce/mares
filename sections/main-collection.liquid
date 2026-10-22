@@ -1,0 +1,180 @@
+{%- comment -%}
+  Collection page (docs/THEME_PLAN.md 6.5): title (the page's h1), description, sort
+  links, a grid of product cards and numeric pagination.
+
+  This is the neutral template: it never assumes a line. A card shows a line tag only
+  when show_tag is on and the product has the mares.line metafield.
+
+  Columns must divide the grid (4 columns on mobile, 8 on tablet, 12 on desktop):
+  mobile 1 or 2, tablet 2 or 4, desktop 3 or 4. Liquid writes the column span of each
+  card as custom properties; main-collection.css turns them into grid-column spans.
+{%- endcomment -%}
+
+{{ 'section-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-chip.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+  assign columns_tablet = section.settings.columns_tablet | plus: 0
+  assign columns_desktop = section.settings.columns_desktop | plus: 0
+
+  assign span_mobile = 4 | divided_by: columns_mobile
+  assign span_tablet = 8 | divided_by: columns_tablet
+  assign span_desktop = 12 | divided_by: columns_desktop
+
+  # sizes: the card's share of the viewport at each breakpoint. Desktop is capped by the
+  # 1200px container, so it is capped in absolute terms too.
+  if columns_mobile == 1
+    assign sizes_mobile = '100vw'
+  else
+    assign sizes_mobile = '50vw'
+  endif
+  if columns_tablet == 2
+    assign sizes_tablet = '50vw'
+  else
+    assign sizes_tablet = '25vw'
+  endif
+  if columns_desktop == 3
+    assign sizes_desktop = 'min(33vw, 400px)'
+  else
+    assign sizes_desktop = 'min(25vw, 300px)'
+  endif
+  assign card_sizes = '(min-width: 1024px) ' | append: sizes_desktop | append: ', (min-width: 600px) ' | append: sizes_tablet | append: ', ' | append: sizes_mobile
+
+  # The first row is eager. Rows differ per breakpoint, so use the longest one.
+  assign eager_count = columns_mobile
+  if columns_tablet > eager_count
+    assign eager_count = columns_tablet
+  endif
+  if columns_desktop > eager_count
+    assign eager_count = columns_desktop
+  endif
+
+  assign empty_text = section.settings.empty_text
+  if empty_text == blank
+    assign empty_text = 'collections.empty' | t
+  endif
+-%}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <section class="collection">
+    <div class="container">
+      <header class="collection__header">
+        <h1 class="collection__title text-display-lg">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="collection__description text-body-lg">{{ collection.description }}</div>
+        {%- endif -%}
+      </header>
+
+      {%- if section.settings.show_sort and collection.products_count > 1 and collection.sort_options.size > 1 -%}
+        <nav class="collection__sort" aria-labelledby="collection-sort-label">
+          <p class="collection__sort-label text-label" id="collection-sort-label">{{ 'collections.sort_by' | t }}</p>
+          <ul class="collection__sort-list" role="list">
+            {%- for option in collection.sort_options -%}
+              <li>
+                <a
+                  class="chip"
+                  href="{{ collection.url }}?sort_by={{ option.value }}"
+                  {% if option.value == collection.sort_by %}aria-current="true"{% endif %}
+                >{{ option.name }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      {%- if collection.products.size > 0 -%}
+        <ul
+          class="grid collection__grid"
+          role="list"
+          style="--span-mobile: {{ span_mobile }}; --span-tablet: {{ span_tablet }}; --span-desktop: {{ span_desktop }};"
+        >
+          {%- for product in collection.products -%}
+            {%- assign card_eager = false -%}
+            {%- if forloop.index <= eager_count -%}
+              {%- assign card_eager = true -%}
+            {%- endif -%}
+            <li class="collection__item">
+              {% render 'product-card',
+                product: product,
+                sizes: card_sizes,
+                eager: card_eager,
+                show_tag: section.settings.show_tag
+              %}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <p class="collection__empty text-body-lg">{{ empty_text }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "t:sections.main-collection.settings.products_per_page.label"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.main-collection.settings.columns_mobile.label",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "t:sections.main-collection.settings.columns_tablet.label",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.main-collection.settings.columns_desktop.label",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "t:sections.main-collection.settings.show_sort.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tag",
+      "label": "t:sections.main-collection.settings.show_tag.label",
+      "info": "t:sections.main-collection.settings.show_tag.info",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "t:sections.main-collection.settings.empty_text.label",
+      "info": "t:sections.main-collection.settings.empty_text.info"
+    }
+  ]
+}
+{% endschema %}

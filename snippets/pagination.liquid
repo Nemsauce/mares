@@ -1,0 +1,65 @@
+{%- comment -%}
+  Numeric pagination from a {% paginate %} object. Renders nothing for a single page.
+
+  Parameters:
+    paginate  (required) the paginate object.
+
+  Usage:
+    {% render 'pagination', paginate: paginate %}
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+  {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+
+  <nav class="pagination" aria-label="{{ 'accessibility.pagination' | t }}">
+    <ul class="pagination__list" role="list">
+      <li>
+        {%- if paginate.previous.is_link -%}
+          <a class="pagination__item pagination__item--step text-body" href="{{ paginate.previous.url }}" rel="prev">
+            {% render 'icon', name: 'chevron-left' %}
+            <span>{{ 'pagination.previous' | t }}</span>
+          </a>
+        {%- else -%}
+          <span class="pagination__item pagination__item--step pagination__item--disabled text-body" aria-disabled="true">
+            {% render 'icon', name: 'chevron-left' %}
+            <span>{{ 'pagination.previous' | t }}</span>
+          </span>
+        {%- endif -%}
+      </li>
+
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a
+              class="pagination__item text-body"
+              href="{{ part.url }}"
+              aria-label="{{ 'accessibility.page' | t: number: part.title }}"
+            >{{ part.title }}</a>
+          {%- elsif part.title == paginate.current_page -%}
+            <span
+              class="pagination__item pagination__item--current text-body"
+              aria-current="page"
+              aria-label="{{ 'accessibility.current_page' | t: number: part.title }}"
+            >{{ part.title }}</span>
+          {%- else -%}
+            <span class="pagination__gap text-body" aria-hidden="true">&hellip;</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      <li>
+        {%- if paginate.next.is_link -%}
+          <a class="pagination__item pagination__item--step text-body" href="{{ paginate.next.url }}" rel="next">
+            <span>{{ 'pagination.next' | t }}</span>
+            {% render 'icon', name: 'chevron-right' %}
+          </a>
+        {%- else -%}
+          <span class="pagination__item pagination__item--step pagination__item--disabled text-body" aria-disabled="true">
+            <span>{{ 'pagination.next' | t }}</span>
+            {% render 'icon', name: 'chevron-right' %}
+          </span>
+        {%- endif -%}
+      </li>
+    </ul>
+  </nav>
+{%- endif -%}

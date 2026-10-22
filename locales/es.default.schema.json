@@ -204,6 +204,34 @@
       "presets": {
         "name": "Texto destacado"
       }
+    },
+    "main-collection": {
+      "name": "Colección",
+      "settings": {
+        "products_per_page": {
+          "label": "Productos por página"
+        },
+        "columns_mobile": {
+          "label": "Columnas en móvil"
+        },
+        "columns_tablet": {
+          "label": "Columnas en tableta"
+        },
+        "columns_desktop": {
+          "label": "Columnas en escritorio"
+        },
+        "show_sort": {
+          "label": "Mostrar orden"
+        },
+        "show_tag": {
+          "label": "Mostrar etiqueta de línea",
+          "info": "Usa el metacampo mares.line de cada producto."
+        },
+        "empty_text": {
+          "label": "Texto si no hay productos",
+          "info": "Si lo dejas vacío, se muestra el texto por defecto."
+        }
+      }
     }
   }
 }

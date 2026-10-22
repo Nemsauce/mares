@@ -1,0 +1,78 @@
+/* section-collection.css: collection page (docs/THEME_PLAN.md 6.5). Tokens only.
+   Liquid writes --span-mobile, --span-tablet and --span-desktop on the grid; the grid itself
+   (4, 8 or 12 columns) comes from grid.css. */
+
+@layer sections {
+  .collection {
+    padding-block: var(--section-gap);
+  }
+
+  .collection__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-block-end: var(--space-8);
+  }
+
+  .collection__title {
+    text-wrap: balance;
+  }
+
+  .collection__description {
+    max-inline-size: 65ch; /* PROPOSAL: readable measure */
+    color: var(--color-ink-muted);
+  }
+
+  .collection__sort {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-block-end: var(--space-6);
+  }
+
+  .collection__sort-label {
+    color: var(--color-ink-muted);
+  }
+
+  .collection__sort-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection__grid {
+    row-gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection__item {
+    grid-column: span var(--span-mobile);
+    min-width: 0;
+  }
+
+  .collection__empty {
+    max-inline-size: 65ch;
+    color: var(--color-ink);
+  }
+
+  .collection .pagination {
+    margin-block-start: var(--space-12);
+  }
+
+  @media (min-width: 600px) {
+    .collection__item {
+      grid-column: span var(--span-tablet);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection__item {
+      grid-column: span var(--span-desktop);
+    }
+  }
+}

@@ -1,0 +1,50 @@
+/* component-pagination.css: numeric pagination (docs/THEME_PLAN.md 6.5). Tokens only.
+   Page links are controls, so they carry the control border (R-4). The current page is
+   marked by the brand fill and by aria-current. */
+
+@layer components {
+  .pagination__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pagination__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--control-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .pagination__item--current {
+    border-color: var(--color-brand);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  /* No previous or next page: dashed border and half opacity, plus aria-disabled. */
+  .pagination__item--disabled {
+    border-style: dashed;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination__gap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink-muted);
+  }
+}
