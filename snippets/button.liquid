@@ -1,0 +1,61 @@
+{%- comment -%}
+  Button or link styled as a button.
+
+  Parameters:
+    label    (required) visible text, already translated by the caller.
+    url      (optional) renders <a href> when present, <button> otherwise.
+    variant  (optional) 'primary' (default) or 'secondary'.
+    type     (optional, button only) 'button' (default) or 'submit'.
+    disabled (optional) true = not available. <button> gets the disabled
+             attribute; a link loses its href (and so its tab stop).
+    loading  (optional) true = request pending. Sets aria-disabled="true" and
+             shows a spinner; the control stays in the tab order. The script
+             that sets this state must also ignore activation while it lasts.
+    class    (optional) extra classes for layout, never for color.
+
+  A secondary button must never sit on a line color (see component-button.css).
+
+  Usage:
+    {% render 'button', label: 'products.add_to_cart' | t, type: 'submit' %}
+    {% render 'button', label: 'cart.empty_button' | t, url: routes.root_url, variant: 'secondary' %}
+{%- endcomment -%}
+
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign button_variant = variant | default: 'primary'
+  assign button_classes = 'button button--' | append: button_variant | append: ' text-button'
+  if loading
+    assign button_classes = button_classes | append: ' button--loading'
+  endif
+  if class != blank
+    assign button_classes = button_classes | append: ' ' | append: class
+  endif
+-%}
+
+{%- if url != blank -%}
+  <a
+    {% unless disabled %}href="{{ url }}"{% endunless %}
+    class="{{ button_classes }}"
+    {% if disabled or loading %}aria-disabled="true"{% endif %}
+  >
+    <span class="button__label">{{ label }}</span>
+    {%- if loading -%}
+      <span class="button__spinner" aria-hidden="true"></span>
+      <span class="visually-hidden">{{ 'accessibility.loading' | t }}</span>
+    {%- endif -%}
+  </a>
+{%- else -%}
+  <button
+    type="{{ type | default: 'button' }}"
+    class="{{ button_classes }}"
+    {% if disabled %}disabled{% endif %}
+    {% if loading %}aria-disabled="true"{% endif %}
+  >
+    <span class="button__label">{{ label }}</span>
+    {%- if loading -%}
+      <span class="button__spinner" aria-hidden="true"></span>
+      <span class="visually-hidden">{{ 'accessibility.loading' | t }}</span>
+    {%- endif -%}
+  </button>
+{%- endif -%}

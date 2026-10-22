@@ -1,0 +1,82 @@
+/* component-button.css: primary and secondary buttons (docs/THEME_PLAN.md section 4).
+   Type style comes from the .text-button class (base.css) and is repeated here so the
+   button also works without it. Focus ring: the global :focus-visible rule in base.css;
+   it is not redefined here.
+
+   A secondary button must never be placed on a line color. Its brand text fails 4.5:1
+   on the line colors (R-6). Secondary is for general surfaces (bg, bg-raised) only. */
+
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 48px; /* guide */
+    padding: var(--space-3) var(--space-6);
+    /* Both variants carry the same 2px border so they have identical measurements. */
+    border: 2px solid var(--color-brand);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: var(--type-button-size);
+    line-height: var(--type-button-line);
+    font-weight: var(--type-button-weight);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button--primary {
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  .button--secondary {
+    background: transparent;
+    color: var(--color-brand);
+  }
+
+  /* Hover only where hover exists, and never while disabled or loading. */
+  @media (hover: hover) {
+    .button--primary:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--color-brand-hover);
+      border-color: var(--color-brand-hover);
+    }
+  }
+
+  /* Disabled: half opacity plus the not-allowed cursor. The reason is given in text
+     next to the control by whoever renders it. */
+  .button:disabled,
+  .button[aria-disabled="true"]:not(.button--loading) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Loading: aria-disabled (set by the snippet), never removed from the tab order. */
+  .button--loading {
+    cursor: progress;
+  }
+
+  .button__spinner {
+    flex: none;
+    width: var(--space-4);
+    height: var(--space-4);
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: var(--radius-pill);
+    animation: button-spin 1s linear infinite; /* at most 1.2s per cycle */
+  }
+
+  @keyframes button-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Non-essential motion stops. The partial ring stays visible as a static indicator. */
+  @media (prefers-reduced-motion: reduce) {
+    .button__spinner {
+      animation: none;
+    }
+  }
+}
