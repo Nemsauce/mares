@@ -1,0 +1,45 @@
+# Files Shopify CLI must NOT upload to the store (shopify theme dev / push).
+# Syntax follows .gitignore. Anything not listed here is treated as theme source.
+# The theme only accepts: assets/ blocks/ config/ layout/ locales/ sections/
+# snippets/ templates/. Everything below is repository tooling or documentation.
+
+# --- Project documentation and design source of truth ----------------------
+# docs/design/* is read-only reference material; docs/THEME_PLAN.md is the plan.
+docs/
+
+# --- Developer scripts -----------------------------------------------------
+# build-tokens.mjs and check-no-hex.sh run on a developer machine only.
+# They must never ship inside the theme.
+scripts/
+
+# --- Tooling config --------------------------------------------------------
+# Read by `shopify theme check` locally; not a theme file.
+.theme-check.yml
+
+# --- Git and ignore files --------------------------------------------------
+.git/
+.gitignore
+.gitattributes
+.shopifyignore
+
+# --- Any README / markdown at the repository root --------------------------
+README*
+readme*
+*.md
+
+# --- Local state and editor files ------------------------------------------
+.shopify/
+node_modules/
+.vscode/
+.idea/
+.claude/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+
+# Deliberately NOT ignored: config/settings_data.json and templates/*.json.
+# Merchants edit these in the theme editor, so pushing over a live theme can
+# overwrite their changes. When a live store exists, revisit this and decide
+# whether to ignore them per environment (do not decide it here).

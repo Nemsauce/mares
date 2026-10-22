@@ -1,6 +1,6 @@
 # Mares: Shopify theme architecture plan
 
-Status: planning only. No theme code exists yet. This file is the contract every later commit prompt refers to.
+Status: planning only. No theme code exists yet (the repo holds only this plan, the design docs and the repo config files). This file is the contract every later commit prompt refers to.
 Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, no build step required to deploy.
 
 ## 0. Ground rules
@@ -23,6 +23,17 @@ Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, n
 4. Nothing is gateway-specific. No dynamic checkout buttons, no payment icons, no gateway names in code or copy.
 5. The theme exposes **no raw color, font or spacing settings** in the theme editor. The editor can pick a *line* (Descanso / Día), never a hex. This protects the tokens from the merchant.
 6. Copy comes only from `README.md` / `guia-web.md`. Anything else is a placeholder in `locales/es.default.json`, marked `TODO(copy)`, and listed for the owner.
+
+### Resolved decisions (2026-10-22)
+
+Owner decisions that replace earlier proposals and open questions. If any other part of this plan disagrees with this list, this list wins.
+
+- **R-4, control borders.** Borders of fields, chips and other controls use `--control-border: var(--color-ink-muted)` instead of `line`. Accessibility wins over the guide's wording ("borde 1px `line`"): `ink-muted` is 5.21:1 on `bg` and 5.86:1 on `bg-raised`, against the 3:1 required for control borders, while `line` is 1.32:1 and 1.48:1. `line` stays for dividers (header underline, footer rule, skeleton). `guia-web.md` should be updated to match later; `docs/design/*` is read-only here, so it is not touched now.
+- **R-6, focus ring.** Inside `[data-line]` surfaces, `--focus-ring-color: var(--color-ink)`. Everywhere else it stays `var(--color-focus)`. Reason: the `focus` ring is 2.49:1 on turquoise and 2.95:1 on coral, under the 3:1 minimum; `ink` is 4.68:1 or better on all six line colors.
+- **Q-12, token script.** `scripts/build-tokens.mjs` is approved. Node built-ins only, no packages. The generated `assets/tokens.css` is committed.
+- **Q-2, card density.** The product grid defaults to 2 cards per row on mobile. At 375px that is 163px cards and the card name may wrap to two lines; this is accepted.
+- **Q-7, personalization pricing.** Personalization carries no extra cost in phase 1. No surcharge logic is built.
+- **Q-3, fonts (partially resolved).** Font placeholders stay for now and `fonts_ready` remains `false` until the real WOFF2 files arrive. Still open: whether to keep Nunito 600 (Q-3 in section 9.1).
 
 ---
 
@@ -141,7 +152,7 @@ Rules for the tree:
 ### 2.1 Source and generation
 - `docs/design/tokens.json` is the only source. It is never copied into the theme.
 - `scripts/build-tokens.mjs` (Node built-ins only, **no packages**) reads it and writes `assets/tokens.css`. The generated file is committed. Header comment: `GENERATED from docs/design/tokens.json v1. Do not edit by hand.`
-- Fallback if the script is not approved (Q-12): hand-transcribe once, same naming, and the check script compares values to the JSON.
+- The script is approved (see Resolved decisions). It is a developer tool only: it is excluded from theme uploads and does not run on deploy.
 
 ### 2.2 Naming (1:1 with the token name)
 
@@ -174,8 +185,8 @@ Rules for the tree:
 | `--line-accent` | descanso: `var(--color-lavender)`; dia: `var(--color-coral)` | Accent `[T]`. |
 | `--line-soft` | descanso: `var(--color-blush)`; dia: `var(--color-sun)` | Warm / small accent `[T]`. |
 | `--color-on-line` | light: `var(--color-ink)`; dark: `var(--color-on-brand)` | Text on line colors. Ink on line colors is fine in light only (R-5). |
-| `--control-border` | `var(--color-line)` | `[G]` field and chip border. Single point to change if R-4 is approved. |
-| `--focus-ring-color` | `var(--color-focus)` | Single point to change if R-6 is approved. |
+| `--control-border` | `var(--color-ink-muted)` | Border of fields, chips and other controls. Decided (R-4): `[G]` said `line`, which fails 3:1. |
+| `--focus-ring-color` | `var(--color-focus)`; inside `[data-line]` surfaces `var(--color-ink)` | Decided (R-6): the `focus` ring fails 3:1 on turquoise and coral. |
 
 The mapping is activated by an attribute on the section wrapper: `data-line="descanso"` or `data-line="dia"`. One line per page is enforced by convention and by which sections the template includes `[R]`.
 
@@ -205,10 +216,10 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 | Nunito | 600 | none (listed in `[G]` and `[R]`) | No |
 
 - Only these weights; `font-display: swap` on every face `[R][G]`. No italics, no other weights.
-- **Source (decision, confirm in Q-3):** Google Fonts files (both are open licensed) **self-hosted** as WOFF2 in `assets/`. Reason: same-origin on the Shopify CDN, no third-party connection before first paint, preloading works cleanly. Alternatives if declined: Google Fonts stylesheet with `preconnect`, or Shopify's font library (availability of Fraunces there is not verified `[V]`).
+- **Source (plan default; real files still pending, see Q-3):** Google Fonts files (both are open licensed) **self-hosted** as WOFF2 in `assets/`. Reason: same-origin on the Shopify CDN, no third-party connection before first paint, preloading works cleanly. Alternatives if declined: Google Fonts stylesheet with `preconnect`, or Shopify's font library (availability of Fraunces there is not verified `[V]`).
 - **Subset:** Latin only. Spanish letters (á é í ó ú ñ ü ¿ ¡) live in it.
 - **Fallback stacks** come from tokens `[T]`: `--font-display: "Fraunces", Georgia, serif`, `--font-sans: "Nunito", system-ui, -apple-system, sans-serif`.
-- **Placeholders for now:** `snippets/fonts.liquid` contains the four `@font-face` blocks and the two preloads behind one flag, `{% assign fonts_ready = false %}`. While false it outputs nothing and the site renders in the fallback stacks. The commit that adds real files flips the flag. Files are named in section 1.
+- **Placeholders for now (decided):** `snippets/fonts.liquid` contains the four `@font-face` blocks and the two preloads behind one flag, `{% assign fonts_ready = false %}`. While false it outputs nothing and the site renders in the fallback stacks. The commit that adds real files flips the flag. Files are named in section 1.
 - **CLS:** metric-adjusted fallback faces (`size-adjust`, `ascent-override`, ...) are added in the performance pass, using values measured with the real files. No numbers are invented now.
 - `tokens.json` has `type.fonts: []`, so no font files are defined by the design system. Real files are an input needed from the owner (Q-3).
 
@@ -231,8 +242,8 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
   `.container { width: min(100% - 2 * var(--page-margin), 1200px); margin-inline: auto; }` and `.grid { display: grid; grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr)); column-gap: var(--grid-gap); }`. `--grid-cols`, `--page-margin` switch at the two breakpoints. `1200px` is defined once as `--content-max` (it is in `[G]`, not in tokens.json). **Gutter (`--grid-gap`) is not in the docs**: `[P]` `--space-4` below 600px, `--space-6` from 600px (Q-1).
 - **Fluid rules:** `minmax(0, 1fr)` columns, `max-width: 100%` on media, `aspect-ratio` boxes, `overflow-wrap: anywhere` on user-facing long strings, nothing with a fixed pixel width wider than the viewport. Tables and code only may scroll horizontally, inside their own container. Type sizes stay at token values (no `clamp()` with invented numbers). The one responsive type switch: hero `display-xl` on desktop, `display-lg` below `[T][G]`. Tablet is not specified; `[P]` use `display-lg` below 1024px (Q-1).
 - **Section rhythm `[G]`:** `--section-gap: var(--space-12)`, `var(--space-16)` from 1024px. Hero: `--space-24` above and below on desktop only. Mobile/tablet hero padding is not specified: `[P]` `--space-12` vertical, `--space-8` inside.
-- **Components straight from `[G]`:** button (48px min height, `--space-3`/`--space-6` padding, `--radius-md`, `button` style), secondary button (2px `brand` border), field (`bg-raised`, 1px border, `--radius-sm`, 48px, `body` text, visible label above), product card, collection tag (`--radius-pill`, padding `--space-1`/`--space-3`, `label` style, `ink` text), size chip (`--radius-pill`, 44px minimum target, selected = `brand` fill + `on-brand`), header (64px mobile, 1px `line` below), hero block (`--radius-lg`).
-- **States `[G]`:** hover only under `(hover: hover)` (button -> `--color-brand-hover`, card -> `--shadow-soft`; no shadows at rest, no gradients `[R]`). Focus: `:focus-visible { outline: 2px solid var(--focus-ring-color); outline-offset: 2px; }` on every control. Disabled: `opacity: .5; cursor: not-allowed` plus nearby text explaining why. Error: 2px `--color-error` border plus message text under the field, never color alone. Loading: skeleton `--color-line` on `--color-bg-raised`, animation at most 1.2s. `prefers-reduced-motion: reduce` removes smooth scroll, auto zoom and non-essential motion.
+- **Components straight from `[G]`:** button (48px min height, `--space-3`/`--space-6` padding, `--radius-md`, `button` style), secondary button (2px `brand` border), field (`bg-raised`, 1px `--control-border` border, `--radius-sm`, 48px, `body` text, visible label above), product card, collection tag (`--radius-pill`, padding `--space-1`/`--space-3`, `label` style, `ink` text), size chip (`--radius-pill`, 1px `--control-border` border, 44px minimum target, selected = `brand` fill + `on-brand`), header (64px mobile, 1px `line` below), hero block (`--radius-lg`). Control borders use `--control-border` (= `ink-muted`), never `line`; `line` is only for dividers (decided, R-4).
+- **States `[G]`:** hover only under `(hover: hover)` (button -> `--color-brand-hover`, card -> `--shadow-soft`; no shadows at rest, no gradients `[R]`). Focus: `:focus-visible { outline: 2px solid var(--focus-ring-color); outline-offset: 2px; }` on every control, where `--focus-ring-color` is the `focus` token, switched to `ink` inside `[data-line]` surfaces (decided, R-6). Disabled: `opacity: .5; cursor: not-allowed` plus nearby text explaining why. Error: 2px `--color-error` border plus message text under the field, never color alone. Loading: skeleton `--color-line` on `--color-bg-raised`, animation at most 1.2s. `prefers-reduced-motion: reduce` removes smooth scroll, auto zoom and non-essential motion.
 - **Images:** product card and gallery 4:5 `[G]`. WebP/AVIF delivery comes from the Shopify image CDN `[V]`; `srcset` and `sizes` are produced by `snippets/image.liquid`; `loading="lazy"` except the first visible image `[G]`.
 - **Budget `[P]`:** global CSS (tokens + base + base-lines + grid) under 20 KB uncompressed; any single component file under 10 KB. Revisit at the performance pass.
 
@@ -274,7 +285,7 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 ### 6.3 Hero per line (`sections/hero-line.liquid`, `snippets/embroidery-motif|divider`)
 - Design `[G][T]`: block with `--radius-lg`, background `--line-main` (`sea-glass` for Descanso, `turquoise` for Día), title `display-xl` (`display-lg` below 1024px) in `ink`, desktop vertical padding `--space-24`. Optional decorative motif in the embroidery stroke: 2px, round caps, `ink-muted` `[R]` (not a line color: it would vanish on the same-colored block).
 - Used on `collection.descanso.json` and `collection.dia.json`. Two alt templates (instead of a metafield) so the heading, text and image are editable per line in the theme editor.
-- The hero button is the page's **single primary button**. Using the secondary style here would put `brand` text on a line color, which fails on turquoise and coral (R-6 numbers).
+- The hero button is the page's **single primary button**. Using the secondary style here would put `brand` text on a line color, which fails on turquoise and coral (numbers in R-6). Keyboard focus rings inside this block use `ink` (decided, R-6).
 - Motifs `[R]`: Descanso = ola suave, luna sobre el mar, conchitas nacaradas. Día = estrella de mar, caballito de mar, palmita, sol. Placeholder simple SVG first; final artwork comes from the designer (Q-6).
 - **Editable:** `line` (select), `heading` (empty = collection title, rendered as `h1`), `text` (short), `button_label`, `button_link`, `image` (optional), `motif` (select, limited to the chosen line, or none).
 
@@ -283,12 +294,13 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 - Image alt: the media alt from admin (guide example: "Pijama azul verdoso con ola bordada" `[G]`), falling back to the product title.
 - Optional badge: `coral` with `ink` text, "novedad" use per `[T]` (`coral` usage). Optional line tag via `collection-tag` (see Q-5 before enabling by default).
 - Sold-out state: text, never only opacity.
+- At 375px, 2-up cards are 163px wide and the name may wrap to two lines. This is accepted (decided, Q-2); the card layout must not truncate the name.
 - Params: `product`, `image_sizes`, `eager` (first row only: `loading="eager"` + `fetchpriority="high"` for the LCP candidate), `show_tag`.
 - **Editable (via parent section):** `show_tag`, `show_compare_at`.
 
 ### 6.5 Collection grid (`sections/main-collection.liquid`)
 - Card spans: `grid-column: span var(--span)` where Liquid writes `--span-sm/md/lg = grid columns / cards per row`.
-- Cards per row only allows values that divide the grid: mobile 1 or 2 (default 2), tablet 2 or 4 (default 2; 3 does not fit an 8-column grid), desktop 3 or 4 (default 3). See Q-2 for the 375px width check (2-up at 375 is 163px cards).
+- Cards per row only allows values that divide the grid: mobile 1 or 2 (default 2, decided), tablet 2 or 4 (default 2; 3 does not fit an 8-column grid), desktop 3 or 4 (default 3). Mobile 2-up means 163px cards at 375px with a name that may wrap to two lines (accepted, Q-2).
 - Empty state in text. Skeleton while loading. Numeric pagination.
 - **Editable:** `products_per_page` (range 8 to 24, step 4, default 12), `columns_mobile`, `columns_tablet`, `columns_desktop`, `show_sort` (Shopify `sort_options`), `show_tag`, `empty_text`. Filtering is out of phase 1 (Q-9).
 
@@ -301,7 +313,7 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 | --- | --- | --- |
 | `product-title` | `h1`, `display-sm` `[T]` | none |
 | `product-price` | `price` style, `ink-muted` struck compare-at | `show_compare_at` |
-| `variant-picker` | size chips `--radius-pill`, 1px border, selected `brand` + `on-brand`, 44px min target `[G]`; sold-out options disabled with text | `chip_style` limited to chips |
+| `variant-picker` | size chips `--radius-pill`, 1px `--control-border` border, selected `brand` + `on-brand`, 44px min target `[G]`; sold-out options disabled with text | `chip_style` limited to chips |
 | `quantity` | field per `[G]`, 48px | `show` |
 | `buy-buttons` | the single primary button "Agregar al carrito" `[R]`; disabled state with reason text; no dynamic checkout button | none (label from locale) |
 | `product-description` | `body` / `body-lg` for intro | none |
@@ -345,7 +357,7 @@ Scope `[G]`: phase 1 is a configurator **without AI**: embroidery motif, name or
 - Customer image uploads; saving the preview image on the order; production-file export.
 - Free drag/resize/rotate of the motif; several embroidery locations; stitch simulation.
 - Editing a configured line in the cart (customer removes and re-adds).
-- Embroidery price surcharge (needs a pricing decision; Q-7).
+- Embroidery price surcharge or any pricing logic (decided: personalization carries no extra cost in phase 1, Q-7).
 - Server-side validation (Cart/Checkout Validation Function), saved designs, accounts.
 - Translations other than `es`.
 
@@ -413,6 +425,8 @@ Models: **S-med** = Sonnet 5.5 medium, **S-high** = Sonnet 5.5 high, **O-high** 
 | E10 | feat(cart): shipping cost and delivery notice (estimator only if R-3 is confirmed) | `sections/main-cart.liquid` | S-high |
 
 ### Phase F: quality and handover
+F1 is not blocked on R-4: control borders are decided (`--control-border` = `ink-muted`), so the audit checks the implemented choice.
+
 | # | Commit | Files | Model |
 | --- | --- | --- | --- |
 | F1 | chore(a11y): audit and fixes (contrast script, focus, 44px targets, landmarks, headings, alt text) | various | O-high |
@@ -436,27 +450,26 @@ Models: **S-med** = Sonnet 5.5 medium, **S-high** = Sonnet 5.5 high, **O-high** 
 ## 9. Open questions and risks
 
 ### 9.1 Questions for the owner (design gaps and decisions)
+Q-2, Q-7, Q-12 and part of Q-3 are decided (see Resolved decisions in section 0). The remaining questions keep their numbers.
+
 - **Q-1 Missing specs.** Not in the docs, planned as `[P]`: grid gutter; tablet (600 to 1023px) section spacing and hero title size; header height on desktop; main navigation and its mobile pattern; footer design; garment-color selector; product page column split.
-- **Q-2 Card density at 375px.** 2-up cards are 163px wide with a 22px `display-sm` name that wraps to two lines. Approve 2-up, or default to 1-up on mobile?
-- **Q-3 Fonts.** Approve self-hosting Fraunces/Nunito WOFF2; supply or approve downloading the files. Nunito 600 is listed by `[G][R]` but no token uses it: keep or drop?
+- **Q-3 Fonts.** Placeholders stay until the real files arrive (decided). Still open: keep or drop Nunito 600 (listed by `[G][R]`, used by no token), and supply the Fraunces/Nunito WOFF2 files (self-hosting is the plan default).
 - **Q-4 Admin data.** Approve creating metafield `mares.line` (product), `mares.personalizable` (product), and a thread-color metaobject. These are admin changes, not theme code.
 - **Q-5 One line per page vs general pages.** README: home, cart, checkout use only `bg`, `bg-raised`, `ink`, `brand`; one line's colors per page. So the home cannot show both line colors, and product cards in mixed lists (search, "all products") would show both line tags. Plan: neutral home; tags only where the page has a line. Confirm.
 - **Q-6 Art and palette.** Final one-line motif SVGs (7), real garment photos with consistent framing, thread color palette, and which typeface represents an embroidered name in the preview (Fraunces 600 as stand-in).
-- **Q-7 Pricing.** Does personalization cost extra? If yes it needs its own solution.
 - **Q-8 Cart drawer.** Not in the design docs. Phase 1 is a cart page. Confirm.
 - **Q-9 Search and filters.** Not in the design docs. Phase 1 ships sorting only and a basic search page.
 - **Q-10 Customer accounts.** Plan assumes Shopify-hosted accounts (no `templates/customers/*`). Confirm; gift cards also omitted.
 - **Q-11 Brand name casing.** `[G]` lists "nombre en título, minúscula o mayúscula" as pending.
-- **Q-12 Token script.** Approve `scripts/build-tokens.mjs` (Node built-ins only) or fall back to hand transcription.
 - **Q-13 Hover.** "Oscurece `brand` un 8%" is not defined precisely; plan mixes with black.
 
 ### 9.2 Accessibility risks (found by computing WCAG ratios from tokens.json)
 Targets from `[G]`: 4.5:1 normal text, 3:1 for 24px+ text, icons and control borders, visible focus, 44px targets.
 
 - **R-1 What passes (light):** `ink` on `bg` 9.72, on `bg-raised` 10.93; `ink-muted` on `bg` 5.21; `brand` on `bg` 5.18, on `bg-raised` 5.83; `on-brand` on `brand` 5.18; `error` on `bg` 4.84; `success` on `bg` 5.57; `ink` on sea-glass 6.44, lavender 6.24, blush 7.42, turquoise 4.68, coral 5.53, sun 7.77. The numbers quoted in `tokens.json` (9.7, 5.2, 5.2) check out. `ink` on turquoise (4.68) is the thinnest margin and applies to the 13px `label`.
-- **R-4 Control borders fail 3:1.** `[G]` specifies fields and chips with a 1px `line` border, and also requires 3:1 for control borders. `line` on `bg` is 1.32:1, on `bg-raised` 1.48:1, and the white field on pearl is 1.12:1. The token's own note says `line` is not enough alone. **Recommended:** use `ink-muted` (5.21 on `bg`) for control borders through the `--control-border` alias. This changes the design; owner decision. Until then the plan follows `[G]`, and the audit commit (F1) is blocked on it.
-- **R-5 Dark mode and line colors.** Line colors have one value for both themes. In dark, `ink` on them is 1.2 to 2.0:1 (fail), while `on-brand` (dark) is 6.9 to 11.4:1. The alias `--color-on-line` flips it. Dark stays off until that alias exists (section 2.3).
-- **R-6 Focus ring on line colors.** The `focus` ring (`brand`) on turquoise is 2.49:1 and on coral 2.95:1 (both under 3:1); sea-glass 3.43, lavender 3.32, blush 3.95, sun 4.14 pass. Inside line-colored blocks (the Día hero) the ring would fail. **Recommended:** `--focus-ring-color: var(--color-ink)` inside `[data-line]` surfaces (ink on turquoise 4.68). The same numbers show `brand` text on any line color fails 4.5:1 (best case 4.14), so no brand-colored text or secondary buttons over line colors.
+- **R-4 Control borders (decided).** `[G]` specified a 1px `line` border for fields and chips while also requiring 3:1 for control borders. `line` on `bg` is 1.32:1, on `bg-raised` 1.48:1, and the white field on pearl is 1.12:1. Decision: `--control-border` is `var(--color-ink-muted)` (5.21 on `bg`, 5.86 on `bg-raised`). `guia-web.md` should be updated to match later. F1 audits this choice; it is not blocked.
+- **R-5 Dark mode and line colors.** Line colors have one value for both themes. In dark, `ink` on them is 1.2 to 2.0:1 (fail), while `on-brand` (dark) is 6.9 to 11.4:1. The alias `--color-on-line` flips it. Dark stays off until that alias exists (section 2.3). The R-6 focus rule has the same dark problem (`ink` on line colors in dark); the dark-mode commit must switch the in-surface ring to `--color-on-line` as well.
+- **R-6 Focus ring on line colors (decided).** The `focus` ring (`brand`) on turquoise is 2.49:1 and on coral 2.95:1 (both under 3:1); sea-glass 3.43, lavender 3.32, blush 3.95, sun 4.14 pass. Decision: inside `[data-line]` surfaces `--focus-ring-color` is `var(--color-ink)` (4.68 or better on all six line colors); elsewhere it stays `var(--color-focus)`. The same numbers show `brand` text on any line color fails 4.5:1 (best case 4.14), so no brand-colored text or secondary buttons over line colors.
 - **R-7 Other:** color never as the only signal (errors, selected chip, sold out, disabled); icon-only buttons need accessible names; one `h1` per page; skip link; `prefers-reduced-motion`; alt text depends on merchant data entry; `label` uppercase done by CSS so screen readers read normal text.
 
 ### 9.3 Performance risks (target LCP < 2.5s on 4G mobile `[G]`)
@@ -478,9 +491,9 @@ Targets from `[G]`: 4.5:1 normal text, 3:1 for 24px+ text, icons and control bor
 
 ### 9.5 Contradictions and ambiguities found in the design docs
 1. **Font weights.** README: both fonts at 400/600/700. Guide: Fraunces 600, Nunito 400/600/700. tokens.json: Fraunces 600 only; Nunito 400 and 700 only (no token uses Nunito 600). `type.fonts` is empty.
-2. **Control borders** (R-4): guide requires 3:1 but specifies `line` (1.32:1); the `line` token says not to use it alone.
+2. **Control borders** (R-4, resolved): guide requires 3:1 but specifies `line` (1.32:1); the `line` token says not to use it alone. The plan uses `ink-muted`; the guide still says `line` until updated.
 3. **Dark values** (R-5): README says `ink` on line colors is fine; dark `ink` fails there.
-4. **Focus ring** (R-6): `focus` token fails 3:1 on turquoise and coral.
+4. **Focus ring** (R-6, resolved): `focus` token fails 3:1 on turquoise and coral. The plan switches to `ink` inside `[data-line]` surfaces.
 5. **Home page and lines:** README says home uses only general colors and each page one line, while the brief asks for a hero per line and the tag spec uses both line colors.
 6. **README turquoise wording:** the list of colors that may carry `ink` omits turquoise, the next sentence says use only `ink` on turquoise. Contrast says `ink` is OK (4.68).
 7. **Shadow:** README says `shadow-soft` only on hover; the token also lists dropdown menus.

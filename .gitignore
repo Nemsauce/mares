@@ -1,0 +1,52 @@
+# Git ignore rules for the Mares Shopify theme repository.
+# Only local, generated or machine-specific files belong here.
+# Theme source (layout/, sections/, assets/, ...) and docs/ must NEVER be ignored.
+
+# --- Operating system junk -------------------------------------------------
+# macOS metadata and resource forks
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+# Windows thumbnails and folder settings
+Thumbs.db
+ehthumbs.db
+desktop.ini
+# Linux trash and file-manager state
+.directory
+.Trash-*
+
+# --- Editor and IDE state --------------------------------------------------
+# Personal editor settings are not part of the project contract.
+.vscode/
+.idea/
+# Vim/Emacs swap and backup files
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+
+# --- Local Shopify CLI state -----------------------------------------------
+# Created by `shopify theme dev` / `shopify theme push`; holds local store/theme
+# bindings that differ per developer and must not be shared.
+.shopify/
+
+# --- Node (build-tokens.mjs uses Node built-ins only, but tooling may add this) --
+node_modules/
+
+# --- Logs ------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Secrets ---------------------------------------------------------------
+# Store credentials or API tokens must never be committed.
+.env
+.env.*
+
+# --- Claude Code local settings -------------------------------------------
+# Per-machine permissions; the shared project settings (if any) stay tracked.
+.claude/settings.local.json

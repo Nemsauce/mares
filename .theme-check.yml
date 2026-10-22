@@ -1,0 +1,65 @@
+# Theme Check configuration for the Mares theme (see docs/THEME_PLAN.md).
+# Run with `shopify theme check` once layout/theme.liquid exists.
+#
+# Approach: start from the recommended set (it catches real errors such as
+# Liquid syntax, missing translations and invalid schema), then make the checks
+# that protect this plan's goals explicit errors. Every check we turn off is
+# listed at the bottom with the reason and the condition for turning it back on.
+
+extends: theme-check:recommended
+
+root: .
+
+# Paths Theme Check must not lint: repository tooling and documentation that is
+# also excluded from uploads by .shopifyignore.
+ignore:
+  - docs/*
+  - scripts/*
+  - node_modules/*
+  - .shopify/*
+
+# --- Checks made strict on purpose ------------------------------------------
+
+# Plan section 5: all scripts use `defer`; none may block the parser (LCP < 2.5s).
+ParserBlockingScript:
+  enabled: true
+  severity: error
+
+# Plan sections 3 and 9.3: fonts are self-hosted and no third-party assets are
+# loaded, so any remote CSS/JS/font reference is a mistake.
+RemoteAsset:
+  enabled: true
+  severity: error
+
+# Plan section 9.3: explicit width/height on images prevents layout shift (CLS).
+ImgWidthAndHeight:
+  enabled: true
+  severity: error
+
+# Plan section 0, rule 6: every user-facing string comes from locales/es.default.json.
+TranslationKeyExists:
+  enabled: true
+  severity: error
+
+# Plan section 5: JavaScript budget. Per-file backstop for loaded scripts.
+# The configurator (phase G) may need a justified, commented increase later.
+AssetSizeJavaScript:
+  enabled: true
+  severity: error
+  threshold_in_bytes: 10000
+
+# Plan section 4: CSS budget. Global CSS (tokens + base + base-lines + grid) is
+# under 20 KB; this is a coarse per-file backstop, not the full budget.
+AssetSizeCSS:
+  enabled: true
+  severity: error
+  threshold_in_bytes: 20000
+
+# --- Checks disabled, with justification -------------------------------------
+
+# Phase 1 deliberately omits templates/customers/*, gift_card.liquid, blog and
+# article (plan section 1, Q-10: Shopify-hosted customer accounts, no gift
+# cards, no blog). This check requires all of them.
+# Turn back on if any of those features is added, or remove once the files exist.
+MissingRequiredTemplateFiles:
+  enabled: false
