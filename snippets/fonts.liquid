@@ -1,0 +1,63 @@
+{%- comment -%}
+  Self-hosted fonts (docs/THEME_PLAN.md section 3): Fraunces 600 for display,
+  Nunito 400 / 600 / 700 for text. font-display: swap on every face.
+
+  fonts_ready is the single switch. While it is false this snippet outputs
+  nothing and the site renders in the fallback stacks from tokens
+  (--font-display, --font-sans). The commit that adds the real WOFF2 files to
+  assets/ flips it to true:
+    assets/fraunces-600.woff2
+    assets/nunito-400.woff2
+    assets/nunito-600.woff2   (kept because the guide lists it; see Q-3)
+    assets/nunito-700.woff2
+
+  Preloaded: Fraunces 600 and Nunito 400 only. Nunito 700 is not preloaded
+  until Lighthouse says otherwise; Nunito 600 is not used by any token.
+{%- endcomment -%}
+{%- assign fonts_ready = false -%}
+
+{%- comment -%}
+  The WOFF2 files do not exist yet, so MissingAsset would fail on the
+  references below even though they never render. Remove both
+  theme-check lines in the commit that adds the files and flips fonts_ready.
+{%- endcomment -%}
+{%- # theme-check-disable MissingAsset -%}
+{%- if fonts_ready -%}
+  {{ 'fraunces-600.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+  {{ 'nunito-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+
+  <style>
+    @font-face {
+      font-family: "Fraunces";
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+      src: url("{{ 'fraunces-600.woff2' | asset_url }}") format("woff2");
+    }
+
+    @font-face {
+      font-family: "Nunito";
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url("{{ 'nunito-400.woff2' | asset_url }}") format("woff2");
+    }
+
+    @font-face {
+      font-family: "Nunito";
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+      src: url("{{ 'nunito-600.woff2' | asset_url }}") format("woff2");
+    }
+
+    @font-face {
+      font-family: "Nunito";
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url("{{ 'nunito-700.woff2' | asset_url }}") format("woff2");
+    }
+  </style>
+{%- endif -%}
+{%- # theme-check-enable MissingAsset -%}
