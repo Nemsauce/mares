@@ -1,0 +1,10 @@
+/* component-icon.css: size and alignment only. The icon snippet sets width and height
+   attributes (24px by default); color comes from currentColor on the surrounding text. */
+
+@layer components {
+  .icon {
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+  }
+}
