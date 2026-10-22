@@ -1,0 +1,88 @@
+/* section-header.css: header (docs/THEME_PLAN.md 6.1). Tokens only; breakpoint 1024px. */
+
+@layer sections {
+  .header {
+    background: var(--color-bg);
+    border-block-end: 1px solid var(--color-line); /* divider: line, not a control */
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    /* 64px on mobile [G]. PROPOSAL: desktop is not in the docs, so it stays 64px. */
+    min-height: 64px;
+  }
+
+  .header__logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+
+  /* 32px high; the snippet requests a 64px image for sharp 2x screens. PROPOSAL: the
+     docs give no logo size. */
+  .header__logo-image {
+    width: auto;
+    height: var(--space-8);
+  }
+
+  /* Inline links from 1024px. Below that the mobile menu replaces them. */
+  .header__nav {
+    display: none;
+  }
+
+  .header__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  /* The current page is underlined, not only colored. */
+  .header__link[aria-current="page"] {
+    text-decoration: underline;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-inline-start: auto;
+  }
+
+  .header__cart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    .header__link:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .header__nav {
+      display: block;
+    }
+  }
+}

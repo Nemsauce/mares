@@ -35,9 +35,7 @@
     {%- endcomment -%}
     <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
 
-    {%- comment -%}
-      C1 renders the header section group here.
-    {%- endcomment -%}
+    {% sections 'header-group' %}
 
     <main id="main">
       {{ content_for_layout }}

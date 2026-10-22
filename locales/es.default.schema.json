@@ -44,5 +44,16 @@
         }
       }
     }
+  },
+  "sections": {
+    "header": {
+      "name": "Encabezado",
+      "settings": {
+        "menu": {
+          "label": "Menú",
+          "info": "Los enlaces que se muestran en el encabezado."
+        }
+      }
+    }
   }
 }

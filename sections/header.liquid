@@ -1,0 +1,76 @@
+{%- comment -%}
+  Header (docs/THEME_PLAN.md 6.1): bg background, logo left, cart right, 1px line
+  underneath. Navigation comes from the `menu` link list and shows inline from 1024px.
+  Below that the mobile menu takes over (added in the next commit).
+{%- endcomment -%}
+
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+
+{%- assign menu = section.settings.menu -%}
+
+{%- capture header_links -%}
+  {%- for link in menu.links -%}
+    <li>
+      <a class="header__link text-body" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+    </li>
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign brand_name = 'general.brand_name' | t -%}
+
+{%- capture header_logo -%}
+  <a class="header__logo" href="{{ routes.root_url }}">
+    {%- if settings.logo != blank -%}
+      {{- settings.logo | image_url: height: 64 | image_tag: class: 'header__logo-image', alt: brand_name, loading: 'eager' -}}
+    {%- else -%}
+      {%- comment -%}
+        No logo uploaded: the word in the display family, weight 600, brand color [R].
+        PROPOSAL: display-md size (the docs give the wordmark no size).
+      {%- endcomment -%}
+      <span class="header__wordmark text-display-md">{{ brand_name }}</span>
+    {%- endif -%}
+  </a>
+{%- endcapture -%}
+
+<header class="header">
+  <div class="container header__inner">
+    {%- if template.name == 'index' -%}
+      <h1 class="header__brand text-display-md">{{ header_logo }}</h1>
+    {%- else -%}
+      <div class="header__brand">{{ header_logo }}</div>
+    {%- endif -%}
+
+    {%- if header_links != blank -%}
+      <nav class="header__nav" aria-label="{{ 'general.menu' | t }}">
+        <ul class="header__list" role="list">
+          {{ header_links }}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="header__actions">
+      <a class="header__cart" href="{{ routes.cart_url }}">
+        {% render 'icon', name: 'cart' %}
+        <span class="visually-hidden">{{ 'accessibility.cart_count' | t: count: cart.item_count }}</span>
+        {%- if cart.item_count > 0 -%}
+          <span class="header__cart-count text-body-sm" aria-hidden="true">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:sections.header.settings.menu.label",
+      "info": "t:sections.header.settings.menu.info",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
