@@ -1,0 +1,80 @@
+{
+  "404": {
+    "title": "No encontramos esta página",
+    "text": "Puede que el enlace haya cambiado. Mira nuestras líneas.",
+    "button": "Volver al inicio"
+  },
+  "todo_copy": "TODO(copy): owner must review the wording of these keys. 404.title, 404.text, 404.button, general.view_line_dia, general.menu, general.search, general.back_to_home, general.copyright, accessibility.skip_to_content, accessibility.open_menu, accessibility.close_menu, accessibility.cart, accessibility.cart_count, accessibility.loading, accessibility.error, accessibility.opens_in_new_window, accessibility.pagination, accessibility.page, accessibility.current_page, products.adding, products.added, products.sold_out, products.unavailable, products.unavailable_reason, products.quantity, products.quantity_decrease, products.quantity_increase, products.size, products.price, products.compare_at_price, products.stock_error, cart.empty_heading, cart.empty_text, cart.remove, cart.subtotal, cart.checkout, cart.shipping_notice, cart.update_error, search.title, search.label, search.placeholder, search.submit, search.results_count, search.no_results, pagination.previous, pagination.next",
+  "general": {
+    "brand_tagline": "Hecha con amor para las que más amamos.",
+    "line_descanso": "Descanso",
+    "line_dia": "Día",
+    "view_line_descanso": "Ver la línea Descanso",
+    "view_line_dia": "Ver la línea Día",
+    "menu": "Menú",
+    "search": "Buscar",
+    "back_to_home": "Volver al inicio",
+    "copyright": "© {{ year }} {{ shop_name }}"
+  },
+  "accessibility": {
+    "skip_to_content": "Ir al contenido",
+    "open_menu": "Abrir menú",
+    "close_menu": "Cerrar menú",
+    "cart": "Carrito",
+    "cart_count": {
+      "one": "Carrito, {{ count }} producto",
+      "other": "Carrito, {{ count }} productos"
+    },
+    "loading": "Cargando",
+    "error": "Error",
+    "opens_in_new_window": "Se abre en una pestaña nueva",
+    "pagination": "Paginación",
+    "page": "Página {{ number }}",
+    "current_page": "Página {{ number }}, página actual"
+  },
+  "products": {
+    "add_to_cart": "Agregar al carrito",
+    "adding": "Agregando",
+    "added": "Agregado al carrito",
+    "sold_out": "Agotado",
+    "unavailable": "No disponible",
+    "unavailable_reason": "Esta combinación no está disponible.",
+    "quantity": "Cantidad",
+    "quantity_decrease": "Disminuir cantidad de {{ product }}",
+    "quantity_increase": "Aumentar cantidad de {{ product }}",
+    "size": "Talla",
+    "price": "Precio",
+    "compare_at_price": "Precio anterior",
+    "shipping_cost": "Costo de envío",
+    "delivery_time": "Tiempo estimado de entrega",
+    "returns_policy": "Política de cambios",
+    "garment_care": "Cuidado de la prenda",
+    "stock_error": "No hay más unidades disponibles de este producto."
+  },
+  "cart": {
+    "title": "Carrito",
+    "empty_heading": "Tu carrito está vacío",
+    "empty_text": "Cuando agregues algo, lo verás aquí.",
+    "empty_button": "Ver la línea Descanso",
+    "remove": "Quitar {{ product }}",
+    "subtotal": "Subtotal",
+    "checkout": "Ir a pagar",
+    "shipping_notice": "Verás el costo de envío antes de pagar.",
+    "update_error": "No pudimos actualizar tu carrito. Intenta de nuevo."
+  },
+  "search": {
+    "title": "Buscar",
+    "label": "Buscar en la tienda",
+    "placeholder": "Escribe lo que buscas",
+    "submit": "Buscar",
+    "results_count": {
+      "one": "{{ count }} resultado para «{{ terms }}»",
+      "other": "{{ count }} resultados para «{{ terms }}»"
+    },
+    "no_results": "No encontramos resultados para «{{ terms }}»."
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "settings_schema": {
+    "brand": {
+      "name": "Marca",
+      "settings": {
+        "favicon": {
+          "label": "Ícono de la pestaña",
+          "info": "Imagen cuadrada de al menos 32 × 32 px."
+        },
+        "logo": {
+          "label": "Logo",
+          "info": "Si no subes un logo, se muestra la palabra «Mares»."
+        }
+      }
+    },
+    "pages": {
+      "name": "Políticas",
+      "settings": {
+        "page_returns": {
+          "label": "Página de cambios",
+          "info": "Se enlaza desde el pie de página y desde el producto."
+        },
+        "page_care": {
+          "label": "Página de cuidado de la prenda",
+          "info": "Se enlaza desde el pie de página y desde el producto."
+        }
+      }
+    },
+    "social": {
+      "name": "Redes sociales",
+      "settings": {
+        "header": {
+          "content": "Enlaces"
+        },
+        "info": "Déjalo vacío para ocultar el enlace.",
+        "social_instagram_url": {
+          "label": "Instagram"
+        },
+        "social_tiktok_url": {
+          "label": "TikTok"
+        },
+        "social_facebook_url": {
+          "label": "Facebook"
+        }
+      }
+    }
+  }
+}
