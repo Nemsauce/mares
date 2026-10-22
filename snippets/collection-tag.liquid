@@ -1,0 +1,16 @@
+{%- comment -%}
+  Collection tag chip. Its background is var(--line-main), so it must be rendered
+  inside an element with data-line="descanso" or data-line="dia".
+
+  Parameters:
+    label (required) the text, already translated or taken from the collection title.
+          Renders nothing when blank.
+
+  Usage:
+    {% render 'collection-tag', label: collection.title %}
+{%- endcomment -%}
+
+{%- if label != blank -%}
+  {{ 'component-tag.css' | asset_url | stylesheet_tag }}
+  <span class="collection-tag">{{ label }}</span>
+{%- endif -%}

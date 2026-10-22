@@ -1,0 +1,73 @@
+/* component-field.css: text field, select and textarea (docs/THEME_PLAN.md section 4).
+   The label is always visible above the control; a placeholder never replaces it.
+
+   Markup:
+     <div class="field">
+       <label class="field__label" for="id">...</label>
+       <input class="field__input" id="id" aria-describedby="id-message">
+       <p class="field__message" id="id-message">...</p>   (only when there is a message)
+     </div>
+   Error state: aria-invalid="true" on the control, plus the message text. The message
+   and the thicker border together mean the error is never signalled by color alone. */
+
+@layer components {
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* PROPOSAL: the guide does not give the label a style. body-sm, ink. */
+  .field__label {
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-line);
+    font-weight: var(--type-body-sm-weight);
+  }
+
+  .field__input {
+    /* The error state widens the border to 2px; padding gives the difference back so
+       the text does not move. */
+    --field-border-width: 1px;
+    inline-size: 100%;
+    min-height: 48px; /* guide */
+    /* PROPOSAL: the guide does not give the inner padding. space-4 minus the border. */
+    padding: var(--space-3) calc(var(--space-4) - var(--field-border-width));
+    border: var(--field-border-width) solid var(--control-border); /* R-4 */
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-raised);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-line);
+    font-weight: var(--type-body-weight);
+  }
+
+  .field__input::placeholder {
+    color: var(--color-ink-muted);
+  }
+
+  .field__input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .field__input[aria-invalid="true"] {
+    --field-border-width: 2px;
+    border-color: var(--color-error);
+  }
+
+  /* Space for the message below the control. */
+  .field__message {
+    color: var(--color-ink-muted);
+    font-family: var(--font-sans);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-line);
+    font-weight: var(--type-body-sm-weight);
+  }
+
+  .field__input[aria-invalid="true"] ~ .field__message {
+    color: var(--color-error);
+  }
+}

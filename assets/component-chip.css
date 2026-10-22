@@ -1,0 +1,59 @@
+/* component-chip.css: selectable pill, used for size and other options.
+   (docs/THEME_PLAN.md section 4 and 6.6)
+
+   Markup, radio pattern (the input stays in the accessibility tree and keyboard flow):
+     <input class="chip__input visually-hidden" type="radio" id="x" name="size" value="M">
+     <label class="chip" for="x">M</label>
+   Also works on a button or link with aria-pressed / aria-current="true" for selected
+   and aria-disabled="true" for unavailable.
+
+   Unavailable options also need a text reason where the chip is rendered (sold-out
+   options are disabled with text). Here they differ from available ones by a strike
+   through the label and a dashed border, not by color alone. */
+
+@layer components {
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px; /* guide: minimum touch target */
+    min-height: 44px;
+    /* PROPOSAL: the guide gives no padding or text style for chips. space-4 inline, body-sm. */
+    padding: 0 var(--space-4);
+    border: 1px solid var(--control-border); /* R-4 */
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-line);
+    font-weight: var(--type-body-sm-weight);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Selected: brand fill with on-brand text. */
+  .chip__input:checked + .chip,
+  .chip[aria-pressed="true"],
+  .chip[aria-current="true"] {
+    border-color: var(--color-brand);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  /* Unavailable: strike-through, dashed border and half opacity. */
+  .chip__input:disabled + .chip,
+  .chip[aria-disabled="true"] {
+    border-style: dashed;
+    opacity: 0.5;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
+  /* The focused element is the hidden input, so the ring is drawn on its chip. Same
+     ring as the global rule in base.css: it reads the same variable. */
+  .chip__input:focus-visible + .chip {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+}

@@ -1,0 +1,25 @@
+/* component-skeleton.css: loading placeholder (docs/THEME_PLAN.md section 4).
+   Place on a var(--color-bg-raised) surface, such as a card. Decorative: mark the
+   element aria-hidden="true" and announce loading through the live region. */
+
+@layer components {
+  .skeleton {
+    display: block;
+    min-height: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-line);
+    animation: skeleton-pulse 1.2s ease-in-out infinite; /* guide: at most 1.2s */
+  }
+
+  @keyframes skeleton-pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
+  }
+}
