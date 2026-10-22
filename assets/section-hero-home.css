@@ -16,9 +16,15 @@
     text-align: center;
   }
 
+  /* Type style swap: display-lg below 1024px, display-xl from 1024px (the design system's
+     hero rule). Both come from the --type-* tokens; the text-display-lg class in the markup
+     is the same style and keeps the heading styled if this rule is ever removed. */
   .hero-home__heading {
     max-inline-size: 18ch; /* PROPOSAL: headline measure */
     color: var(--color-ink);
+    font-size: var(--type-display-lg-size);
+    line-height: var(--type-display-lg-line);
+    font-weight: var(--type-display-lg-weight);
     text-wrap: balance;
   }
 
@@ -41,8 +47,7 @@
     object-fit: cover;
   }
 
-  /* Desktop: display-xl, and the generous space-24 above and below. Below 1024px the
-     class text-display-lg applies as is. */
+  /* Desktop: display-xl, and the generous space-24 above and below. */
   @media (min-width: 1024px) {
     .hero-home {
       padding-block: var(--space-24);

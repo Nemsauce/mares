@@ -3,8 +3,8 @@
   All copy comes from the section settings, whose defaults are the t: keys in
   locales/es.default.schema.json (source: docs/content/catalogo-y-copy.md).
 
-  The heading is an h2, not an h1: sections/header.liquid already renders the one h1 of
-  the home page (the wordmark). Two h1s would break the one-h1-per-page rule.
+  The heading is the h1 of the home page, because the headline is what the page is about.
+  The header logo is never a heading (see sections/header.liquid), so this is the only h1.
 
   General page: bg only. No line colors here.
 {%- endcomment -%}
@@ -14,7 +14,7 @@
 <section class="hero-home">
   <div class="container hero-home__inner">
     {%- if section.settings.heading != blank -%}
-      <h2 class="hero-home__heading text-display-lg">{{ section.settings.heading }}</h2>
+      <h1 class="hero-home__heading text-display-lg">{{ section.settings.heading }}</h1>
     {%- endif -%}
 
     {%- if section.settings.text != blank -%}

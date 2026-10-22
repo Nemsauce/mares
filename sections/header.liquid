@@ -3,6 +3,10 @@
   underneath. Navigation comes from the `menu` link list and shows inline from 1024px.
   Below that a <header-menu> custom element opens a native <dialog> with the same links.
 
+  Heading rule: the logo is a plain link on every page and is never a heading. The one
+  h1 of each page belongs to the page content: the hero headline on the home page, the
+  title on every other page.
+
   No-JavaScript approach (chosen on purpose): the menu button is rendered with the
   `hidden` attribute and header-menu.js reveals it when the element upgrades, so it is
   absent, never a button that does nothing. Without JS the same links are rendered in a
@@ -42,11 +46,7 @@
 
 <header class="header">
   <div class="container header__inner">
-    {%- if template.name == 'index' -%}
-      <h1 class="header__brand text-display-md">{{ header_logo }}</h1>
-    {%- else -%}
-      <div class="header__brand">{{ header_logo }}</div>
-    {%- endif -%}
+    <div class="header__brand">{{ header_logo }}</div>
 
     {%- if header_links != blank -%}
       <nav class="header__nav" aria-label="{{ 'general.menu' | t }}">
