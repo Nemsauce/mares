@@ -54,6 +54,48 @@
           "info": "Los enlaces que se muestran en el encabezado."
         }
       }
+    },
+    "footer": {
+      "name": "Pie de página",
+      "settings": {
+        "show_copyright": {
+          "label": "Mostrar derechos de autor"
+        }
+      },
+      "blocks": {
+        "menu": {
+          "name": "Menú",
+          "settings": {
+            "heading": {
+              "label": "Título"
+            },
+            "menu": {
+              "label": "Menú",
+              "info": "Los enlaces de esta columna."
+            }
+          }
+        },
+        "text": {
+          "name": "Texto",
+          "settings": {
+            "heading": {
+              "label": "Título"
+            },
+            "text": {
+              "label": "Texto"
+            }
+          }
+        },
+        "brand": {
+          "name": "Marca",
+          "settings": {
+            "text": {
+              "label": "Frase",
+              "info": "Si lo dejas vacío, se muestra la frase de trabajo."
+            }
+          }
+        }
+      }
     }
   }
 }

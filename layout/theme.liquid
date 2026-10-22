@@ -41,9 +41,7 @@
       {{ content_for_layout }}
     </main>
 
-    {%- comment -%}
-      C3 renders the footer section group here.
-    {%- endcomment -%}
+    {% sections 'footer-group' %}
 
     {%- comment -%}
       No <script> tags yet. core.js and the other deferred scripts arrive in E3.

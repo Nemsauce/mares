@@ -1,0 +1,74 @@
+/* section-footer.css: footer (docs/THEME_PLAN.md 6.2). Tokens only.
+   The footer design is not in the docs; everything marked PROPOSAL follows the plan. */
+
+@layer sections {
+  .footer {
+    background: var(--color-bg);
+    border-block-start: 1px solid var(--color-line); /* PROPOSAL: mirrors the header */
+    padding-block: var(--section-gap); /* PROPOSAL: the section rhythm token */
+    color: var(--color-ink);
+  }
+
+  /* PROPOSAL: 1 block per row below 600px (4 of 4 columns), 2 per row to 1023px
+     (4 of 8), 4 per row from 1024px (3 of 12). The grid itself is grid.css. */
+  .footer__blocks {
+    row-gap: var(--space-8);
+  }
+
+  .footer__block {
+    grid-column: span 4;
+    min-width: 0;
+  }
+
+  .footer__heading {
+    margin-block-end: var(--space-3);
+  }
+
+  .footer__wordmark {
+    margin-block-end: var(--space-2);
+    color: var(--color-brand);
+  }
+
+  .footer__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__links--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-6);
+  }
+
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink);
+  }
+
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-6);
+  }
+
+  .footer__legal--divided {
+    margin-block-start: var(--space-8);
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-line);
+  }
+
+  .footer__copyright {
+    color: var(--color-ink-muted);
+  }
+
+  @media (min-width: 1024px) {
+    .footer__block {
+      grid-column: span 3;
+    }
+  }
+}

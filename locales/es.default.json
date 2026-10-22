@@ -7,6 +7,12 @@
   "general": {
     "brand_tagline": "Hecha con amor para las que más amamos.",
     "brand_name": "Mares",
+    "social_links": "Redes sociales",
+    "social": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "facebook": "Facebook"
+    },
     "line_descanso": "Descanso",
     "line_dia": "Día",
     "view_line_descanso": "Ver la línea Descanso",
