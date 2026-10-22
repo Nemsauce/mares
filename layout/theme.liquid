@@ -1,0 +1,54 @@
+{%- liquid
+  # Direction comes from the request locale's language. Liquid exposes no
+  # direction property, so the right-to-left languages are listed here.
+  assign locale_language = request.locale.iso_code | split: '-' | first
+  assign rtl_languages = 'ar,he,fa,ur,ps,sd,ug,yi,dv,ckb' | split: ','
+  assign text_direction = 'ltr'
+  if rtl_languages contains locale_language
+    assign text_direction = 'rtl'
+  endif
+-%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" dir="{{ text_direction }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {%- comment -%}
+      Minimal title only. snippets/meta-tags.liquid (description, canonical,
+      Open Graph, structured data) arrives in F3; no other meta tags before then.
+    {%- endcomment -%}
+    <title>{{ page_title | escape }}</title>
+
+    {% render 'head-assets' %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {%- comment -%}
+      Single polite live region for cart and error announcements. It must stay
+      in the DOM from first load; scripts only change its text. The announcer
+      arrives with core.js in E3.
+    {%- endcomment -%}
+    <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    {%- comment -%}
+      C1 renders the header section group here.
+    {%- endcomment -%}
+
+    <main id="main">
+      {{ content_for_layout }}
+    </main>
+
+    {%- comment -%}
+      C3 renders the footer section group here.
+    {%- endcomment -%}
+
+    {%- comment -%}
+      No <script> tags yet. core.js and the other deferred scripts arrive in E3.
+    {%- endcomment -%}
+  </body>
+</html>

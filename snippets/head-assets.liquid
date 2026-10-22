@@ -1,0 +1,71 @@
+{%- comment -%}
+  Head assets, rendered once from layout/theme.liquid. Order matters and is
+  fixed by docs/THEME_PLAN.md section 2.6:
+    1. layer order declaration
+    2. tokens.css
+    3. (later commits, see the marked block below)
+{%- endcomment -%}
+
+{%- comment -%} 1. Declares the cascade layer order once, so file load order never changes specificity. {%- endcomment -%}
+<style>
+  @layer tokens, reset, base, components, sections, utilities;
+</style>
+
+{%- comment -%} 2. Design tokens (already wrapped in @layer tokens). {%- endcomment -%}
+{{ 'tokens.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  ------------------------------------------------------------------------
+  LATER COMMITS ADD HERE, IN THIS ORDER (do not reorder):
+    B4  snippets/fonts.liquid   {% raw %}{% render 'fonts' %}{% endraw %} (preloads + @font-face, behind fonts_ready)
+    B5  assets/base.css         stylesheet_tag, render-blocking on purpose
+    B6  assets/base-lines.css   stylesheet_tag
+    B6  assets/grid.css         stylesheet_tag
+  Section and snippet CSS is loaded by the section or snippet that uses it.
+  ------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- comment -%}
+  TEMPORARY. Visually hidden helpers for the skip link and the live region.
+  Moves to assets/base.css (layer utilities / base) in B5; delete this block
+  in that commit. Only tokens are used for design values. The 1px / -1px /
+  inset(50%) values are the standard visually-hidden technique, not design
+  values.
+{%- endcomment -%}
+<style>
+  @layer utilities {
+    .visually-hidden,
+    .skip-link:not(:focus) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .skip-link {
+      position: fixed;
+      inset-block-start: var(--space-4);
+      inset-inline-start: var(--space-4);
+      z-index: 1;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-md);
+      background: var(--color-brand);
+      color: var(--color-on-brand);
+      font-family: var(--font-sans);
+      font-size: var(--type-button-size);
+      line-height: var(--type-button-line);
+      font-weight: var(--type-button-weight);
+      text-decoration: none;
+    }
+
+    .skip-link:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+</style>
