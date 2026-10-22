@@ -327,6 +327,9 @@
     },
     "buy-buttons": {
       "name": "Botón de compra"
+    },
+    "variant-picker": {
+      "name": "Selector de variante"
     }
   }
 }

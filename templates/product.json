@@ -12,6 +12,9 @@
             "show_compare_at": true
           }
         },
+        "picker": {
+          "type": "variant-picker"
+        },
         "quantity": {
           "type": "quantity"
         },
@@ -22,7 +25,7 @@
           "type": "product-description"
         }
       },
-      "block_order": ["title", "price", "quantity", "buy", "description"],
+      "block_order": ["title", "price", "picker", "quantity", "buy", "description"],
       "settings": {}
     }
   },

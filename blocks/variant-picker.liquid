@@ -1,0 +1,102 @@
+{%- comment -%}
+  Variant picker, no script. One labelled group (fieldset with a visible legend) per
+  product option; each value is a chip.
+
+  How it works: the picker is a plain GET form to the product URL. Each available chip is
+  a submit button with name="variant" and the id of the variant that choosing it leads to,
+  so one click reloads the page as ?variant=ID. The page then renders with that variant
+  selected: price, availability and the hidden id of the add to cart form (blocks/
+  buy-buttons.liquid) all follow product.selected_or_first_available_variant.
+
+  Why buttons and not radio inputs: a radio selection cannot submit a form without a
+  script. Chips are therefore toggle buttons (aria-pressed) in a labelled group. When
+  variant-picker.js arrives (plan section 5) it can upgrade this markup.
+
+  Target variant of a chip: the variant with that option value and the same values as the
+  current selection for the other options. If none exists the combination does not exist;
+  if it exists but is not available it is sold out. Both chips are disabled and say so in
+  text, never by color alone.
+
+  A product with a single variant (for example "Talla única") renders no picker at all;
+  its only variant is what the add to cart form sends.
+{%- endcomment -%}
+
+{%- if product.variants.size > 1 -%}
+  {{ 'component-chip.css' | asset_url | stylesheet_tag }}
+
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+  <form class="variant-picker" method="get" action="{{ product.url }}" {{ block.shopify_attributes }}>
+    {%- for option in product.options_with_values -%}
+      {%- assign option_position = forloop.index0 -%}
+      <fieldset class="variant-picker__group">
+        <legend class="variant-picker__legend text-label">{{ option.name }}</legend>
+        <div class="variant-picker__options">
+          {%- for option_value in option.values -%}
+            {%- liquid
+              assign target_variant = nil
+              for candidate in product.variants
+                assign matches = true
+                for candidate_value in candidate.options
+                  if forloop.index0 == option_position
+                    if candidate_value != option_value
+                      assign matches = false
+                    endif
+                  else
+                    if candidate_value != current_variant.options[forloop.index0]
+                      assign matches = false
+                    endif
+                  endif
+                endfor
+                if matches and target_variant == nil
+                  assign target_variant = candidate
+                endif
+              endfor
+
+              assign is_selected = false
+              if option_value == current_variant.options[option_position]
+                assign is_selected = true
+              endif
+
+              assign note = ''
+              if target_variant == nil
+                assign note = 'products.unavailable' | t
+              elsif target_variant.available == false
+                assign note = 'products.sold_out' | t
+              endif
+            -%}
+
+            {%- if note != blank -%}
+              <button type="button" class="chip" aria-pressed="{{ is_selected }}" aria-disabled="true">
+                {%- if is_selected -%}{% render 'icon', name: 'check', size: 16 %}{%- endif -%}
+                <span>{{ option_value }}</span>
+                <span class="variant-picker__note text-label">{{ note }}</span>
+              </button>
+            {%- elsif is_selected -%}
+              <button type="button" class="chip" aria-pressed="true">
+                {% render 'icon', name: 'check', size: 16 %}
+                <span>{{ option_value }}</span>
+              </button>
+            {%- else -%}
+              <button type="submit" class="chip" name="variant" value="{{ target_variant.id }}" aria-pressed="false">
+                <span>{{ option_value }}</span>
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+  </form>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.variant-picker.name",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:blocks.variant-picker.name"
+    }
+  ]
+}
+{% endschema %}

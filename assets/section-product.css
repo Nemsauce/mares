@@ -64,6 +64,44 @@
     padding-inline-start: var(--space-6);
   }
 
+  /* Variant picker: groups of chips. The chip look is component-chip.css. */
+  .variant-picker {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    inline-size: 100%;
+  }
+
+  .variant-picker__group {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .variant-picker__legend {
+    margin-block-end: var(--space-2);
+    padding: 0;
+    color: var(--color-ink-muted);
+  }
+
+  .variant-picker__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .variant-picker .chip {
+    gap: var(--space-2);
+  }
+
+  /* The reason an option cannot be chosen, as text. inline-block keeps the chip's
+     strike-through off it. */
+  .variant-picker__note {
+    display: inline-block;
+    text-decoration: none;
+  }
+
   .product-quantity {
     inline-size: var(--space-24); /* PROPOSAL: a narrow field; the docs give no width */
   }
