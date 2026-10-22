@@ -1,7 +1,15 @@
 {%- comment -%}
   Header (docs/THEME_PLAN.md 6.1): bg background, logo left, cart right, 1px line
   underneath. Navigation comes from the `menu` link list and shows inline from 1024px.
-  Below that the mobile menu takes over (added in the next commit).
+  Below that a <header-menu> custom element opens a native <dialog> with the same links.
+
+  No-JavaScript approach (chosen on purpose): the menu button is rendered with the
+  `hidden` attribute and header-menu.js reveals it when the element upgrades, so it is
+  absent, never a button that does nothing. Without JS the same links are rendered in a
+  <noscript> navigation under the header row, so the menu stays reachable on mobile.
+  Alternatives rejected: showing the inline links on mobile until the script runs (the
+  header would jump in height when JS arrives, a layout shift) and a <details> menu
+  (a second pattern to maintain next to the dialog).
 {%- endcomment -%}
 
 {{ 'section-header.css' | asset_url | stylesheet_tag }}
@@ -49,6 +57,40 @@
     {%- endif -%}
 
     <div class="header__actions">
+      {%- if header_links != blank -%}
+        <header-menu class="header__menu">
+          <button
+            type="button"
+            class="header__icon-button"
+            data-menu-open
+            aria-expanded="false"
+            aria-controls="header-menu-dialog"
+            aria-label="{{ 'accessibility.open_menu' | t }}"
+            hidden
+          >
+            {% render 'icon', name: 'menu' %}
+          </button>
+
+          <dialog id="header-menu-dialog" class="header__dialog" aria-label="{{ 'general.menu' | t }}">
+            <div class="container header__dialog-bar">
+              <button
+                type="button"
+                class="header__icon-button"
+                data-menu-close
+                aria-label="{{ 'accessibility.close_menu' | t }}"
+              >
+                {% render 'icon', name: 'close' %}
+              </button>
+            </div>
+            <nav class="container" aria-label="{{ 'general.menu' | t }}">
+              <ul class="header__list header__list--stacked" role="list">
+                {{ header_links }}
+              </ul>
+            </nav>
+          </dialog>
+        </header-menu>
+      {%- endif -%}
+
       <a class="header__cart" href="{{ routes.cart_url }}">
         {% render 'icon', name: 'cart' %}
         <span class="visually-hidden">{{ 'accessibility.cart_count' | t: count: cart.item_count }}</span>
@@ -57,8 +99,22 @@
         {%- endif -%}
       </a>
     </div>
+
+    {%- if header_links != blank -%}
+      <noscript>
+        <nav class="header__nav-fallback" aria-label="{{ 'general.menu' | t }}">
+          <ul class="header__list" role="list">
+            {{ header_links }}
+          </ul>
+        </nav>
+      </noscript>
+    {%- endif -%}
   </div>
 </header>
+
+{%- if header_links != blank -%}
+  <script src="{{ 'header-menu.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 {% schema %}
 {

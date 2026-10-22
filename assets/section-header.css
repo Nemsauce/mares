@@ -8,6 +8,7 @@
 
   .header__inner {
     display: flex;
+    flex-wrap: wrap; /* only the no-JS fallback navigation ever wraps onto a second row */
     align-items: center;
     gap: var(--space-6);
     /* 64px on mobile [G]. PROPOSAL: desktop is not in the docs, so it stays 64px. */
@@ -74,6 +75,75 @@
     text-decoration: none;
   }
 
+  .header__icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+  }
+
+  /* Mobile menu: a full-screen native dialog. Only shown below 1024px. */
+  .header__dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    overflow-y: auto;
+  }
+
+  /* display is set on [open] only, so the closed dialog keeps its default display:none. */
+  .header__dialog[open] {
+    display: block;
+  }
+
+  .header__dialog-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 64px;
+  }
+
+  /* PROPOSAL: the docs do not describe the mobile menu (Q-1). Stacked links in the
+     display family, divided by line. */
+  .header__list--stacked {
+    display: block;
+  }
+
+  .header__list--stacked > li {
+    border-block-end: 1px solid var(--color-line);
+  }
+
+  .header__list--stacked .header__link {
+    display: flex;
+    padding-block: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--type-display-sm-size);
+    line-height: var(--type-display-sm-line);
+    font-weight: var(--type-display-sm-weight);
+  }
+
+  /* No-JavaScript navigation (inside <noscript>), under the header row. */
+  .header__nav-fallback {
+    flex: 0 0 100%;
+  }
+
+  /* Keep the page from scrolling behind the open dialog. */
+  html:has(.header__dialog[open]) {
+    overflow: hidden;
+  }
+
   @media (hover: hover) {
     .header__link:hover {
       text-decoration: underline;
@@ -83,6 +153,11 @@
   @media (min-width: 1024px) {
     .header__nav {
       display: block;
+    }
+
+    .header__menu,
+    .header__nav-fallback {
+      display: none;
     }
   }
 }
