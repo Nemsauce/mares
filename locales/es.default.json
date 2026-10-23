@@ -75,6 +75,13 @@
     "line_quantity": "Cantidad de {{ product }}: {{ quantity }}",
     "line_removed": "Quitaste {{ product }} del carrito"
   },
+  "newsletter": {
+    "label": "Correo electrónico",
+    "submit": "Suscribirme",
+    "hint": "Escribe tu correo para recibir novedades.",
+    "success": "Listo, ya estás en la lista. Gracias.",
+    "error": "No pudimos guardar tu correo. Revisa que esté bien escrito e intenta de nuevo."
+  },
   "search": {
     "title": "Buscar",
     "label": "Buscar en la tienda",

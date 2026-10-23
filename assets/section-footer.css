@@ -29,6 +29,35 @@
     color: var(--color-brand);
   }
 
+  /* Newsletter block (optional): the field, a hint or message, and a secondary button. */
+  .footer__newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .footer__newsletter .field {
+    inline-size: 100%;
+  }
+
+  .footer__newsletter-intro {
+    margin-block-end: var(--space-3);
+  }
+
+  /* The success message is text with a check icon, so it never relies on color. */
+  .footer__newsletter-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink);
+  }
+
+  .footer__newsletter-status .icon {
+    flex: none;
+    color: var(--color-brand);
+  }
+
   .footer__links {
     margin: 0;
     padding: 0;

@@ -94,6 +94,18 @@
               "info": "Si lo dejas vacío, se muestra la frase de trabajo."
             }
           }
+        },
+        "newsletter": {
+          "name": "Boletín de correo",
+          "settings": {
+            "heading": {
+              "label": "Título"
+            },
+            "text": {
+              "label": "Texto",
+              "info": "Dilo con claridad: qué va a recibir quien se suscribe. Escribe solo lo que la marca pueda cumplir. Los correos quedan en la lista de clientes de la tienda."
+            }
+          }
         }
       }
     },
