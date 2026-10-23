@@ -10,9 +10,11 @@
   When the variant is sold out the button is disabled and a text message says why. No
   dynamic checkout button: the payment gateway is undecided.
 
-  JavaScript hooks: <product-form> (assets/product-form.js) adds to the cart without a page
-  load and reads its messages from the data-*-text attributes. [data-form-error] is the
-  error text it fills next to the button; it stays hidden and empty without the script.
+  JavaScript hooks: [data-variant-region] marks this block for assets/variant-picker.js,
+  which replaces it with the server-rendered version for the chosen variant.
+  <product-form> (assets/product-form.js) adds to the cart without a page load and reads
+  its messages from the data-*-text attributes. [data-form-error] is the error text it
+  fills next to the button; it stays hidden and empty without the script.
   The color comes from the error token inline, because this commit may not touch CSS.
 {%- endcomment -%}
 
@@ -24,7 +26,7 @@
   {%- assign unavailable = false -%}
 {%- endif -%}
 
-<div class="product-buy" {{ block.shopify_attributes }}>
+<div class="product-buy" data-variant-region="buy" {{ block.shopify_attributes }}>
   <product-form
     data-added-text="{{ 'products.added' | t }}"
     data-stock-error-text="{{ 'products.stock_error' | t }}"

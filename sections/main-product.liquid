@@ -20,6 +20,9 @@
   Progressive enhancement only (plan section 5). core.js is loaded by the header first.
 {%- endcomment -%}
 <script src="{{ 'product-form.js' | asset_url }}" defer></script>
+{%- if product.variants.size > 1 -%}
+  <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 {%- liquid
   assign product_line = product.metafields.mares.line.value
@@ -29,7 +32,7 @@
   assign gallery_images = product.media | where: 'media_type', 'image'
 -%}
 
-<section class="product"{% if product_line != blank %} data-line="{{ product_line }}"{% endif %}>
+<section class="product" data-section-id="{{ section.id }}"{% if product_line != blank %} data-line="{{ product_line }}"{% endif %}>
   <div class="container">
     <div class="grid product__grid">
       <div class="product__media">

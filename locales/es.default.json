@@ -45,6 +45,7 @@
     "sold_out": "Agotado",
     "unavailable": "No disponible",
     "unavailable_reason": "Esta combinación no está disponible.",
+    "variant_selected": "Seleccionaste {{ value }}",
     "quantity": "Cantidad",
     "quantity_decrease": "Disminuir cantidad de {{ product }}",
     "quantity_increase": "Aumentar cantidad de {{ product }}",
