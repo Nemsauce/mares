@@ -70,7 +70,10 @@
     "update": "Actualizar carrito",
     "order_note": "Nota para tu pedido",
     "shipping_notice": "Verás el costo de envío antes de pagar.",
-    "update_error": "No pudimos actualizar tu carrito. Intenta de nuevo."
+    "update_error": "No pudimos actualizar tu carrito. Intenta de nuevo.",
+    "updated": "Carrito actualizado",
+    "line_quantity": "Cantidad de {{ product }}: {{ quantity }}",
+    "line_removed": "Quitaste {{ product }} del carrito"
   },
   "search": {
     "title": "Buscar",

@@ -13,6 +13,13 @@
   Quantities typed but not saved with "Actualizar carrito" are not sent to checkout, and
   the order note is saved only when the customer goes to checkout.
 
+  JavaScript hooks: <cart-items> (assets/cart-items.js) upgrades the quantity form
+  [data-cart-update] and the remove links to the Ajax Cart API, re-rendering its own
+  content through the Section Rendering API (data-section-id). It reads its announcement
+  copy from the data-*-text attributes and returns focus to [data-cart-heading] when the
+  cart empties. Without the script the element is an inert wrapper and everything above
+  works as described.
+
   The title is the page's h1 in both states. The empty state heading is an h2.
 
   Shipping cost and delivery time sit above the checkout button, so the customer sees them
@@ -23,6 +30,7 @@
 
 {{ 'section-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-field.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart-items.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign empty_heading = section.settings.empty_heading
@@ -53,7 +61,16 @@
 
 <div class="cart">
   <div class="container">
-    <h1 class="cart__title text-display-lg">{{ 'cart.title' | t }}</h1>
+    <h1 class="cart__title text-display-lg" tabindex="-1" data-cart-heading>{{ 'cart.title' | t }}</h1>
+
+    <cart-items
+      data-section-id="{{ section.id }}"
+      data-quantity-text="{{ 'cart.line_quantity' | t: product: '[product]', quantity: '[quantity]' }}"
+      data-removed-text="{{ 'cart.line_removed' | t: product: '[product]' }}"
+      data-updated-text="{{ 'cart.updated' | t }}"
+      data-stock-error-text="{{ 'products.stock_error' | t }}"
+      data-error-text="{{ 'cart.update_error' | t }}"
+    >
 
     {%- if cart.item_count == 0 -%}
       <div class="cart__empty">
@@ -64,7 +81,7 @@
     {%- else -%}
       <div class="grid cart__grid">
         <div class="cart__items">
-          <form class="cart__update" action="{{ routes.cart_url }}" method="post">
+          <form class="cart__update" action="{{ routes.cart_url }}" method="post" data-cart-update>
             <ul class="cart__list" role="list">
               {%- for item in cart.items -%}
                 <li class="cart__line">
@@ -111,6 +128,7 @@
         </div>
       </div>
     {%- endif -%}
+    </cart-items>
   </div>
 </div>
 

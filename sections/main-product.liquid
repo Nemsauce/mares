@@ -23,6 +23,9 @@
 {%- if product.variants.size > 1 -%}
   <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
 {%- endif -%}
+{%- if product.media.size > 1 -%}
+  <script src="{{ 'media-gallery.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 {%- liquid
   assign product_line = product.metafields.mares.line.value
@@ -41,10 +44,15 @@
             A scrollable region must be reachable by keyboard, hence tabindex="0".
             Named after the product, so no extra string is needed.
           {%- endcomment -%}
+          {%- comment -%}
+            <media-gallery> (assets/media-gallery.js) syncs thumbnails [data-gallery-thumb]
+            with the visible slide. No thumbnail strip is rendered yet, so it stays idle.
+          {%- endcomment -%}
+          <media-gallery>
           <div class="product__gallery" role="group" aria-label="{{ product.title }}" tabindex="0">
             {%- for media in gallery_images -%}
               {%- assign media_alt = media.alt | default: product.title -%}
-              <div class="product__slide">
+              <div class="product__slide" id="{{ section.id }}-media-{{ media.id }}" data-gallery-slide>
                 {% render 'image',
                   image: media.preview_image,
                   alt: media_alt,
@@ -56,6 +64,7 @@
               </div>
             {%- endfor -%}
           </div>
+          </media-gallery>
         {%- else -%}
           {%- comment -%} No images: one placeholder at the same ratio, no thumbnail strip. {%- endcomment -%}
           <div class="product__slide product__slide--empty">

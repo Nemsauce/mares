@@ -13,6 +13,10 @@
 
   The product image is decorative (empty alt): the title link next to it names the line.
 
+  JavaScript hooks for assets/cart-items.js: data-line-key and data-line-title on the line,
+  data-line-quantity on the input, data-line-remove on the link, and [data-line-error], an
+  empty hidden message the script fills when a change to this line fails.
+
   Usage:
     {% render 'cart-line-item', item: item, index: forloop.index %}
 {%- endcomment -%}
@@ -46,7 +50,7 @@
   {%- endfor -%}
 {%- endcapture -%}
 
-<div class="cart-line">
+<div class="cart-line" data-line-key="{{ item.key }}" data-line-title="{{ line_title }}">
   <div class="cart-line__media">
     {% render 'image',
       image: item.image,
@@ -83,11 +87,17 @@
           min="1"
           inputmode="numeric"
           aria-describedby="{{ title_id }}"
+          data-line-quantity
         >
       </div>
 
-      <a class="cart-line__remove text-body-sm" href="{{ item.url_to_remove }}">{{ remove_label }}</a>
+      <a class="cart-line__remove text-body-sm" href="{{ item.url_to_remove }}" data-line-remove>{{ remove_label }}</a>
     </div>
+
+    <p class="cart-line__error text-body-sm" data-line-error hidden>
+      <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+      <span data-line-error-text></span>
+    </p>
   </div>
 
   <div class="cart-line__price">
