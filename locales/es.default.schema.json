@@ -64,6 +64,56 @@
         "info": "Una línea de puntadas en el borde superior de la sección, que la separa de la anterior. Úsala igual en todas las secciones de la página."
       }
     },
+    "process": {
+      "name": "Cómo nace cada prenda",
+      "settings": {
+        "eyebrow": { "label": "Etiqueta sobre el encabezado", "default": "El proceso" },
+        "heading": { "label": "Encabezado", "default": "Cómo nace" },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca.",
+          "default": "cada prenda"
+        },
+        "text": {
+          "label": "Texto de entrada",
+          "default": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros."
+        }
+      },
+      "blocks": {
+        "shared": {
+          "title": { "label": "Título del paso" },
+          "text": { "label": "Texto del paso" }
+        },
+        "step_1": {
+          "name": "Paso 1",
+          "settings": {
+            "title": { "default": "Se escoge la tela" },
+            "text": { "default": "Buscamos telas suaves, que no aprieten ni raspen. Si no pasa la prueba de la mejilla, no entra." }
+          }
+        },
+        "step_2": {
+          "name": "Paso 2",
+          "settings": {
+            "title": { "default": "Se borda en la máquina" },
+            "text": { "default": "La máquina borda parejo y firme, que es lo que hace que un nombre dure." }
+          }
+        },
+        "step_3": {
+          "name": "Paso 3",
+          "settings": {
+            "title": { "default": "Se revisa cada prenda" },
+            "text": { "default": "Revisamos cada prenda." }
+          }
+        },
+        "step_4": {
+          "name": "Paso 4",
+          "settings": {
+            "title": { "default": "Se empaca" },
+            "text": { "default": "La empacamos una por una." }
+          }
+        }
+      }
+    },
     "announcement-bar": {
       "name": "Barra de anuncio",
       "settings": {

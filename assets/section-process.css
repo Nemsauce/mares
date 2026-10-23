@@ -1,0 +1,85 @@
+/* section-process.css: how a garment is made (sections/process.liquid). General page
+   surfaces only: bg band, bg-raised cards, ink, brand. Tokens only. The header is
+   component-section-header.css.
+
+   Contrast: ink on bg-raised 10.93 to 1; the step number is on-brand on brand, 5.18 to 1
+   (4.5 needed). The number is decoration, drawn with a counter and an empty alternative
+   text; it carries no meaning the step title does not. */
+
+@layer sections {
+  /* Band 4 of the home rhythm: bg, after the white essence band, so no two tinted bands
+     touch (gift follows on the deeper pearl). */
+  .process {
+    padding-block: var(--section-gap);
+    background: var(--color-bg);
+  }
+
+  .process__header {
+    margin-block-end: var(--space-6);
+  }
+
+  .process__steps {
+    display: grid;
+    gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: process-step;
+  }
+
+  .process__step {
+    counter-increment: process-step;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-width: 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-raised);
+    box-shadow: var(--shadow-rest);
+  }
+
+  /* The decorative number: a brand disc, 48px like the essence icons. */
+  .process__step::before {
+    content: counter(process-step);
+    content: counter(process-step) / "";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 48px;
+    block-size: 48px;
+    margin-block-end: var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    font-family: var(--font-display);
+    font-size: var(--type-display-sm-size);
+    line-height: 1;
+    font-weight: var(--type-display-sm-weight);
+  }
+
+  .process__title {
+    color: var(--color-ink);
+  }
+
+  .process__text {
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 600px) {
+    .process__header {
+      margin-block-end: var(--space-8);
+    }
+
+    .process__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .process__steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+}

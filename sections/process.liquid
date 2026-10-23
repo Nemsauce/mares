@@ -1,0 +1,200 @@
+{%- comment -%}
+  How a garment is made: the section header (eyebrow, two-part heading, intro line) and four
+  numbered steps. Copy is docs/BRAND.md, section "Cómo nace cada prenda", verbatim, as the
+  defaults of the settings and blocks (t: keys in locales/es.default.schema.json). The four
+  steps are four block types, step_1 to step_4, that differ only in their default copy, the
+  same pattern as lines-entry. The two steps BRAND.md took out (how the motif is drawn on
+  the fabric and how the reverse looks) are PENDIENTE there and are not on the page.
+
+  The numbers are decoration: a CSS counter drawn in a disc, with an empty alternative text,
+  so a screen reader hears the step titles and the list's own "1 of 4", not a number twice.
+  The step title carries the meaning. Each step is an h3 under the section's h2.
+
+  Layout: stacked below 600px, two columns from 600px, one row of four from 1024px.
+
+  data-reveal: the content rises in once when it scrolls into view (assets/reveal.js).
+  Without the script, or under reduced motion, it is simply shown.
+
+  General page: bg band, bg-raised cards, ink, brand. No line colors.
+{%- endcomment -%}
+
+{{ 'section-process.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_divider -%}
+  {{ 'section-divider.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'reveal.js' | asset_url }}" defer></script>
+
+<section class="process{% if section.settings.show_divider %} section--divided{% endif %}">
+  {%- if section.settings.show_divider -%}
+    <div class="container section-divider" aria-hidden="true">{% render 'embroidery-divider' %}</div>
+  {%- endif -%}
+  <div class="container" data-reveal>
+    {% render 'section-header',
+      motif: section.settings.motif,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_accent: section.settings.heading_accent,
+      subtitle: section.settings.text,
+      level: 2,
+      class: 'process__header'
+    %}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="process__steps" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.title != blank -%}
+            <li class="process__step" {{ block.shopify_attributes }}>
+              <h3 class="process__title text-display-sm">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p class="process__text text-body">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.process.name",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "motif",
+      "label": "t:sections.shared.motif.label",
+      "info": "t:sections.shared.motif.info",
+      "options": [
+        { "value": "none", "label": "t:sections.shared.motif.options__1.label" },
+        { "value": "ola-suave", "label": "t:sections.shared.motif.options__2.label" },
+        { "value": "luna-sobre-el-mar", "label": "t:sections.shared.motif.options__3.label" },
+        { "value": "conchitas-nacaradas", "label": "t:sections.shared.motif.options__4.label" },
+        { "value": "estrella-de-mar", "label": "t:sections.shared.motif.options__5.label" },
+        { "value": "caballito-de-mar", "label": "t:sections.shared.motif.options__6.label" },
+        { "value": "palmita", "label": "t:sections.shared.motif.options__7.label" },
+        { "value": "sol", "label": "t:sections.shared.motif.options__8.label" }
+      ],
+      "default": "conchitas-nacaradas"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "t:sections.shared.show_divider.label",
+      "info": "t:sections.shared.show_divider.info",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.process.settings.eyebrow.label",
+      "default": "t:sections.process.settings.eyebrow.default"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.process.settings.heading.label",
+      "default": "t:sections.process.settings.heading.default"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "t:sections.process.settings.heading_accent.label",
+      "info": "t:sections.process.settings.heading_accent.info",
+      "default": "t:sections.process.settings.heading_accent.default"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.process.settings.text.label",
+      "default": "t:sections.process.settings.text.default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step_1",
+      "name": "t:sections.process.blocks.step_1.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.process.blocks.shared.title.label",
+          "default": "t:sections.process.blocks.step_1.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.process.blocks.shared.text.label",
+          "default": "t:sections.process.blocks.step_1.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "step_2",
+      "name": "t:sections.process.blocks.step_2.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.process.blocks.shared.title.label",
+          "default": "t:sections.process.blocks.step_2.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.process.blocks.shared.text.label",
+          "default": "t:sections.process.blocks.step_2.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "step_3",
+      "name": "t:sections.process.blocks.step_3.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.process.blocks.shared.title.label",
+          "default": "t:sections.process.blocks.step_3.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.process.blocks.shared.text.label",
+          "default": "t:sections.process.blocks.step_3.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "step_4",
+      "name": "t:sections.process.blocks.step_4.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.process.blocks.shared.title.label",
+          "default": "t:sections.process.blocks.step_4.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.process.blocks.shared.text.label",
+          "default": "t:sections.process.blocks.step_4.settings.text.default"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.process.name",
+      "blocks": [
+        { "type": "step_1" },
+        { "type": "step_2" },
+        { "type": "step_3" },
+        { "type": "step_4" }
+      ]
+    }
+  ]
+}
+{% endschema %}
