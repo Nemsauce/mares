@@ -24,6 +24,11 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    transition:
+      background-color var(--motion-fast) var(--motion-ease),
+      border-color var(--motion-fast) var(--motion-ease),
+      color var(--motion-fast) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
   }
 
   .button--primary {
@@ -36,11 +41,26 @@
     color: var(--color-brand);
   }
 
-  /* Hover only where hover exists, and never while disabled or loading. */
+  /* Hover only where hover exists, and never while disabled or loading.
+     Secondary fills with brand on hover: on-brand on brand is 5.18 to 1. Secondary only
+     sits on general surfaces (bg, bg-raised, surface-sunk), never on a line color. */
   @media (hover: hover) {
     .button--primary:hover:not(:disabled, [aria-disabled="true"]) {
       background: var(--color-brand-hover);
       border-color: var(--color-brand-hover);
+    }
+
+    .button--secondary:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--color-brand);
+      color: var(--color-on-brand);
+    }
+  }
+
+  /* Press: the button gives a little under the finger or the pointer. Movement, so only
+     when motion is allowed. */
+  @media (prefers-reduced-motion: no-preference) {
+    .button:active:not(:disabled, [aria-disabled="true"]) {
+      transform: translateY(1px) scale(0.98);
     }
   }
 

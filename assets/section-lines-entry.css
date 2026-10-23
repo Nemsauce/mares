@@ -47,16 +47,22 @@
     background: var(--color-bg-raised);
     box-shadow: var(--shadow-rest);
     overflow: hidden;
+    transition:
+      box-shadow var(--motion-fast) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
   }
 
+  /* overflow: hidden keeps the hover zoom inside the image box, off the text. */
   .lines-entry__media {
     aspect-ratio: 16 / 9; /* PROPOSAL: same ratio as the hero images in the brief */
+    overflow: hidden;
   }
 
   .lines-entry__image {
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
+    transition: transform var(--motion-slow) var(--motion-ease);
   }
 
   .lines-entry__body {
@@ -91,6 +97,23 @@
   @media (hover: hover) {
     .lines-entry__card:hover {
       box-shadow: var(--shadow-lift);
+    }
+  }
+
+  /* Movement, only when motion is allowed (same as the product card). */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .lines-entry__card:hover {
+      transform: translateY(calc(-1 * var(--space-1)));
+    }
+
+    .lines-entry__card:hover .lines-entry__image {
+      transform: scale(1.04);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lines-entry__card:active {
+      transform: scale(0.99);
     }
   }
 

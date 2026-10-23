@@ -11,11 +11,21 @@
     box-shadow: var(--shadow-rest);
     color: var(--color-ink);
     overflow: hidden;
+    transition:
+      box-shadow var(--motion-fast) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
   }
 
+  /* overflow: hidden keeps the hover zoom of the image inside its own box, so it never
+     covers the name or the price. */
   .product-card__media {
     /* Reserves the 4:5 box even before an image arrives; image.liquid sets the same ratio. */
     aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .product-card__media img {
+    transition: transform var(--motion-slow) var(--motion-ease);
   }
 
   .product-card__body {
@@ -66,6 +76,24 @@
   @media (hover: hover) {
     .product-card:hover {
       box-shadow: var(--shadow-lift);
+    }
+  }
+
+  /* Movement, only when motion is allowed: the card rises on hover and the image grows a
+     little inside its box; on press the card settles back. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .product-card:hover {
+      transform: translateY(calc(-1 * var(--space-1)));
+    }
+
+    .product-card:hover .product-card__media img {
+      transform: scale(1.04);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .product-card:active {
+      transform: scale(0.99);
     }
   }
 }

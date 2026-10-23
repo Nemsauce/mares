@@ -102,6 +102,14 @@
     --shadow-rest: var(--shadow-soft);
     --shadow-lift: var(--shadow-soft);
     --surface-sunk: var(--color-bg);
+
+    /* Motion. PROPOSAL: tokens.json has no durations. Fast for hover and press, slow for
+       entrances and the card image. The reduced-motion rule in the reset layer shortens
+       every transition to nothing; movement itself (translate, scale, reveal) is only
+       declared under prefers-reduced-motion: no-preference. */
+    --motion-fast: 180ms;
+    --motion-slow: 600ms;
+    --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
   @supports (color: color-mix(in srgb, currentColor 50%, transparent)) {
@@ -147,6 +155,22 @@
     font-weight: var(--type-display-md-weight);
     font-size: inherit;
     line-height: inherit;
+  }
+
+  /* Links: the underline settles a little lower on hover (motion, so not under reduced
+     motion; the color and the underline itself never depend on it). */
+  a {
+    text-underline-offset: calc(var(--space-1) / 2);
+    transition:
+      color var(--motion-fast) var(--motion-ease),
+      text-decoration-color var(--motion-fast) var(--motion-ease),
+      text-underline-offset var(--motion-fast) var(--motion-ease);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    a:hover {
+      text-underline-offset: var(--space-1);
+    }
   }
 
   /* Focus ring: color from --focus-ring-color (base-lines.css, R-6). */
@@ -237,6 +261,32 @@
 }
 
 @layer utilities {
+  /* Entrance (assets/reveal.js). The script adds .reveal only to elements below the fold
+     and only when motion is allowed, then .is-revealed once the element is in view.
+     Without the script nothing gets .reveal, so nothing is ever hidden. The rules are
+     inside no-preference, so under reduced motion .reveal has no effect either. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(var(--space-4));
+      transition:
+        opacity var(--motion-slow) var(--motion-ease),
+        transform var(--motion-slow) var(--motion-ease);
+    }
+
+    .reveal.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media print {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   /* The 1px, -1px and inset(50%) values are the standard visually-hidden technique,
      not design values. */
   .visually-hidden,

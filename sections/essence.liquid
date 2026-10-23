@@ -13,10 +13,14 @@
   locales/es.default.schema.json. The features have no default text: the content file has
   none, and the brand has not confirmed what it can claim.
 
+  data-reveal: the content rises in once, when it scrolls into view (assets/reveal.js).
+  Without the script it is simply shown.
+
   General page: bg, bg-raised, ink, brand. No line colors.
 {%- endcomment -%}
 
 {{ 'section-essence.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
 {%- capture features -%}
   {%- for block in section.blocks -%}
@@ -35,7 +39,7 @@
 {%- endcapture -%}
 
 <section class="essence{% if section.settings.image != blank %} essence--image{% endif %}">
-  <div class="container">
+  <div class="container" data-reveal>
     <div class="grid essence__grid">
       <div class="essence__body">
         {% render 'section-header',

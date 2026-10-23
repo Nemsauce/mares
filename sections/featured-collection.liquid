@@ -15,6 +15,9 @@
   The cards are below the fold on the home page, so every image is lazy: nothing here
   competes with the hero image for the LCP.
 
+  data-reveal: the content rises in once, when it scrolls into view (assets/reveal.js).
+  Without the script it is simply shown.
+
   Nothing renders when the collection is missing or empty, except in the theme editor,
   where a short note says why the section is blank.
 
@@ -58,9 +61,10 @@
 
 {%- if fc_count > 0 -%}
   {{ 'section-featured-collection.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
   <section class="featured-collection">
-    <div class="container">
+    <div class="container" data-reveal>
       {% render 'section-header',
         eyebrow: section.settings.eyebrow,
         heading: section.settings.heading,

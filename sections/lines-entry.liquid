@@ -7,14 +7,18 @@
   The home page is a general page: bg-raised cards, ink text, brand link. No line colors
   and no data-line attribute here, not even for the two lines.
 
+  data-reveal: the content rises in once, when it scrolls into view (assets/reveal.js).
+  Without the script it is simply shown.
+
   Below 600px the cards are a horizontal scroll-snap row (section-lines-entry.css), so the
   featured products that follow stay within two phone screens of the top.
 {%- endcomment -%}
 
 {{ 'section-lines-entry.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
 <section class="lines-entry">
-  <div class="container">
+  <div class="container" data-reveal>
     {% render 'section-header',
       eyebrow: section.settings.eyebrow,
       heading: section.settings.heading,
