@@ -46,17 +46,46 @@
         "dia"
       ],
       "settings": {
-        "heading": "Dos formas de mirar el mar",
-        "heading_accent": "",
-        "eyebrow": ""
+        "heading": "Dos formas de mirar",
+        "heading_accent": "el mar",
+        "eyebrow": "Las dos líneas"
       }
     },
     "essence": {
       "type": "essence",
+      "blocks": {
+        "embroidery": {
+          "type": "feature",
+          "settings": {
+            "icon": "spool",
+            "title": "Bordada con cuidado"
+          }
+        },
+        "softness": {
+          "type": "feature",
+          "settings": {
+            "icon": "feather",
+            "title": "Suave para su piel"
+          }
+        },
+        "price": {
+          "type": "feature",
+          "settings": {
+            "icon": "tag",
+            "title": "Precio justo",
+            "text": "Sin recortar en calidad"
+          }
+        }
+      },
+      "block_order": [
+        "embroidery",
+        "softness",
+        "price"
+      ],
       "settings": {
-        "eyebrow": "",
-        "heading": "Por qué bordamos a mano",
-        "heading_accent": "",
+        "eyebrow": "Hecha con amor",
+        "heading": "Por qué bordamos",
+        "heading_accent": "a mano",
         "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
       }
     }

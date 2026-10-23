@@ -286,6 +286,15 @@
               },
               "options__4": {
                 "label": "Carrito"
+              },
+              "options__5": {
+                "label": "Carrete de hilo"
+              },
+              "options__6": {
+                "label": "Pluma"
+              },
+              "options__7": {
+                "label": "Etiqueta"
               }
             },
             "title": {
