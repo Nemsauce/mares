@@ -64,12 +64,6 @@
     list-style: none;
   }
 
-  .footer__links--inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 var(--space-6);
-  }
-
   .footer__link {
     display: inline-flex;
     align-items: center;

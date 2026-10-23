@@ -76,11 +76,28 @@
     "line_removed": "Quitaste {{ product }} del carrito"
   },
   "newsletter": {
-    "label": "Correo electrónico",
+    "label": "Tu correo",
     "submit": "Suscribirme",
     "hint": "Escribe tu correo para recibir novedades.",
-    "success": "Listo, ya estás en la lista. Gracias.",
-    "error": "No pudimos guardar tu correo. Revisa que esté bien escrito e intenta de nuevo."
+    "success": "Listo, te escribimos pronto.",
+    "error": "No pudimos guardar tu correo. Revísalo e intenta de nuevo."
+  },
+  "footer": {
+    "store": {
+      "heading": "Tienda",
+      "line_descanso": "Línea Descanso",
+      "line_dia": "Línea Día",
+      "all_products": "Todas las prendas"
+    },
+    "help": {
+      "heading": "Ayuda",
+      "faq": "Preguntas frecuentes",
+      "returns": "Cambios",
+      "care": "Cuidado de la prenda"
+    },
+    "contact": {
+      "heading": "Escríbenos"
+    }
   },
   "search": {
     "title": "Buscar",

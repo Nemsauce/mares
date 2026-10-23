@@ -60,6 +60,10 @@
       "settings": {
         "show_copyright": {
           "label": "Mostrar derechos de autor"
+        },
+        "page_faq": {
+          "label": "Página de preguntas frecuentes",
+          "info": "Se muestra en el grupo Ayuda. Si no eliges una página, el enlace no aparece. Los enlaces de cambios y cuidado salen de Ajustes del tema, en Páginas."
         }
       },
       "blocks": {
@@ -99,10 +103,12 @@
           "name": "Boletín de correo",
           "settings": {
             "heading": {
-              "label": "Título"
+              "label": "Título",
+              "default": "Déjanos tu correo"
             },
             "text": {
               "label": "Texto",
+              "default": "Te escribimos cuando entra algo nuevo. Nada más.",
               "info": "Dilo con claridad: qué va a recibir quien se suscribe. Escribe solo lo que la marca pueda cumplir. Los correos quedan en la lista de clientes de la tienda."
             }
           }
