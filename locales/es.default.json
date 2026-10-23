@@ -65,6 +65,8 @@
     "remove": "Quitar {{ product }}",
     "subtotal": "Subtotal",
     "checkout": "Ir a pagar",
+    "update": "Actualizar carrito",
+    "order_note": "Nota para tu pedido",
     "shipping_notice": "Verás el costo de envío antes de pagar.",
     "update_error": "No pudimos actualizar tu carrito. Intenta de nuevo."
   },

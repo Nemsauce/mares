@@ -1,0 +1,207 @@
+/* section-cart.css: cart page and its line items (docs/THEME_PLAN.md 6.7). Tokens only.
+   General page: bg, bg-raised, ink and brand. No line colors. The field, button and price
+   looks come from their component files. */
+
+@layer sections {
+  .cart {
+    padding-block: var(--section-gap);
+  }
+
+  .cart__title {
+    color: var(--color-ink);
+    margin-block-end: var(--space-8);
+  }
+
+  /* Empty state. */
+  .cart__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    max-inline-size: 65ch; /* PROPOSAL: readable measure */
+  }
+
+  .cart__empty h2 {
+    color: var(--color-ink);
+  }
+
+  /* Stacked below 1024px; from 1024px the lines take 8 of 12 columns and the summary 4
+     (PROPOSAL: the docs give no split for the cart). */
+  .cart__grid {
+    row-gap: var(--space-8);
+  }
+
+  .cart__items,
+  .cart__summary {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .cart__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .cart__line {
+    padding-block: var(--space-6);
+    border-block-end: 1px solid var(--color-line);
+  }
+
+  .cart__line:first-child {
+    padding-block-start: 0;
+  }
+
+  .cart__update-action {
+    margin-block-start: var(--space-6);
+  }
+
+  /* Summary: a raised panel. */
+  .cart__summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-self: start;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-raised);
+  }
+
+  .cart__subtotal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  .cart__subtotal dd {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .cart__shipping {
+    color: var(--color-ink);
+  }
+
+  .cart__shipping > * + * {
+    margin-block-start: var(--space-2);
+  }
+
+  .cart__checkout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .cart__checkout .button {
+    inline-size: 100%;
+  }
+
+  /* One line: image, body, price. Below 600px the price drops under the body. */
+  .cart-line {
+    display: grid;
+    grid-template-columns: var(--space-24) minmax(0, 1fr);
+    grid-template-areas:
+      "media body"
+      "media price";
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+  }
+
+  .cart-line__media {
+    grid-area: media;
+    align-self: start;
+    border-radius: var(--radius-md); /* PROPOSAL: the docs give no radius for thumbnails */
+    overflow: hidden;
+  }
+
+  .cart-line__body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .cart-line__price {
+    grid-area: price;
+  }
+
+  .cart-line__title {
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+  }
+
+  /* Options and line item properties as name and value pairs. */
+  .cart-line__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+  }
+
+  .cart-line__detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .cart-line__detail dt {
+    color: var(--color-ink-muted);
+  }
+
+  .cart-line__detail dd {
+    margin: 0;
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+  }
+
+  /* The message is text, so it never relies on color. */
+  .cart-line__error {
+    color: var(--color-ink);
+  }
+
+  .cart-line__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--space-4);
+  }
+
+  .cart-line__quantity {
+    inline-size: var(--space-24); /* PROPOSAL: a narrow field; the docs give no width */
+  }
+
+  /* Remove link: underlined, brand, with a target tall enough to press (44px). */
+  .cart-line__remove {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-brand);
+    text-decoration: underline;
+  }
+
+  @media (min-width: 600px) {
+    .cart-line {
+      grid-template-columns: var(--space-24) minmax(0, 1fr) auto;
+      grid-template-areas: "media body price";
+      column-gap: var(--space-6);
+    }
+
+    .cart-line__price {
+      justify-self: end;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cart__items {
+      grid-column: span 8;
+    }
+
+    .cart__summary {
+      grid-column: span 4;
+    }
+  }
+}

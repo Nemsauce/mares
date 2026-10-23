@@ -1,0 +1,99 @@
+{%- comment -%}
+  One cart line (docs/THEME_PLAN.md 6.7). Rendered inside the cart's update form, so its
+  quantity input is posted with the others as updates[] (cart order = line order).
+
+  Parameters:
+    item   (required) a cart line item.
+    index  (required) the 1-based position of the line, used for unique ids.
+
+  Details list: the variant options (not for a product with only its default variant),
+  then the line item properties as visible name and value text. A property whose name
+  starts with an underscore is hidden, which is the Shopify convention for data that is
+  not for the customer. Names and values are escaped because the customer typed them.
+
+  The product image is decorative (empty alt): the title link next to it names the line.
+
+  Usage:
+    {% render 'cart-line-item', item: item, index: forloop.index %}
+{%- endcomment -%}
+
+{%- liquid
+  assign title_id = 'cart-line-title-' | append: index
+  assign quantity_id = 'cart-line-quantity-' | append: index
+  assign line_title = item.title | escape
+  assign remove_label = 'cart.remove' | t: product: line_title
+-%}
+
+{%- capture details -%}
+  {%- unless item.product.has_only_default_variant -%}
+    {%- for option in item.options_with_values -%}
+      <div class="cart-line__detail">
+        <dt>{{ option.name | escape }}</dt>
+        <dd>{{ option.value | escape }}</dd>
+      </div>
+    {%- endfor -%}
+  {%- endunless -%}
+
+  {%- for property in item.properties -%}
+    {%- assign property_name = property.first | strip -%}
+    {%- assign property_initial = property_name | slice: 0 -%}
+    {%- if property_name != blank and property_initial != '_' and property.last != blank -%}
+      <div class="cart-line__detail">
+        <dt>{{ property_name | escape }}</dt>
+        <dd>{{ property.last | escape }}</dd>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<div class="cart-line">
+  <div class="cart-line__media">
+    {% render 'image',
+      image: item.image,
+      alt: '',
+      sizes: '96px',
+      widths: '96, 192, 288',
+      aspect_ratio: '4 / 5'
+    %}
+  </div>
+
+  <div class="cart-line__body">
+    <a class="cart-line__title text-body" id="{{ title_id }}" href="{{ item.url }}">{{ item.product.title }}</a>
+
+    {%- if details != blank -%}
+      <dl class="cart-line__details text-body-sm">{{ details }}</dl>
+    {%- endif -%}
+
+    {%- if item.error_message != blank -%}
+      <p class="cart-line__error text-body-sm">
+        <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+        {{ item.error_message }}
+      </p>
+    {%- endif -%}
+
+    <div class="cart-line__controls">
+      <div class="field cart-line__quantity">
+        <label class="field__label" for="{{ quantity_id }}">{{ 'products.quantity' | t }}</label>
+        <input
+          class="field__input"
+          type="number"
+          id="{{ quantity_id }}"
+          name="updates[]"
+          value="{{ item.quantity }}"
+          min="1"
+          inputmode="numeric"
+          aria-describedby="{{ title_id }}"
+        >
+      </div>
+
+      <a class="cart-line__remove text-body-sm" href="{{ item.url_to_remove }}">{{ remove_label }}</a>
+    </div>
+  </div>
+
+  <div class="cart-line__price">
+    {% render 'price',
+      price: item.final_line_price,
+      compare_at_price: item.original_line_price
+    %}
+  </div>
+</div>

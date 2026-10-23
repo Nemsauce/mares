@@ -1,0 +1,166 @@
+{%- comment -%}
+  Cart page (docs/THEME_PLAN.md 6.7). General page: bg, bg-raised, ink and brand only,
+  no line colors, even when the cart mixes both lines.
+
+  No JavaScript. Three plain requests to Shopify's own cart endpoints, each one a full page
+  load:
+    - quantities: one form, POST to routes.cart_url with updates[] (one input per line, in
+      cart order) and a submit button.
+    - remove: a link to item.url_to_remove (GET /cart/change?line=N&quantity=0).
+    - checkout: a second form, POST to routes.cart_url with a "checkout" field, which makes
+      Shopify save the order note and redirect to checkout. It is a hidden field because
+      snippets/button.liquid has no name parameter.
+  Quantities typed but not saved with "Actualizar carrito" are not sent to checkout, and
+  the order note is saved only when the customer goes to checkout.
+
+  The title is the page's h1 in both states. The empty state heading is an h2.
+
+  Shipping cost and delivery time sit above the checkout button, so the customer sees them
+  before paying. Both come from settings. A blank shipping notice falls back to the locale
+  string (docs/content/catalogo-y-copy.md), because the guide requires it to be visible.
+  A blank delivery estimate shows nothing (the content file has no copy yet).
+{%- endcomment -%}
+
+{{ 'section-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-field.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign empty_heading = section.settings.empty_heading
+  if empty_heading == blank
+    assign empty_heading = 'cart.empty_heading' | t
+  endif
+
+  assign empty_text = section.settings.empty_text
+  if empty_text == blank
+    assign empty_text = 'cart.empty_text' | t
+  endif
+
+  assign empty_button_label = section.settings.empty_button_label
+  if empty_button_label == blank
+    assign empty_button_label = 'cart.empty_button' | t
+  endif
+
+  # Same address the 404 page uses for the Descanso line.
+  assign empty_button_link = section.settings.empty_button_link
+  if empty_button_link == blank
+    assign empty_button_link = routes.collections_url | append: '/descanso'
+  endif
+
+  assign shipping_note = section.settings.shipping_note
+  assign checkout_label = 'cart.checkout' | t
+  assign update_label = 'cart.update' | t
+-%}
+
+<div class="cart">
+  <div class="container">
+    <h1 class="cart__title text-display-lg">{{ 'cart.title' | t }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart__empty">
+        <h2 class="text-display-sm">{{ empty_heading }}</h2>
+        <p class="text-body-lg">{{ empty_text }}</p>
+        {% render 'button', label: empty_button_label, url: empty_button_link %}
+      </div>
+    {%- else -%}
+      <div class="grid cart__grid">
+        <div class="cart__items">
+          <form class="cart__update" action="{{ routes.cart_url }}" method="post">
+            <ul class="cart__list" role="list">
+              {%- for item in cart.items -%}
+                <li class="cart__line">
+                  {% render 'cart-line-item', item: item, index: forloop.index %}
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            <div class="cart__update-action">
+              {% render 'button', label: update_label, type: 'submit', variant: 'secondary' %}
+            </div>
+          </form>
+        </div>
+
+        <div class="cart__summary">
+          <dl class="cart__subtotal">
+            <dt class="text-body">{{ 'cart.subtotal' | t }}</dt>
+            <dd class="text-price">{{ cart.items_subtotal_price | money }}</dd>
+          </dl>
+
+          <div class="cart__shipping text-body-sm">
+            {%- if shipping_note != blank -%}
+              {{ shipping_note }}
+            {%- else -%}
+              <p>{{ 'cart.shipping_notice' | t }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.delivery_estimate != blank -%}
+              <p><strong>{{ 'products.delivery_time' | t }}</strong> {{ section.settings.delivery_estimate }}</p>
+            {%- endif -%}
+          </div>
+
+          <form class="cart__checkout" action="{{ routes.cart_url }}" method="post">
+            {%- if section.settings.show_order_note -%}
+              <div class="field">
+                <label class="field__label" for="cart-note">{{ 'cart.order_note' | t }}</label>
+                <textarea class="field__input" id="cart-note" name="note" rows="3">{{ cart.note | escape }}</textarea>
+              </div>
+            {%- endif -%}
+
+            <input type="hidden" name="checkout" value="">
+            {% render 'button', label: checkout_label, type: 'submit' %}
+          </form>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_order_note",
+      "label": "t:sections.main-cart.settings.show_order_note.label",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_note",
+      "label": "t:sections.main-cart.settings.shipping_note.label",
+      "info": "t:sections.main-cart.settings.shipping_note.info",
+      "default": "t:sections.main-cart.settings.shipping_note.default"
+    },
+    {
+      "type": "text",
+      "id": "delivery_estimate",
+      "label": "t:sections.main-cart.settings.delivery_estimate.label",
+      "info": "t:sections.main-cart.settings.delivery_estimate.info"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "t:sections.main-cart.settings.empty_heading.label",
+      "default": "t:sections.main-cart.settings.empty_heading.default"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "t:sections.main-cart.settings.empty_text.label",
+      "default": "t:sections.main-cart.settings.empty_text.default"
+    },
+    {
+      "type": "text",
+      "id": "empty_button_label",
+      "label": "t:sections.main-cart.settings.empty_button_label.label",
+      "default": "t:sections.main-cart.settings.empty_button_label.default"
+    },
+    {
+      "type": "url",
+      "id": "empty_button_link",
+      "label": "t:sections.main-cart.settings.empty_button_link.label",
+      "info": "t:sections.main-cart.settings.empty_button_link.info"
+    }
+  ]
+}
+{% endschema %}

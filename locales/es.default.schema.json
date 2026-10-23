@@ -305,6 +305,39 @@
     },
     "main-product": {
       "name": "Producto"
+    },
+    "main-cart": {
+      "name": "Carrito",
+      "settings": {
+        "show_order_note": {
+          "label": "Mostrar nota del pedido"
+        },
+        "shipping_note": {
+          "label": "Aviso de envío",
+          "info": "Se muestra sobre el botón de pago. Si lo dejas vacío, se muestra el aviso por defecto.",
+          "default": "<p>Verás el costo de envío antes de pagar.</p>"
+        },
+        "delivery_estimate": {
+          "label": "Tiempo estimado de entrega",
+          "info": "Por ejemplo, el rango de días. Si lo dejas vacío, no se muestra."
+        },
+        "empty_heading": {
+          "label": "Titular del carrito vacío",
+          "default": "Tu carrito está vacío"
+        },
+        "empty_text": {
+          "label": "Texto del carrito vacío",
+          "default": "Cuando agregues algo, lo verás aquí."
+        },
+        "empty_button_label": {
+          "label": "Texto del botón del carrito vacío",
+          "default": "Ver la línea Descanso"
+        },
+        "empty_button_link": {
+          "label": "Enlace del botón del carrito vacío",
+          "info": "Si lo dejas vacío, se usa la línea Descanso."
+        }
+      }
     }
   },
   "blocks": {
