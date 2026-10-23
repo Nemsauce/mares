@@ -7,6 +7,7 @@
     heading         (optional) the heading text.
     heading_accent  (optional) a second part of the heading, shown after a space in the brand
                     color. Plain text: both parts are separate settings, no markup in copy.
+                    The space is always emitted, see the whitespace trap note in the h tag.
     subtitle        (optional) paragraph under the heading, body-lg, ink.
     level           (optional) heading level, 1 to 6. Default 2. The size does not change with
                     the level: the caller picks the level that fits the page outline.
@@ -49,8 +50,17 @@
 
     {%- if heading != blank or heading_accent != blank -%}
       <h{{ header_level }} class="section-header__heading text-display-md">
+        {%- comment -%}
+          WHITESPACE TRAP: the gap between heading and accent must come from an output tag
+          that prints a space string, never from a bare space typed between two tags.
+          A bare space is plain template text, and whitespace control (the dash on a tag
+          delimiter, here on the tag that opens the next line) trims plain text beside it,
+          so the space can go with the newline and the words render joined ("mirarel mar").
+          The value an output tag prints is not template text, so no dash can trim it.
+          Do not turn the output tag below back into a typed space.
+        {%- endcomment -%}
         {%- if heading != blank -%}{{ heading }}{%- endif -%}
-        {%- if heading != blank and heading_accent != blank %} {% endif -%}
+        {%- if heading != blank and heading_accent != blank -%}{{ ' ' }}{%- endif -%}
         {%- if heading_accent != blank -%}<span class="section-header__accent">{{ heading_accent }}</span>{%- endif -%}
       </h{{ header_level }}>
     {%- endif -%}
