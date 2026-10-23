@@ -1,0 +1,16 @@
+/* section-announcement-bar.css: the line above the header (sections/announcement-bar.liquid).
+   Tokens only. Quiet on purpose: body-sm, centered, no color accent, no motion.
+   Text on the deeper pearl (base.css): ink 9.10 to 1. */
+
+@layer sections {
+  .announcement-bar {
+    background: var(--surface-sunk);
+    color: var(--color-ink);
+  }
+
+  .announcement-bar__text {
+    margin: 0;
+    padding-block: var(--space-2);
+    text-align: center;
+  }
+}

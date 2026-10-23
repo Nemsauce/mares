@@ -1,0 +1,45 @@
+{%- comment -%}
+  Announcement bar: one short line above the header, in the header group, so it is on every
+  page. Its default is a fact the store can prove ("Envío gratis a todo el país"), not an
+  offer: no countdown, no color, no link, body-sm on the deeper pearl. A blank line renders
+  nothing, which is also how the owner turns it off.
+
+  NOT dismissible, on purpose. Closing it would need a script and somewhere to remember the
+  choice (a cookie or localStorage), the bar would flash on every page until that ran, and
+  the line is one 38px row of information the customer is glad to see again on the cart.
+  The cost of keeping it is those 38px; if the bar ever carries something temporary,
+  revisit this.
+
+  General page surface: surface-sunk with ink text (9.10 to 1, 4.5 needed).
+{%- endcomment -%}
+
+{%- if section.settings.text != blank -%}
+  {{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+
+  <div class="announcement-bar">
+    <p class="announcement-bar__text text-body-sm container">{{ section.settings.text }}</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:sections.announcement-bar.settings.text.label",
+      "info": "t:sections.announcement-bar.settings.text.info",
+      "default": "t:sections.announcement-bar.settings.text.default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.name"
+    }
+  ]
+}
+{% endschema %}

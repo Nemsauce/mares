@@ -2,10 +2,16 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Envío gratis a todo el país"
+      }
+    },
     "header": {
       "type": "header",
       "settings": {}
     }
   },
-  "order": ["header"]
+  "order": ["announcement-bar", "header"]
 }

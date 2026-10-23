@@ -46,6 +46,16 @@
     }
   },
   "sections": {
+    "announcement-bar": {
+      "name": "Barra de anuncio",
+      "settings": {
+        "text": {
+          "label": "Texto",
+          "info": "Una sola línea corta, sobre el encabezado, en todas las páginas. Escribe solo hechos que la tienda pueda cumplir. Si lo dejas vacío, la barra no se muestra.",
+          "default": "Envío gratis a todo el país"
+        }
+      }
+    },
     "header": {
       "name": "Encabezado",
       "settings": {
