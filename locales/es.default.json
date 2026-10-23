@@ -55,7 +55,8 @@
     "delivery_time": "Tiempo estimado de entrega",
     "returns_policy": "Política de cambios",
     "garment_care": "Cuidado de la prenda",
-    "stock_error": "No hay más unidades disponibles de este producto."
+    "stock_error": "No hay más unidades disponibles de este producto.",
+    "add_error": "No pudimos agregar el producto. Revisa tu conexión e intenta de nuevo."
   },
   "cart": {
     "title": "Carrito",

@@ -9,6 +9,11 @@
 
   When the variant is sold out the button is disabled and a text message says why. No
   dynamic checkout button: the payment gateway is undecided.
+
+  JavaScript hooks: <product-form> (assets/product-form.js) adds to the cart without a page
+  load and reads its messages from the data-*-text attributes. [data-form-error] is the
+  error text it fills next to the button; it stays hidden and empty without the script.
+  The color comes from the error token inline, because this commit may not touch CSS.
 {%- endcomment -%}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -20,13 +25,27 @@
 {%- endif -%}
 
 <div class="product-buy" {{ block.shopify_attributes }}>
-  {%- form 'product', product, id: form_id, class: 'product-buy__form' -%}
-    <input type="hidden" name="id" value="{{ current_variant.id }}">
-    {% render 'button', label: add_label, type: 'submit', disabled: unavailable %}
-    {%- if unavailable -%}
-      <p class="product-buy__reason text-body-sm">{{ 'products.sold_out' | t }}</p>
-    {%- endif -%}
-  {%- endform -%}
+  <product-form
+    data-added-text="{{ 'products.added' | t }}"
+    data-stock-error-text="{{ 'products.stock_error' | t }}"
+    data-error-text="{{ 'products.add_error' | t }}"
+    data-loading-text="{{ 'accessibility.loading' | t }}"
+  >
+    {%- form 'product', product, id: form_id, class: 'product-buy__form' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      {% render 'button', label: add_label, type: 'submit', disabled: unavailable %}
+      {%- if unavailable -%}
+        <p class="product-buy__reason text-body-sm">{{ 'products.sold_out' | t }}</p>
+      {%- endif -%}
+      <p
+        id="{{ form_id }}-error"
+        class="text-body-sm"
+        style="color: var(--color-error);"
+        data-form-error
+        hidden
+      ></p>
+    {%- endform -%}
+  </product-form>
 </div>
 
 {% schema %}

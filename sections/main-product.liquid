@@ -6,14 +6,20 @@
   content_for 'blocks'. Theme blocks are current Shopify syntax: each block is its own
   file, and the template lists them.
 
-  No JavaScript: the gallery is a CSS scroll-snap strip, the variant picker is a plain GET
-  form and the add to cart is a plain POST form (see the blocks).
+  Works without JavaScript: the gallery is a CSS scroll-snap strip, the variant picker is a
+  plain GET form and the add to cart is a plain POST form (see the blocks). The scripts
+  loaded below only upgrade those; if they do not run, nothing changes.
 
   data-line comes from the product metafield mares.line ('descanso' or 'dia'). Without it
   the page is neutral and no line is assumed.
 {%- endcomment -%}
 
 {{ 'section-product.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Progressive enhancement only (plan section 5). core.js is loaded by the header first.
+{%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign product_line = product.metafields.mares.line.value
