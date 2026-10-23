@@ -59,21 +59,11 @@
         "heading_accent": "",
         "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
       }
-    },
-    "closing": {
-      "type": "text-feature",
-      "settings": {
-        "heading": "Por qué bordamos a mano",
-        "heading_accent": "",
-        "eyebrow": "",
-        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
-      }
     }
   },
   "order": [
     "hero",
     "lines",
-    "essence",
-    "closing"
+    "essence"
   ]
 }
