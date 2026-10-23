@@ -46,6 +46,24 @@
     }
   },
   "sections": {
+    "shared": {
+      "motif": {
+        "label": "Bordado decorativo",
+        "info": "Un dibujo pequeño de bordado sobre la etiqueta del encabezado. Es solo adorno: la sección se entiende igual sin él.",
+        "options__1": { "label": "Ninguno" },
+        "options__2": { "label": "Ola suave" },
+        "options__3": { "label": "Luna sobre el mar" },
+        "options__4": { "label": "Conchitas nacaradas" },
+        "options__5": { "label": "Estrella de mar" },
+        "options__6": { "label": "Caballito de mar" },
+        "options__7": { "label": "Palmita" },
+        "options__8": { "label": "Sol" }
+      },
+      "show_divider": {
+        "label": "Línea de bordado arriba",
+        "info": "Una línea de puntadas en el borde superior de la sección, que la separa de la anterior. Úsala igual en todas las secciones de la página."
+      }
+    },
     "announcement-bar": {
       "name": "Barra de anuncio",
       "settings": {

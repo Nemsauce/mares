@@ -4,6 +4,7 @@
 
    Markup:
      <div class="section-header section-header--center">
+       <div class="section-header__motif"><svg aria-hidden="true">...</svg></div> (optional)
        <p class="section-header__eyebrow text-label">...</p>
        <h2 class="section-header__heading text-display-md">... <span class="section-header__accent">...</span></h2>
        <p class="section-header__subtitle text-body-lg">...</p>
@@ -25,6 +26,15 @@
   .section-header--left {
     align-items: flex-start;
     text-align: start;
+  }
+
+  /* Decorative embroidery motif above the eyebrow. It takes the header's alignment:
+     centered in the default header, at the start in a left aligned one, where a centered
+     drawing over left aligned text would float.
+     ink-muted, never a line color (README, "Bordado como motivo"): 4.88 to 1 on the deeper
+     pearl, more on bg and bg-raised (3 to 1 needed for artwork). */
+  .section-header__motif {
+    color: var(--color-ink-muted);
   }
 
   .section-header__eyebrow,

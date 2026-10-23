@@ -48,6 +48,8 @@
         "dia"
       ],
       "settings": {
+        "motif": "ola-suave",
+        "show_divider": true,
         "heading": "Dos formas de mirar",
         "heading_accent": "el mar",
         "eyebrow": "Las dos líneas"
@@ -56,6 +58,8 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
+        "motif": "luna-sobre-el-mar",
+        "show_divider": true,
         "eyebrow": "Línea Descanso",
         "heading": "Para dormir",
         "heading_accent": "tranquila",
@@ -98,6 +102,8 @@
         "price"
       ],
       "settings": {
+        "motif": "estrella-de-mar",
+        "show_divider": true,
         "eyebrow": "Hecha con amor",
         "heading": "Por qué bordamos",
         "heading_accent": "a mano",

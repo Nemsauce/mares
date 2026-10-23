@@ -20,6 +20,9 @@
 {%- endcomment -%}
 
 {{ 'section-essence.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_divider -%}
+  {{ 'section-divider.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 <script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
 {%- capture features -%}
@@ -38,11 +41,15 @@
   {%- endfor -%}
 {%- endcapture -%}
 
-<section class="essence{% if section.settings.image != blank %} essence--image{% endif %}">
+<section class="essence{% if section.settings.image != blank %} essence--image{% endif %}{% if section.settings.show_divider %} section--divided{% endif %}">
+  {%- if section.settings.show_divider -%}
+    <div class="container section-divider" aria-hidden="true">{% render 'embroidery-divider' %}</div>
+  {%- endif -%}
   <div class="container" data-reveal>
     <div class="grid essence__grid">
       <div class="essence__body">
         {% render 'section-header',
+          motif: section.settings.motif,
           eyebrow: section.settings.eyebrow,
           heading: section.settings.heading,
           heading_accent: section.settings.heading_accent,
@@ -79,6 +86,30 @@
   "name": "t:sections.essence.name",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "select",
+      "id": "motif",
+      "label": "t:sections.shared.motif.label",
+      "info": "t:sections.shared.motif.info",
+      "options": [
+        { "value": "none", "label": "t:sections.shared.motif.options__1.label" },
+        { "value": "ola-suave", "label": "t:sections.shared.motif.options__2.label" },
+        { "value": "luna-sobre-el-mar", "label": "t:sections.shared.motif.options__3.label" },
+        { "value": "conchitas-nacaradas", "label": "t:sections.shared.motif.options__4.label" },
+        { "value": "estrella-de-mar", "label": "t:sections.shared.motif.options__5.label" },
+        { "value": "caballito-de-mar", "label": "t:sections.shared.motif.options__6.label" },
+        { "value": "palmita", "label": "t:sections.shared.motif.options__7.label" },
+        { "value": "sol", "label": "t:sections.shared.motif.options__8.label" }
+      ],
+      "default": "estrella-de-mar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "t:sections.shared.show_divider.label",
+      "info": "t:sections.shared.show_divider.info",
+      "default": true
+    },
     {
       "type": "text",
       "id": "eyebrow",

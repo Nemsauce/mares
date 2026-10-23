@@ -1,0 +1,25 @@
+/* section-divider.css: the embroidery stitch line between home page sections
+   (snippets/embroidery-divider.liquid). Tokens only.
+
+   A section that shows it is .section--divided and carries a .section-divider as its first
+   child. The line is laid on the seam, half over the section above and half over its own
+   top, across the container width, so the same stitch separates every pair of sections
+   whatever the two backgrounds are. It takes no space, so the sections keep their height.
+
+   Decorative: the wrapper is aria-hidden and has no meaning of its own. ink-muted on bg,
+   bg-raised and surface-sunk is 4.88 to 1 or more (3 to 1 needed for artwork). */
+
+@layer sections {
+  .section--divided {
+    position: relative;
+  }
+
+  .section-divider {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    transform: translateY(-50%);
+    color: var(--color-ink-muted);
+    pointer-events: none;
+  }
+}

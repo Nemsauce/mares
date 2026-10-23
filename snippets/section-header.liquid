@@ -1,8 +1,14 @@
 {%- comment -%}
-  Section header: an optional small label (eyebrow), a heading and an optional subtitle.
-  One place for how a home page section introduces itself, so the sections read as one page.
+  Section header: an optional embroidery motif, an optional small label (eyebrow), a heading
+  and an optional subtitle. One place for how a home page section introduces itself, so the
+  sections read as one page.
 
   Parameters:
+    motif           (optional) name of an embroidery motif (snippets/embroidery-motif.liquid),
+                    drawn small above the eyebrow in ink-muted, centered like the
+                    header (at the start when align is 'left'). Decoration only: it
+                    is aria-hidden and the section must read the same without it. A blank or
+                    unknown name renders nothing.
     eyebrow         (optional) small label above the heading, label style, brand color.
     heading         (optional) the heading text.
     heading_accent  (optional) a second part of the heading, shown after a space in the brand
@@ -14,13 +20,15 @@
     align           (optional) 'center' (default) or 'left'.
     class           (optional) extra classes for spacing, never for color.
 
-  Nothing renders when eyebrow, heading, heading_accent and subtitle are all blank.
+  Nothing renders when eyebrow, heading, heading_accent and subtitle are all blank (a motif
+  alone is not a header).
   The brand color is used for text on bg and bg-raised only (5.2 to 1 on bg, more on
   bg-raised), never on a line color or on a photograph.
 
   Usage:
     {% render 'section-header', heading: section.settings.heading, level: 2 %}
     {% render 'section-header', eyebrow: 'x', heading: 'y', heading_accent: 'z', align: 'left' %}
+    {% render 'section-header', motif: 'ola-suave', eyebrow: 'x', heading: 'y' %}
 {%- endcomment -%}
 
 {%- liquid
@@ -43,7 +51,19 @@
 {%- if eyebrow != blank or heading != blank or heading_accent != blank or subtitle != blank -%}
   {{ 'component-section-header.css' | asset_url | stylesheet_tag }}
 
+  {%- comment -%}
+    The motif is captured first so that an unknown name, for which the motif snippet renders
+    nothing, leaves no empty box (and no extra gap) behind.
+  {%- endcomment -%}
+  {%- capture header_motif -%}
+    {%- if motif != blank -%}{% render 'embroidery-motif', name: motif, size: 40 %}{%- endif -%}
+  {%- endcapture -%}
+
   <div class="{{ header_classes }}">
+    {%- if header_motif != blank -%}
+      <div class="section-header__motif">{{ header_motif }}</div>
+    {%- endif -%}
+
     {%- if eyebrow != blank -%}
       <p class="section-header__eyebrow text-label">{{ eyebrow }}</p>
     {%- endif -%}
