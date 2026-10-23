@@ -25,15 +25,31 @@ Separación entre secciones: `space-12` en móvil, `space-16` en escritorio. El 
 | Botón principal | Fondo `brand`, texto `on-brand`, estilo `button`, radio `radius-md`, alto mínimo 48px, padding `space-3` y `space-6`. Un solo botón principal por pantalla. |
 | Botón secundario | Fondo transparente, borde 2px `brand`, texto `brand`, mismas medidas que el principal. |
 | Campo de formulario | Fondo `bg-raised`, borde 1px `line`, radio `radius-sm`, alto 48px, texto `body`. Etiqueta visible arriba (`label` o `body-sm`), nunca solo placeholder. |
-| Tarjeta de producto | Fondo `bg-raised`, radio `radius-md`, imagen en proporción 4:5 arriba, nombre en `display-sm`, precio en `price`. `shadow-soft` solo al pasar el cursor. |
+| Tarjeta de producto | Fondo `bg-raised`, radio `radius-md`, imagen en proporción 4:5 arriba, nombre en `display-sm`, precio en `price`. Sombra suave en reposo; `shadow-soft` al pasar el cursor (ver "Profundidad y movimiento"). |
 | Etiqueta de colección | Fondo `sea-glass` (Descanso) o `turquoise` (Día), texto `ink` en estilo `label`, radio `radius-pill`, padding `space-1` y `space-3`. |
 | Selector de talla | Chips de `radius-pill`, borde 1px `line`; seleccionado con fondo `brand` y texto `on-brand`. Objetivo táctil mínimo 44px. |
 | Encabezado | Fondo `bg`, logo a la izquierda, carrito a la derecha, línea inferior 1px `line`. Altura 64px en móvil. |
-| Hero de línea | Bloque `radius-lg` con el color principal de la línea (`sea-glass` o `turquoise`), título `display-xl` (`display-lg` en móvil) en `ink`. |
+| Hero de línea | Bloque `radius-lg` con el color principal de la línea (`sea-glass` o `turquoise`), que puede pasar en degradado al acento de la misma línea (`lavender` o `coral`), título `display-xl` (`display-lg` en móvil) en `ink`. |
+
+## Profundidad y movimiento
+
+*Cambio del 23 de octubre de 2026, por decisión de la persona dueña de la marca. Antes la regla era "sin sombras en reposo" y "sin degradados". El detalle de dónde se usa cada cosa está en el README, "Profundidad y movimiento".*
+
+| Recurso | Dónde sí | Dónde no |
+| --- | --- | --- |
+| Sombra en reposo | Tarjetas de producto y de entrada a las líneas, panel de texto sobre foto, imágenes grandes de un bloque. Sombra baja, derivada de `ink`. | Texto, íconos, campos, botones, franjas de sección a todo el ancho. Nunca como única señal de un estado. |
+| Sombra al pasar el cursor | `shadow-soft` (o más honda) en tarjetas, junto con una subida corta. Menús desplegables. | Elementos que no se pueden tocar. |
+| Degradado | Velo del hero sobre la foto (`bg` a transparente). Bloques grandes de color de línea, del color principal al acento de la misma línea. | Botones, controles, tarjetas de producto, detrás de texto pequeño. Nunca mezclar las dos líneas. |
+| Fondo alterno | Secciones de páginas generales: `bg`, `bg-raised` y perla hondo (`bg` con 25% de `line`). | Dentro de una tarjeta o de un bloque de línea. |
+| Movimiento | Secciones que suben y aparecen una vez al entrar en pantalla; transiciones de hover y de presión en botones, tarjetas y enlaces; zoom leve de la foto dentro de la tarjeta al pasar el cursor. | El hero y todo lo visible al cargar. Carruseles automáticos, bucles, contadores. Contenido que quede oculto si el script no corre. |
+
+- Todo se arma con tokens (`var()`); ningún color suelto fuera de `tokens.css`.
+- Contraste sobre un degradado o un fondo teñido: medir cada texto contra el punto más claro y el más oscuro del degradado que tiene debajo, y anotar los dos números. Los mínimos son los de "Accesibilidad".
+- Con `prefers-reduced-motion` no hay entradas, subidas ni zoom: solo cambian color y sombra.
 
 ## Estados interactivos
 
-- Hover (solo escritorio): botón principal oscurece `brand` un 8%; tarjeta de producto gana `shadow-soft`.
+- Hover (solo escritorio): botón principal oscurece `brand` un 8%; tarjeta de producto gana `shadow-soft`, sube un poco y su foto crece levemente dentro de la tarjeta.
 - Foco con teclado: anillo de 2px `focus` con 2px de separación, visible en todos los controles.
 - Deshabilitado: opacidad 50% y cursor `not-allowed`. Explicar el motivo con texto cerca.
 - Error: borde 2px `error` y mensaje de texto debajo del campo; nunca solo color.
