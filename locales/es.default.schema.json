@@ -114,6 +114,49 @@
         }
       }
     },
+    "gift": {
+      "name": "Un regalo que se guarda",
+      "settings": {
+        "eyebrow": { "label": "Etiqueta sobre el encabezado", "default": "Para regalar" },
+        "heading": { "label": "Encabezado", "default": "Un regalo" },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca.",
+          "default": "que se guarda"
+        },
+        "text": {
+          "label": "Texto",
+          "default": "La ropa de bebé dura meses. Una prenda bordada con su nombre dura en el cajón mucho después de que ya no le sirva. Eso es lo que estás regalando."
+        }
+      },
+      "blocks": {
+        "shared": {
+          "title": { "label": "Frase en negrita" },
+          "text": { "label": "Texto de la nota" }
+        },
+        "note_1": {
+          "name": "Nota 1",
+          "settings": {
+            "title": { "default": "Para el baby shower." },
+            "text": { "default": "Llega antes de que ella llegue." }
+          }
+        },
+        "note_2": {
+          "name": "Nota 2",
+          "settings": {
+            "title": { "default": "Para los primeros meses." },
+            "text": { "default": "Cuando todo es nuevo y todo se necesita." }
+          }
+        },
+        "note_3": {
+          "name": "Nota 3",
+          "settings": {
+            "title": { "default": "Para la familia lejos." },
+            "text": { "default": "Un nombre bordado dice más que una tarjeta." }
+          }
+        }
+      }
+    },
     "announcement-bar": {
       "name": "Barra de anuncio",
       "settings": {

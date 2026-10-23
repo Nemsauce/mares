@@ -1,0 +1,55 @@
+/* section-gift.css: a gift that is kept (sections/gift.liquid). General page surfaces
+   only: the deeper pearl band, bg-raised cards, ink. Tokens only. The header is
+   component-section-header.css.
+
+   Contrast (base.css): ink on surface-sunk 9.10 to 1 (the paragraph under the heading),
+   ink on bg-raised 10.93 to 1 (the notes). Brand text (eyebrow, accent) on surface-sunk
+   4.85 to 1. 4.5 needed. */
+
+@layer sections {
+  /* Band 5 of the home rhythm: the deeper pearl, between two bg bands (process, faq). */
+  .gift {
+    padding-block: var(--section-gap);
+    background: var(--surface-sunk);
+  }
+
+  .gift__header {
+    margin-block-end: var(--space-6);
+  }
+
+  /* One column below 1024px, no wider than a note needs to read well. */
+  .gift__notes {
+    display: grid;
+    gap: var(--grid-gap);
+    max-inline-size: 640px; /* PROPOSAL */
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gift__note {
+    min-width: 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-raised);
+    box-shadow: var(--shadow-rest);
+    color: var(--color-ink);
+  }
+
+  .gift__note-title {
+    font-weight: var(--type-button-weight); /* the bold Nunito that is already loaded */
+  }
+
+  @media (min-width: 600px) {
+    .gift__header {
+      margin-block-end: var(--space-8);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gift__notes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-inline-size: none;
+    }
+  }
+}

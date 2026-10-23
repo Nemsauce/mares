@@ -1,0 +1,182 @@
+{%- comment -%}
+  A gift that is kept: the section header (eyebrow, two-part heading, paragraph) and three
+  short notes. Copy is docs/BRAND.md, section "Un regalo que se guarda", verbatim, as the
+  defaults of the settings and blocks (t: keys in locales/es.default.schema.json). The three
+  notes are three block types, note_1 to note_3, that differ only in their default copy,
+  the same pattern as lines-entry. Whether the store offers gift wrapping or a handwritten
+  note is PENDIENTE in BRAND.md, so nothing about it is on the page.
+
+  Each note is a bold lead and a sentence, as written in BRAND.md ("Para el baby shower."
+  then "Llega antes de que ella llegue."). The two are one paragraph, so the space between
+  them is printed by an output tag, never typed between two tags (the whitespace trap
+  explained in snippets/section-header.liquid).
+
+  Layout: one column below 1024px (at most 640px wide, centered), three columns from 1024px.
+
+  data-reveal: the content rises in once when it scrolls into view (assets/reveal.js).
+  Without the script, or under reduced motion, it is simply shown.
+
+  General page: surface-sunk band, bg-raised cards, ink, brand. No line colors.
+{%- endcomment -%}
+
+{{ 'section-gift.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_divider -%}
+  {{ 'section-divider.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'reveal.js' | asset_url }}" defer></script>
+
+<section class="gift{% if section.settings.show_divider %} section--divided{% endif %}">
+  {%- if section.settings.show_divider -%}
+    <div class="container section-divider" aria-hidden="true">{% render 'embroidery-divider' %}</div>
+  {%- endif -%}
+  <div class="container" data-reveal>
+    {% render 'section-header',
+      motif: section.settings.motif,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_accent: section.settings.heading_accent,
+      subtitle: section.settings.text,
+      level: 2,
+      class: 'gift__header'
+    %}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="gift__notes" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.title != blank -%}
+            <li class="gift__note" {{ block.shopify_attributes }}>
+              <p class="text-body">
+                <strong class="gift__note-title">{{ block.settings.title }}</strong>
+                {%- if block.settings.text != blank -%}{{ ' ' }}{{ block.settings.text }}{%- endif -%}
+              </p>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.gift.name",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "motif",
+      "label": "t:sections.shared.motif.label",
+      "info": "t:sections.shared.motif.info",
+      "options": [
+        { "value": "none", "label": "t:sections.shared.motif.options__1.label" },
+        { "value": "ola-suave", "label": "t:sections.shared.motif.options__2.label" },
+        { "value": "luna-sobre-el-mar", "label": "t:sections.shared.motif.options__3.label" },
+        { "value": "conchitas-nacaradas", "label": "t:sections.shared.motif.options__4.label" },
+        { "value": "estrella-de-mar", "label": "t:sections.shared.motif.options__5.label" },
+        { "value": "caballito-de-mar", "label": "t:sections.shared.motif.options__6.label" },
+        { "value": "palmita", "label": "t:sections.shared.motif.options__7.label" },
+        { "value": "sol", "label": "t:sections.shared.motif.options__8.label" }
+      ],
+      "default": "caballito-de-mar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "t:sections.shared.show_divider.label",
+      "info": "t:sections.shared.show_divider.info",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.gift.settings.eyebrow.label",
+      "default": "t:sections.gift.settings.eyebrow.default"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.gift.settings.heading.label",
+      "default": "t:sections.gift.settings.heading.default"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "t:sections.gift.settings.heading_accent.label",
+      "info": "t:sections.gift.settings.heading_accent.info",
+      "default": "t:sections.gift.settings.heading_accent.default"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.gift.settings.text.label",
+      "default": "t:sections.gift.settings.text.default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "note_1",
+      "name": "t:sections.gift.blocks.note_1.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.gift.blocks.shared.title.label",
+          "default": "t:sections.gift.blocks.note_1.settings.title.default"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.gift.blocks.shared.text.label",
+          "default": "t:sections.gift.blocks.note_1.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "note_2",
+      "name": "t:sections.gift.blocks.note_2.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.gift.blocks.shared.title.label",
+          "default": "t:sections.gift.blocks.note_2.settings.title.default"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.gift.blocks.shared.text.label",
+          "default": "t:sections.gift.blocks.note_2.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "note_3",
+      "name": "t:sections.gift.blocks.note_3.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.gift.blocks.shared.title.label",
+          "default": "t:sections.gift.blocks.note_3.settings.title.default"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.gift.blocks.shared.text.label",
+          "default": "t:sections.gift.blocks.note_3.settings.text.default"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.gift.name",
+      "blocks": [
+        { "type": "note_1" },
+        { "type": "note_2" },
+        { "type": "note_3" }
+      ]
+    }
+  ]
+}
+{% endschema %}
