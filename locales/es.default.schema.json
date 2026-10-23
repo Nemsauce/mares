@@ -157,6 +157,66 @@
         }
       }
     },
+    "faq": {
+      "name": "Preguntas frecuentes",
+      "settings": {
+        "eyebrow": { "label": "Etiqueta sobre el encabezado", "default": "Dudas" },
+        "heading": { "label": "Encabezado", "default": "Preguntas" },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca.",
+          "default": "frecuentes"
+        },
+        "page_faq": {
+          "label": "Página de preguntas frecuentes",
+          "info": "El enlace al final de la sección lleva a esta página. Elige la misma que en el pie de página. Si no eliges una, el enlace no se muestra."
+        }
+      },
+      "blocks": {
+        "shared": {
+          "question": { "label": "Pregunta" },
+          "answer": { "label": "Respuesta" },
+          "personalization_note": {
+            "content": "Esta respuesta habla de personalizar una prenda con un nombre. Agrégala cuando el configurador exista: hoy la tienda no ofrece cómo pedirlo."
+          }
+        },
+        "q_size": {
+          "name": "Pregunta: la talla",
+          "settings": {
+            "question": { "default": "¿Cómo sé qué talla pedir?" },
+            "answer": { "default": "Las tallas van por edad: 0-3, 3-6, 6-12 y 12-18 meses. Si tu bebé está entre dos tallas, pide la más grande. Crece más rápido de lo que uno cree." }
+          }
+        },
+        "q_wash": {
+          "name": "Pregunta: el lavado",
+          "settings": {
+            "question": { "default": "¿Cómo lavo una prenda bordada?" },
+            "answer": { "default": "A mano o en ciclo delicado, con agua fría y la prenda al revés. Jabón neutro, sin blanqueador. Secar a la sombra y extendida. Si planchas, hazlo por el revés." }
+          }
+        },
+        "q_embroidery": {
+          "name": "Pregunta: el bordado",
+          "settings": {
+            "question": { "default": "¿El bordado se despega o se destiñe?" },
+            "answer": { "default": "El hilo va cosido a la tela, no pegado. Lavándola como arriba, el bordado dura lo que dure la prenda." }
+          }
+        },
+        "q_name": {
+          "name": "Pregunta: el nombre (con el configurador)",
+          "settings": {
+            "question": { "default": "¿Puedo pedir el nombre de mi bebé?" },
+            "answer": { "default": "Sí. Escoges el motivo, el nombre o la inicial, el color del hilo y dónde va. Las prendas personalizadas se bordan y tardan al menos 3 días más en salir." }
+          }
+        },
+        "q_exchange": {
+          "name": "Pregunta: el cambio (con el configurador)",
+          "settings": {
+            "question": { "default": "¿Las prendas personalizadas tienen cambio?" },
+            "answer": { "default": "No. Se bordan solo para ti, con ese nombre. Las prendas sin personalizar sí tienen cambio de talla." }
+          }
+        }
+      }
+    },
     "announcement-bar": {
       "name": "Barra de anuncio",
       "settings": {

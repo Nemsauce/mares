@@ -1,0 +1,39 @@
+/* section-faq.css: frequently asked questions (sections/faq.liquid). General page surfaces
+   only: the bg band, ink, brand. Tokens only. The header is component-section-header.css;
+   the questions are component-accordion.css (native details, no script).
+
+   Contrast (base.css): ink on bg 9.72 to 1 (questions and answers), brand on bg 5.18 to 1
+   (eyebrow, accent, the secondary button). 4.5 needed. The dividers between questions are
+   the accordion's own 1px line, which is decoration; the chevron is ink, 3 to 1 needed. */
+
+@layer sections {
+  /* Band 7 of the home rhythm: bg, after the deeper pearl of the gift section and before the
+     footer's deeper pearl, so no two tinted bands touch. */
+  .faq {
+    padding-block: var(--section-gap);
+    background: var(--color-bg);
+  }
+
+  .faq__header {
+    margin-block-end: var(--space-6);
+  }
+
+  /* One centered column, as wide as a question needs to read well. */
+  .faq__list {
+    max-inline-size: 720px; /* PROPOSAL */
+    margin-inline: auto;
+    border-block-start: 1px solid var(--color-line);
+  }
+
+  .faq__footer {
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--space-8);
+  }
+
+  @media (min-width: 600px) {
+    .faq__header {
+      margin-block-end: var(--space-8);
+    }
+  }
+}

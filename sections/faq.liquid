@@ -1,0 +1,245 @@
+{%- comment -%}
+  Frequently asked questions: the section header (eyebrow, two-part heading) and a list of
+  questions that open with native details and summary, so they work with no script. The
+  accordion is the one the product page uses (assets/component-accordion.css).
+
+  Copy is docs/BRAND.md, section "Preguntas frecuentes", verbatim, as the defaults of the
+  blocks (t: keys in locales/es.default.schema.json). Each question is its own block type,
+  q_size to q_exchange, that differ only in their default copy, the same pattern as
+  lines-entry. Only questions with a written answer exist as blocks: the ones BRAND.md marks
+  PENDIENTE (shipping time, where the workshop is, how to write to it) are not here.
+
+  The home page template uses the first three. q_name and q_exchange are about personalizing
+  a garment, which the store cannot do until the configurator is built, so they are not on
+  the page; they are here so the copy is one click away when it is (docs/BRAND.md says the
+  same next to the two answers).
+
+  The link at the end goes to the full questions page, chosen in this section's own page_faq
+  setting. The footer has the same setting (sections/footer.liquid), but one section cannot
+  read another's: the `sections` object is empty in a section's Liquid (checked on a dev
+  theme with a probe), so the page is picked here too and the template points both at the
+  same page. When it is not set, no link renders: a missing link is better than a dead one.
+  Its text is the existing locale string footer.help.faq.
+
+  Layout: one centered column, no wider than 720px. No line colors, no motion of its own
+  beyond the shared reveal. Without the script, or under reduced motion, it is simply shown.
+
+  General page: bg band, ink, brand. Chevron and borders: ink and line (the accordion's own).
+{%- endcomment -%}
+
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_divider -%}
+  {{ 'section-divider.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'reveal.js' | asset_url }}" defer></script>
+
+{%- assign faq_page = section.settings.page_faq -%}
+{%- assign faq_link_label = 'footer.help.faq' | t -%}
+<section class="faq{% if section.settings.show_divider %} section--divided{% endif %}">
+  {%- if section.settings.show_divider -%}
+    <div class="container section-divider" aria-hidden="true">{% render 'embroidery-divider' %}</div>
+  {%- endif -%}
+  <div class="container" data-reveal>
+    {% render 'section-header',
+      motif: section.settings.motif,
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_accent: section.settings.heading_accent,
+      level: 2,
+      class: 'faq__header'
+    %}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq__list">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.question != blank and block.settings.answer != blank -%}
+            <details class="accordion" {{ block.shopify_attributes }}>
+              <summary class="accordion__summary text-display-sm">
+                <span class="accordion__heading">{{ block.settings.question }}</span>
+                {% render 'icon', name: 'chevron-down' %}
+              </summary>
+              <div class="accordion__content text-body">
+                <p>{{ block.settings.answer }}</p>
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if faq_page != blank -%}
+      <div class="faq__footer">
+        {% render 'button', label: faq_link_label, url: faq_page.url, variant: 'secondary' %}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "select",
+      "id": "motif",
+      "label": "t:sections.shared.motif.label",
+      "info": "t:sections.shared.motif.info",
+      "options": [
+        { "value": "none", "label": "t:sections.shared.motif.options__1.label" },
+        { "value": "ola-suave", "label": "t:sections.shared.motif.options__2.label" },
+        { "value": "luna-sobre-el-mar", "label": "t:sections.shared.motif.options__3.label" },
+        { "value": "conchitas-nacaradas", "label": "t:sections.shared.motif.options__4.label" },
+        { "value": "estrella-de-mar", "label": "t:sections.shared.motif.options__5.label" },
+        { "value": "caballito-de-mar", "label": "t:sections.shared.motif.options__6.label" },
+        { "value": "palmita", "label": "t:sections.shared.motif.options__7.label" },
+        { "value": "sol", "label": "t:sections.shared.motif.options__8.label" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "t:sections.shared.show_divider.label",
+      "info": "t:sections.shared.show_divider.info",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.faq.settings.eyebrow.label",
+      "default": "t:sections.faq.settings.eyebrow.default"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.faq.settings.heading.label",
+      "default": "t:sections.faq.settings.heading.default"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "t:sections.faq.settings.heading_accent.label",
+      "info": "t:sections.faq.settings.heading_accent.info",
+      "default": "t:sections.faq.settings.heading_accent.default"
+    },
+    {
+      "type": "page",
+      "id": "page_faq",
+      "label": "t:sections.faq.settings.page_faq.label",
+      "info": "t:sections.faq.settings.page_faq.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "q_size",
+      "name": "t:sections.faq.blocks.q_size.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.shared.question.label",
+          "default": "t:sections.faq.blocks.q_size.settings.question.default"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.shared.answer.label",
+          "default": "t:sections.faq.blocks.q_size.settings.answer.default"
+        }
+      ]
+    },
+    {
+      "type": "q_wash",
+      "name": "t:sections.faq.blocks.q_wash.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.shared.question.label",
+          "default": "t:sections.faq.blocks.q_wash.settings.question.default"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.shared.answer.label",
+          "default": "t:sections.faq.blocks.q_wash.settings.answer.default"
+        }
+      ]
+    },
+    {
+      "type": "q_embroidery",
+      "name": "t:sections.faq.blocks.q_embroidery.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.shared.question.label",
+          "default": "t:sections.faq.blocks.q_embroidery.settings.question.default"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.shared.answer.label",
+          "default": "t:sections.faq.blocks.q_embroidery.settings.answer.default"
+        }
+      ]
+    },
+    {
+      "type": "q_name",
+      "name": "t:sections.faq.blocks.q_name.name",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.faq.blocks.shared.personalization_note.content"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.shared.question.label",
+          "default": "t:sections.faq.blocks.q_name.settings.question.default"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.shared.answer.label",
+          "default": "t:sections.faq.blocks.q_name.settings.answer.default"
+        }
+      ]
+    },
+    {
+      "type": "q_exchange",
+      "name": "t:sections.faq.blocks.q_exchange.name",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.faq.blocks.shared.personalization_note.content"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.shared.question.label",
+          "default": "t:sections.faq.blocks.q_exchange.settings.question.default"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.shared.answer.label",
+          "default": "t:sections.faq.blocks.q_exchange.settings.answer.default"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq.name",
+      "blocks": [
+        { "type": "q_size" },
+        { "type": "q_wash" },
+        { "type": "q_embroidery" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -183,10 +183,16 @@ que dure la prenda.
 **¿Puedo pedir el nombre de mi bebé?**
 Sí. Escoges el motivo, el nombre o la inicial, el color del hilo y dónde va.
 Las prendas personalizadas se bordan y tardan al menos 3 días más en salir.
+NOTA: esta respuesta sale en la página de inicio cuando exista el configurador.
+Hoy no hay cómo pedir un nombre, y decirle a una clienta que sí se puede la manda
+a buscar algo que no está. Está lista como bloque de la sección de preguntas,
+fuera de la página.
 
 **¿Las prendas personalizadas tienen cambio?**
 No. Se bordan solo para ti, con ese nombre. Las prendas sin personalizar sí
 tienen cambio de talla.
+NOTA: igual que la anterior, sale en la página de inicio cuando exista el
+configurador.
 PENDIENTE: confirmar los días que tiene el cliente para pedir el cambio.
 
 **¿Cuánto cuesta el envío y cuánto demora?**
