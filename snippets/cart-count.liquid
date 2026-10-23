@@ -1,0 +1,27 @@
+{%- comment -%}
+  Cart count for the header cart link (docs/THEME_PLAN.md 6.1 and 6.7). Two siblings, so
+  the header__cart flex layout is the same as before:
+    - the accessible text, "Carrito, N productos", read with the link;
+    - the visible number, hidden from assistive technology (the text already says it) and
+      hidden entirely when the cart is empty.
+
+  JavaScript hooks: the listener in assets/core.js updates both on mares:cart:updated.
+  The singular and plural sentences are rendered here, with [count] in place of the
+  number, so the script only picks one and puts a number in it; it never writes copy.
+  Without the script the count is what the server rendered on this page load.
+
+  Usage:
+    {% render 'cart-count' %}
+{%- endcomment -%}
+
+<span
+  class="visually-hidden"
+  data-cart-count-label
+  data-text-one="{{ 'accessibility.cart_count.one' | t: count: '[count]' }}"
+  data-text-other="{{ 'accessibility.cart_count.other' | t: count: '[count]' }}"
+>
+  {{- 'accessibility.cart_count' | t: count: cart.item_count -}}
+</span>
+<span class="header__cart-count text-body-sm" aria-hidden="true" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>
+  {{- cart.item_count -}}
+</span>

@@ -12,6 +12,9 @@
    - Mares.events     the two document events: updated ({ cart }) and error ({ error }).
                       Components never talk to each other except through these.
 
+   Also here: the small listener that keeps the header cart count (snippets/cart-count.liquid)
+   in step with mares:cart:updated.
+
    Without this file every component stays un-upgraded and every form posts as it does
    without JavaScript. */
 
@@ -116,4 +119,22 @@
   const emit = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
 
   window.Mares = { routes, fetchJson, fetchHtml, cart, announce, events: EVENTS, emit };
+
+  // Header cart count (snippets/cart-count.liquid). Only the number is written here; the
+  // sentence comes from the server with [count] in place of it. Not announced: whoever
+  // changed the cart already did.
+  const plural = window.Intl && Intl.PluralRules ? new Intl.PluralRules(document.documentElement.lang || 'es') : null;
+  document.addEventListener(EVENTS.updated, (event) => {
+    const count = event.detail && event.detail.cart && event.detail.cart.item_count;
+    if (typeof count !== 'number') return;
+    const form = (plural ? plural.select(count) : count === 1 ? 'one' : 'other') === 'one' ? 'one' : 'other';
+    document.querySelectorAll('[data-cart-count-label]').forEach((label) => {
+      const text = label.getAttribute(`data-text-${form}`);
+      if (text) label.textContent = text.replace('[count]', count);
+    });
+    document.querySelectorAll('[data-cart-count]').forEach((number) => {
+      number.textContent = count;
+      number.hidden = count === 0;
+    });
+  });
 })();

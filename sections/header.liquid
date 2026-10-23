@@ -99,10 +99,7 @@
 
       <a class="header__cart" href="{{ routes.cart_url }}">
         {% render 'icon', name: 'cart' %}
-        <span class="visually-hidden">{{ 'accessibility.cart_count' | t: count: cart.item_count }}</span>
-        {%- if cart.item_count > 0 -%}
-          <span class="header__cart-count text-body-sm" aria-hidden="true">{{ cart.item_count }}</span>
-        {%- endif -%}
+        {% render 'cart-count' %}
       </a>
     </div>
 
