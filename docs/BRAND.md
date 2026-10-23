@@ -434,6 +434,54 @@ reemplazan por fotos reales de las prendas reales.
 
 ---
 
+## Antes de lanzar
+
+Varios textos de esta página suponen que una clienta puede pedir un nombre bordado.
+Hoy no hay cómo: el configurador está en pausa (`docs/CONFIGURATOR.md`, y ahí
+dice cuál es el primer paso al retomarlo). **Antes de abrir la tienda pasa una de
+dos cosas:** el configurador sale primero, o estos textos cambian. Dejarlo en
+pausa tiene este costo.
+
+Hoy nadie puede llegar a la tienda, así que no hay un problema en marcha: es una
+condición de lanzamiento. La regla de fondo: lo que describe lo que la marca
+vende se queda; lo que le explica a la clienta cómo pedir algo que no existe se
+queda fuera de la página.
+
+**Los cinco textos de la lista.** Si el configurador no está listo al lanzar,
+cada uno pasa a esto. Son propuestas que solo quitan el nombre: no dicen nada
+nuevo sobre cómo se hace la prenda.
+
+| # | Dónde | Texto de hoy | Si no hay configurador |
+| --- | --- | --- | --- |
+| 1 | Cómo nace cada prenda, paso 4 (en la página) | "…y revisamos que vaya la talla **y el nombre** que pediste." | "La empacamos a mano, una por una, y revisamos que vaya la talla que pediste." |
+| 2 | Un regalo que se guarda, el párrafo (en la página) | "Una prenda bordada **con su nombre** dura en el cajón…" | "Una prenda bordada dura en el cajón mucho después de que ya no le sirva." |
+| 3 | Un regalo que se guarda, tercera nota (en la página) | "Para la familia lejos. **Un nombre bordado** dice más que una tarjeta." | "Para la familia lejos. Una prenda bordada dice más que una tarjeta." |
+| 4 | Pregunta "¿Puedo pedir el nombre de mi bebé?" (fuera de la página) | "Sí. **Escoges el motivo, el nombre o la inicial**, el color del hilo y dónde va…" | Se queda fuera. No se reemplaza por otra respuesta mientras el dueño no confirme cómo se toma un nombre. |
+| 5 | Pregunta "¿Las prendas personalizadas tienen cambio?" (fuera de la página) | "No. Se bordan solo para ti, con ese nombre…" | Se queda fuera: sin prendas personalizadas a la venta, la pregunta no existe. |
+
+Los textos 1 a 3 describen lo que la marca vende y se quedan en la página tal
+como están; solo cambian si el lanzamiento llega sin configurador. Los textos 4 y
+5 son un cómo-se-pide de algo que no existe: están fuera de la página y no suben
+hasta que el configurador exista.
+
+**Lo que encontré al hacer esta lista y no estaba en ella.**
+
+- **Página de Cambios**, el párrafo "Las prendas personalizadas con un nombre o una
+  inicial no tienen cambio, porque se bordan solo para ti." Es la misma
+  dependencia que el texto 5. Sin configurador, el párrafo se quita y queda
+  "Si llegó con una falla nuestra, la reponemos."
+- **Enlace "Personalizadas" del encabezado** (ajuste `link_personalization`). Viene
+  vacío, así que no se ve. No lo llenes hasta que exista a dónde llevar.
+- **"…que es lo que hace que un nombre dure"** en la introducción de "Cómo nace cada
+  prenda", en el paso 2 y en "Por qué cada prenda pasa por nuestras manos". Habla
+  del bordado en general, no de pedir un nombre, así que se queda; si el dueño
+  prefiere, pasa a "que es lo que hace que el bordado dure".
+
+Cuando el configurador salga, los textos 4 y 5 se agregan como bloques de la
+sección de preguntas (ya existen) y el párrafo de Cambios vuelve a su sitio.
+
+---
+
 ## Pendientes que solo tú puedes llenar
 
 Todos los PENDIENTE del archivo, en un solo lugar. Cada uno dice dónde aparece.
