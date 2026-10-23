@@ -1,5 +1,8 @@
 /* section-hero-home.css: home hero (docs/THEME_PLAN.md 4 and 6.7b). General page:
-   bg only, tokens only. Type only when no image is set, and still centered and spaced. */
+   bg, bg-raised, ink, brand. Tokens only. No gradients.
+
+   Two looks. Without an image: type only, centered, on bg. With an image
+   (.hero-home--image): full bleed photograph with the text on a panel. */
 
 @layer sections {
   .hero-home {
@@ -33,18 +36,27 @@
     color: var(--color-ink-muted);
   }
 
-  .hero-home__media {
-    inline-size: 100%;
-    margin-block-start: var(--space-6);
-    border-radius: var(--radius-lg);
-    aspect-ratio: 16 / 9; /* brief: 16:9 for hero images */
-    overflow: hidden;
+  /* Trust notes: an optional short row under the button. Empty by default. */
+  .hero-home__notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .hero-home__image {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+  .hero-home__note {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink);
+  }
+
+  .hero-home__note .icon {
+    flex: none;
+    color: var(--color-brand);
   }
 
   /* Desktop: display-xl, and the generous space-24 above and below. */
@@ -57,6 +69,102 @@
       font-size: var(--type-display-xl-size);
       line-height: var(--type-display-xl-line);
       font-weight: var(--type-display-xl-weight);
+    }
+  }
+
+  /* ---- With a photograph ------------------------------------------------------------
+     The photograph is a layer behind the content, taken out of the flow (absolute), so the
+     hero's height depends on the viewport and the text only, never on the image: loading
+     it cannot shift the layout.
+
+     Height: PROPOSAL, 75% of the viewport height, at most 44rem, at least 32rem. On a phone
+     that leaves the top of the photograph visible above the panel.
+
+     Contrast (the guarantee). The text sits on .hero-home__panel, not on the photograph.
+     The panel is the bg token at 90% opacity, one flat color, no gradient. Dark text on it
+     is darkest-case when the photograph under it is pure black, so that is the case the
+     numbers cover (WCAG 2.x relative luminance, measured from the token values):
+       ink on the panel over pure black ..... 7.77 to 1   (over pure white: 9.84 to 1)
+       brand (note icons) over pure black ... 4.14 to 1   (non-text needs 3 to 1)
+     No photograph can go below those, because black is the minimum any pixel can be.
+     The paragraph and the notes are therefore ink, not ink-muted: ink-muted on bg alone is
+     5.21 to 1 and falls under 4.5 to 1 once 10% black shows through (4.17 to 1).
+     The button carries its own surface: on-brand on brand is 5.18 to 1 whatever is behind.
+     In the dark theme the same panel (dark bg token, light ink) measures 14.45 to 1 over
+     black and 10.28 to 1 over white.
+     A change to the 90% below, or to the colors on the panel, needs the numbers redone. */
+  .hero-home--image {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: end;
+    min-height: 32rem;
+    min-height: min(75svh, 44rem);
+    padding-block: var(--space-4);
+  }
+
+  .hero-home__background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .hero-home__background picture {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  /* Cover the layer; the focal point decides which part of the photograph stays in view. */
+  .hero-home__image {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: var(--hero-focal, 50% 50%);
+  }
+
+  .hero-home--image .hero-home__inner {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .hero-home__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    inline-size: min(100%, 36rem); /* PROPOSAL: a comfortable text column */
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg); /* solid where color-mix is not supported: still passes */
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+  }
+
+  .hero-home--image .hero-home__text {
+    color: var(--color-ink);
+  }
+
+  .hero-home--image .hero-home__notes {
+    justify-content: flex-start;
+  }
+
+  /* From 600px the wide photograph is the one shown, so its own focal point applies. */
+  @media (min-width: 600px) {
+    .hero-home--image .hero-home__image {
+      object-position: var(--hero-focal-wide, 50% 50%);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-home--image {
+      align-items: center;
+      padding-block: var(--space-16);
+    }
+
+    .hero-home__panel {
+      padding: var(--space-8);
     }
   }
 }

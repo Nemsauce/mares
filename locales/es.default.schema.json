@@ -125,8 +125,23 @@
           "label": "Enlace del botón"
         },
         "image": {
-          "label": "Imagen",
-          "info": "Opcional. Sin imagen, la portada se muestra solo con texto."
+          "label": "Imagen de fondo",
+          "info": "Opcional. Sin imagen, la portada se muestra solo con texto. Con imagen, el texto va sobre un panel y la imagen se recorta para cubrir la portada: define su punto focal para decidir qué queda a la vista."
+        },
+        "image_mobile": {
+          "label": "Imagen de fondo para móvil",
+          "info": "Opcional. Una imagen vertical (4:5) para pantallas angostas. Sin ella se usa la imagen de fondo, recortada. Solo se usa si hay imagen de fondo."
+        }
+      },
+      "blocks": {
+        "trust_note": {
+          "name": "Nota de confianza",
+          "settings": {
+            "text": {
+              "label": "Texto",
+              "info": "Una frase corta. Escribe solo lo que la marca pueda demostrar. No hay texto por defecto."
+            }
+          }
         }
       }
     },
