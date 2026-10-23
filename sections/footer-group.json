@@ -9,15 +9,17 @@
           "type": "brand",
           "settings": {}
         },
-        "menu": {
-          "type": "menu",
+        "newsletter": {
+          "type": "newsletter",
           "settings": {
-            "menu": "footer"
+            "heading": "Déjanos tu correo",
+            "text": "Te escribimos cuando entra algo nuevo. Nada más."
           }
         }
       },
-      "block_order": ["brand", "menu"],
+      "block_order": ["brand", "newsletter"],
       "settings": {
+        "page_faq": "preguntas-frecuentes-mares",
         "show_copyright": true
       }
     }
