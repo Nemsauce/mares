@@ -1,24 +1,26 @@
-# Mares: embroidery configurator plan (phase 1)
+# Mares: embroidery configurator (phase 1)
 
-Status: design only. No configurator code exists. This document is commit G0 of `docs/THEME_PLAN.md` section 8 and expands section 7 of that plan. Where the two disagree, this document wins for the configurator, except for the "Resolved decisions" list in `THEME_PLAN.md` section 0 and the owner's decisions in `docs/content/respuestas-configurador.md`, which win over this document.
+**Status: paused.** This work is design only: no configurator code exists. When it resumes, the first step is **G1** (section 10): write the configurator strings into `locales/es.default.json` and `locales/es.default.schema.json`. It needs no data and no other code, and the owner reviews the voice of the copy in its diff while doing the admin checklist (section 11, B to D) in parallel.
+
+This document expands the configurator part of `docs/BUILD.md`. Where the two disagree, this document wins for the configurator, except for the "Resolved decisions" list in `docs/BUILD.md` section 0 and the owner's decisions in section 13, which win over this document.
 
 The owner's decisions C-1 to C-17 are folded into the sections below. What is still open is section 12, and it holds debts only: nothing in it blocks a build commit.
 
-Read with: `docs/THEME_PLAN.md` (sections 5, 6.6, 7, 9), `docs/design/README.md`, `docs/design/guia-web.md`, `docs/content/catalogo-y-copy.md`, `docs/content/respuestas-configurador.md`, `docs/content/colores-hilo.md`.
+Read with: `docs/BUILD.md` (sections 5, 6.6, 8), `docs/DESIGN.md`, `docs/BRAND.md`. The owner's decisions and the thread palette are sections 13 and 14 of this file.
 
 ## 0. Conventions
 
-**Source tags.** Same convention as `THEME_PLAN.md` section 0, plus tags for the content files:
+**Source tags.** Same convention as `docs/BUILD.md` section 0, plus tags for the content:
 
 | Tag | Meaning |
 | --- | --- |
 | `[T]` | `docs/design/tokens.json` |
-| `[G]` | `docs/design/guia-web.md` |
-| `[R]` | `docs/design/README.md` |
-| `[C]` | `docs/content/catalogo-y-copy.md` (content source; README wins over it) |
-| `[D]` | `docs/content/respuestas-configurador.md`, the owner's decisions. Wins over this document. |
-| `[H]` | `docs/content/colores-hilo.md`, the thread palette |
-| `[TP]` | Already decided or built in `docs/THEME_PLAN.md` or the theme code (section number or file given) |
+| `[G]` | The former web guide, now part of `docs/DESIGN.md` |
+| `[R]` | The former design README, now part of `docs/DESIGN.md` (the voice rules: `docs/BRAND.md`) |
+| `[C]` | `docs/BRAND.md` (content source; `docs/DESIGN.md` wins over it) |
+| `[D]` | Section 13 of this file, the owner's decisions. Wins over the rest of this document. |
+| `[H]` | Section 14 of this file, the thread palette |
+| `[TP]` | Already decided or built in `docs/BUILD.md` or the theme code (section number or file given) |
 | `[P]` | **Proposal.** The documents are silent. A default the developer builds; the owner can change it later without it blocking anything. Never treated as design truth. |
 | `[V]` | Shopify platform behavior to verify against current Shopify docs before the commit that depends on it. |
 | `C-n` | A decision from `[D]`, closed. The number is kept so older references still resolve; the table below says where each one landed. |
@@ -38,7 +40,7 @@ Read with: `docs/THEME_PLAN.md` (sections 5, 6.6, 7, 9), `docs/design/README.md`
 | C-9 | Fraunces 600 for the preview lettering (provisional) | 4.1, 12 |
 | C-10 | Named positions, no free drag; name under the motif, smaller | 2.5, 4.1 |
 | C-11 | Today's photographs are generated | 2.5, 12 |
-| C-12 | Copy written in the README voice | 10 (G1 inventory) |
+| C-12 | Copy written in the voice of `docs/BRAND.md` | 10 (G1 inventory) |
 | C-13 | Personalized orders take at least 3 more days | 1.1, 6 |
 | C-14 | Every personalized order is reviewed before embroidery | 5.4, 11 F |
 | C-15 | Visible notice plus required checkbox (legal point unverified) | 1.1, 3.2, 5.2, 12 |
@@ -50,7 +52,7 @@ Read with: `docs/THEME_PLAN.md` (sections 5, 6.6, 7, 9), `docs/design/README.md`
 - Phase 1 has no AI. The customer picks a motif, types a name or initial, and, if they typed one, picks a thread color and a position, and sees a preview on the garment. AI generation is phase 2, with a per-customer attempt limit `[G]`.
 - Personalization costs nothing extra in phase 1, so there is no pricing logic anywhere: no surcharge variant, no fee line, no price shown in the configurator, no cost per color (decided, Q-7, `[TP]` section 0; `[H]`).
 - The theme cannot validate anything on the server (section 5.4).
-- Thread colors are merchant data, not design tokens. They are the one documented exception to the no-color-literal rule (`THEME_PLAN.md` section 2.7 and 9.5 item 13). The exception covers merchant data rendered at runtime only; no hex value is ever written in a theme file, so `scripts/check-no-hex.sh` keeps passing unchanged.
+- Thread colors are merchant data, not design tokens. They are the one documented exception to the no-color-literal rule (`docs/BUILD.md` section 2.7 and 8.5 item 13). The exception covers merchant data rendered at runtime only; no hex value is ever written in a theme file, so `scripts/check-no-hex.sh` keeps passing unchanged.
 - Nothing in this document invents a thread color, motif artwork, garment measurement or embroidery position. The 23 thread colors are those of `[H]`, the positions are the four names in `[D]` C-10, the name limits are the three in `[D]` C-4. What is provisional is said to be provisional, and section 12 lists it.
 
 **What already exists and is reused** `[TP]`:
@@ -80,7 +82,7 @@ Personalization is optional (C-1). Someone can buy the garment without a name an
 
 The block shows, top to bottom `[P]` (layout):
 
-1. A heading and one sentence saying what can be chosen. Copy: G1 (section 10), in the README voice (C-12).
+1. A heading and one sentence saying what can be chosen. Copy: G1 (section 10), in the voice of `docs/BRAND.md` (C-12).
 2. **Motivo** `[G]`: a labelled group of chips, one per motif of the product's own line (3 for Descanso, 4 for Día, section 2.3), each chip showing the motif drawing (`embroidery-motif`, 32px `[P]`) and its name as text. **The product's own motif is preselected** (C-2). The product name describes the default motif, not an obligation: the customer can change it to any other motif of the same line.
 3. **Nombre o inicial** `[G]`: one text field (C-17) with a visible label, empty and optional. Under it, a hint that states the maximum for this garment and the allowed characters, and a character counter (section 2.6, 5.1).
 4. **Color de hilo** `[G]`: **hidden until a name is typed** (C-1). A labelled group of 23 chips (C-7, C-8), each a small swatch plus the color's name as text, in the order of `[H]`. None selected `[P]` (section 2.4 explains why). Near the group, one line saying that the color on screen is a sample and the real thread can look different `[H]`.
@@ -493,13 +495,13 @@ Gzipped bytes, `gzip -c <file> | wc -c`:
 | **All phase 1 JS** | **10594** | |
 | **Product page, worst case today** | **8034** | core + header-menu + product-form + variant-picker + media-gallery |
 
-The brief's "8 KB" is the product page figure; the whole theme is 10.6 KB. `THEME_PLAN.md` section 5 keeps the configurator outside the 15 KB phase 1 budget.
+The brief's "8 KB" is the product page figure; the whole theme is 10.6 KB. `docs/BUILD.md` section 5 keeps the configurator outside the 15 KB phase 1 budget.
 
 ### 8.2 Budget `[P]`
 
 - `configurator.js`: at most **4 KB gzipped**, and under the 10,000-byte uncompressed per-file limit Theme Check enforces (`.theme-check.yml`, `AssetSizeJavaScript`). The show/hide by name and the position handling add logic to the script that the first version of this plan did not count; if 4 KB is not enough, G3 and G4 report the real number and the budget is revisited in G6, not silently exceeded.
 - Product page JS with the configurator: at most **12.5 KB gzipped** (8.0 today + 4 + margin), comfortably inside the phase 1 15 KB figure even though the configurator is outside it.
-- `component-configurator.css`: under 10 KB uncompressed (the per-component budget, `THEME_PLAN.md` section 4); expected far less, since chips and fields reuse existing CSS.
+- `component-configurator.css`: under 10 KB uncompressed (the per-component budget, `docs/BUILD.md` section 4); expected far less, since chips and fields reuse existing CSS.
 - HTML added by the block: the line's 3 or 4 motif drawings (each a few hundred bytes of SVG, already in the snippet), 23 thread chips, one or two position chips and a checkbox. No JSON blob of data: everything the script needs is in the markup, including each position's rectangle as `data-` attributes.
 
 ### 8.3 What loads when
@@ -539,7 +541,7 @@ The preview photo must never be the LCP candidate: it is below the fold and hidd
 
 ## 10. Commits to build it
 
-Models as in `THEME_PLAN.md` section 8: **S-med** = Sonnet 5.5 medium effort, **S-high** = Sonnet 5.5 high effort, **O-high** = Opus high effort. Every commit follows that section's definition of done (Theme Check clean, `check-no-hex.sh` clean, 375px and 1280px, keyboard pass, only the named files).
+Models: **S-med** = Sonnet 5.5 medium effort, **S-high** = Sonnet 5.5 high effort, **O-high** = Opus high effort. Every commit follows the definition of done in `docs/BUILD.md` section 0 (Theme Check clean, `check-no-hex.sh` clean, 375px and 1280px, keyboard pass, only the named files).
 
 "Needs" lists data in the Shopify admin that must exist to test the commit (steps of section 11). No decision is outstanding: everything below can start.
 
@@ -561,7 +563,7 @@ Notes:
 - G3 and G4 both edit `configurator.js`; keep G4's preview code in clearly separate methods so G3 stays reviewable.
 - No commit touches `product-form.js`, `cart-line-item.liquid` or `cart-items.js`. If one seems to need it, stop and revisit section 3.
 
-**G1 string inventory** (all in `locales/es.default.json`, in the README voice, C-12; the owner reviews the diff):
+**G1 string inventory** (all in `locales/es.default.json`, in the voice of `docs/BRAND.md`, C-12; the owner reviews the diff):
 
 | Group | Strings |
 | --- | --- |
@@ -582,7 +584,7 @@ Notes:
 
 Do these in order. None needs a developer. Each step says where to click in the admin `[V]` (names of menus may differ slightly; ask before guessing).
 
-**A. Before you start.** The decisions are closed (`docs/content/respuestas-configurador.md`). What is left is the four debts in section 12, and none stops you. Have `docs/content/colores-hilo.md` and the decisions file open next to the admin.
+**A. Before you start.** The decisions are closed (section 13). What is left is the four debts in section 12, and none stops you. Have sections 13 and 14 of this file open next to the admin.
 
 **B1. Thread colors.**
 1. Settings → Custom data → Metaobjects → Add definition.
@@ -592,7 +594,7 @@ Do these in order. None needs a developer. Each step says where to click in the 
 5. Add field "Disponible", key `available`, type "True or false", required.
 6. Add field "Referencia de hilo", key `reference`, type "Single line text", **not** required. Leave it empty for now.
 7. Turn on **Storefronts** access for this definition, then save.
-8. Content → Metaobjects → Color de hilo → add the 23 entries of `colores-hilo.md`, **in the order of its tables**: the six Tonos Mares, the five Neutros, the twelve of the Círculo cromático. Use the exact name written there and the sample color from the same row. Leave "Disponible" on and the reference empty.
+8. Content → Metaobjects → Color de hilo → add the 23 entries of section 14, **in the order of its tables**: the six Tonos Mares, the five Neutros, the twelve of the Círculo cromático. Use the exact name written there and the sample color from the same row. Leave "Disponible" on and the reference empty.
 9. To stop offering a color later, switch its "Disponible" off. Do not delete it: old orders keep its name.
 
 **B2. Positions.**
@@ -653,3 +655,208 @@ These are debts, not blockers. Every decision the owner could make is made (sect
 3. **Debt 3. The photographs are generated.** Everything measured on them is approximate: the position rectangles of the nine entries, the proportion between motif and name inside a zone, and the Fraunces 600 stand-in for the lettering (C-9), which is decided from a photograph of a really embroidered name. *What it would change later:* when the real photographs arrive, the owner replaces `mares.embroidery_image` and measures the nine rectangles again (section 11 D 6, no code); the developer retunes the one proportion constant and, if the real lettering is not Fraunces, the preview typeface (a font file would be a cost to re-check in G6). The buyer-facing note already says the preview is approximate.
 
 4. **Debt 4. The legal value of the no-exchange checkbox is not verified.** In Colombia the right of withdrawal has exceptions for goods made to measure, but whether this garment falls under them is for a lawyer to confirm, not this document (`[D]` C-15). *What it would change later:* if confirmed, nothing. If not, the wording of the policy page, the notice and the checkbox label changes (copy in `locales/es.default.json` and the policy page), and what is sold as non-exchangeable may change with it; the checkbox, the `Aviso de no cambio` key and the page layout are built either way.
+
+---
+
+## 13. Owner decisions (C-1 to C-17)
+
+Respuestas cerradas a las preguntas C-1 a C-17. Si algo de esta sección contradice al resto del documento, manda esta sección.
+
+---
+
+**C-1. La personalización es opcional.**
+Se puede comprar la prenda sin nombre y llega con su bordado de catálogo. Si el
+cliente no escribe nombre, no se le piden color de hilo ni posición.
+
+**C-2. El motivo se puede cambiar.**
+El motivo propio de la prenda viene preseleccionado. El cliente puede cambiarlo
+por cualquier otro de su misma línea. El nombre del producto describe el motivo
+por defecto, no una obligación.
+
+**C-3. Los seis productos son personalizables.**
+
+**C-4. Largo máximo del nombre, por tipo de prenda.**
+
+| Prenda | Máximo |
+| --- | --- |
+| Manta | 16 caracteres |
+| Pijama, enterizo, body | 12 caracteres |
+| Gorro | 8 caracteres |
+
+Provisional. Depende del tamaño de la prenda y de lo que quepa bordado de
+verdad. Se ajusta cuando el taller borde el primero.
+
+**C-5. Caracteres permitidos.**
+Letras con tildes y ñ, espacio, guion y apóstrofo. Entran "María José",
+"Ana-Lucía" y "D'Angela". Sin números, sin emoji, sin otros signos.
+
+**C-6. El nombre se borda tal como se escribe**, con la primera letra en
+mayúscula automáticamente. No se fuerza todo a mayúsculas.
+
+**C-7. La paleta de hilos es la de la sección 14.**
+23 colores. Se trabaja con los nombres, sin referencia de marca de hilo por
+ahora (ver deudas al final).
+
+**C-8. Los 23 colores se ofrecen en todas las prendas.**
+Si más adelante algún color no funciona en cierta tela, se limita entonces.
+
+**C-9. La tipografía del nombre en la vista previa es Fraunces 600,
+provisional.** Se decide con una foto de un nombre bordado real.
+
+**C-10. Posiciones con nombre, no arrastre libre.**
+El cliente escoge entre los sitios que cada prenda permite:
+
+| Prenda | Posiciones |
+| --- | --- |
+| Pijama ola suave | Centro del pecho, pecho izquierdo |
+| Enterizo caballito de mar | Centro del pecho, pecho izquierdo |
+| Body estrella de mar | Centro del pecho, pecho izquierdo |
+| Gorro conchitas | Borde |
+| Manta luna sobre el mar | Esquina |
+| Manta palmita | Esquina |
+
+El nombre va debajo del motivo, más pequeño. El arrastre libre queda como
+pregunta de fase 2, cuando se sepa qué piden los clientes.
+
+**C-11. Las fotos de hoy son generadas.**
+Las posiciones de la vista previa hay que volver a medirlas cuando lleguen las
+fotos reales de las prendas.
+
+**C-12. Los textos del configurador** se escriben en la voz de `docs/BRAND.md`, con las
+demás respuestas ya cerradas.
+
+**C-13. Los pedidos personalizados demoran al menos 3 días más.**
+Eso se dice junto al configurador, antes de agregar al carrito, no en el
+checkout. Texto propuesto: "Las prendas personalizadas se bordan y
+tardan al menos 3 días más en salir."
+
+**C-14. Cada pedido personalizado se revisa manualmente antes de bordar.**
+La página no puede validar del lado del servidor, así que la revisión humana es
+el control real sobre lo que llega escrito.
+
+**C-15. Aviso visible más casilla obligatoria.**
+Antes de agregar al carrito, el cliente marca que entiende que las prendas
+personalizadas no tienen cambio. La casilla deja constancia de que lo leyó.
+Pendiente de verificación legal: en Colombia el derecho de retracto tiene
+excepciones para bienes hechos a la medida, pero eso lo confirma un abogado,
+no este documento.
+
+**C-16. Las claves ocultas sí se envían al pedido.**
+No las ve el cliente y le sirven al taller.
+
+**C-17. Un solo campo para nombre o inicial.**
+Quien quiera una inicial escribe una letra.
+
+---
+
+### Lo que cambia respecto al plan original
+
+1. Entra una cuarta opción: la posición, con sus chips.
+2. El pedido lleva una propiedad más: `Ubicación`.
+3. Cada producto necesita saber qué posiciones permite y dónde cae cada una
+   sobre su foto.
+4. El largo máximo del nombre depende del tipo de prenda, no es uno solo.
+5. Si no se escribe nombre, se ocultan color de hilo, posición y la casilla.
+6. El aviso de los 3 días va en la página de producto, junto al configurador.
+
+### Deudas, no bloqueos
+
+1. **Los colores no tienen referencia de hilo.** Mientras borde la misma
+   persona funciona, porque sabe cuál es su "verde agua". El día que entre
+   alguien más al taller, un pedido que diga "verde agua" es ambiguo. Conviene
+   anotar la referencia real cuando se compre el hilo.
+2. **Los largos máximos son estimados.** Se ajustan con la primera prenda
+   bordada de verdad.
+3. **Las fotos son generadas**, así que las posiciones de la vista previa son
+   aproximadas hasta tener las reales.
+4. **La casilla de no cambio no está verificada legalmente.**
+
+---
+
+## 14. Thread colors
+
+Lista inicial de colores para el configurador de bordado.
+
+Estado: propuesta. Los hex son para la muestra en pantalla, no para comprar hilo.
+La columna de referencia la llenas tú con el hilo real que usas.
+
+### Cómo se usa esta lista
+
+- Cada fila es una opción del selector de color de hilo.
+- El nombre es lo que ve el cliente y lo que llega al pedido. No el hex.
+- El hex solo pinta la muestra en pantalla y la vista previa sobre la prenda.
+- La referencia es lo que usa producción para comprar y bordar.
+- El orden de esta tabla es el orden en que aparecen en el selector.
+
+### Tonos Mares
+
+Los seis de la marca. Son los que combinan con las prendas, así que van primero.
+
+| Nombre | Hex muestra | Referencia de hilo |
+| --- | --- | --- |
+| Verde agua | `#A8CFC2` | PENDIENTE |
+| Lavanda | `#C9BFDD` | PENDIENTE |
+| Rosa arena | `#EBCFC4` | PENDIENTE |
+| Turquesa | `#4FB8C4` | PENDIENTE |
+| Coral | `#F2A68F` | PENDIENTE |
+| Amarillo sol | `#F6D77A` | PENDIENTE |
+
+### Neutros
+
+Los que más se piden para un nombre. El azul profundo es el de la marca.
+
+| Nombre | Hex muestra | Referencia de hilo |
+| --- | --- | --- |
+| Blanco | `#FFFFFF` | PENDIENTE |
+| Crudo | `#EFE6D8` | PENDIENTE |
+| Gris | `#8C8C8C` | PENDIENTE |
+| Azul profundo | `#3E6A85` | PENDIENTE |
+| Negro | `#1E1E1E` | PENDIENTE |
+
+### Círculo cromático
+
+Primarios, secundarios y terciarios, para quien quiera un color fuerte.
+
+| Nombre | Tipo | Hex muestra | Referencia de hilo |
+| --- | --- | --- | --- |
+| Rojo | Primario | `#D7262E` | PENDIENTE |
+| Rojo naranja | Terciario | `#E24E1B` | PENDIENTE |
+| Naranja | Secundario | `#EE7B2E` | PENDIENTE |
+| Amarillo naranja | Terciario | `#F4A62A` | PENDIENTE |
+| Amarillo | Primario | `#F2CE2B` | PENDIENTE |
+| Amarillo verde | Terciario | `#A8C33A` | PENDIENTE |
+| Verde | Secundario | `#3E9E52` | PENDIENTE |
+| Azul verde | Terciario | `#2E9E95` | PENDIENTE |
+| Azul | Primario | `#2D6CB3` | PENDIENTE |
+| Azul violeta | Terciario | `#4A4A9E` | PENDIENTE |
+| Violeta | Secundario | `#7B4397` | PENDIENTE |
+| Rojo violeta | Terciario | `#B83A7E` | PENDIENTE |
+
+Total: 23 colores.
+
+### Notas de producción
+
+1. **Hilo claro sobre tela clara casi no se ve.** Blanco y crudo sobre una prenda
+   perla o rosa arena desaparecen en foto y casi en persona. O los sacas de la
+   lista para esas prendas, o avisas al cliente antes de que compre.
+2. **La muestra en pantalla no es el hilo.** Ningún monitor reproduce el color
+   del hilo con fidelidad. La página debe decirlo en una línea cerca del
+   selector, con una frase corta y sin letra chica.
+3. **El color nunca va solo.** Cada muestra lleva su nombre escrito al lado, no
+   solo el cuadrito, porque hay clientes que no distinguen ciertos colores.
+4. **Si un color se descontinúa**, se quita de la lista y los pedidos viejos
+   conservan el nombre que eligieron, porque el nombre viaja en el pedido.
+
+### Decisiones tomadas
+
+- Lista cerrada, no selector libre de color. Un selector libre deja pedir tonos
+  que no existen en hilo y la vista previa prometería algo imposible de bordar.
+- Sin costo extra por color, igual que el resto de la personalización en fase 1.
+
+### Pendientes
+
+1. La referencia real de hilo de cada color.
+2. Confirmar si los 23 se quedan o se recorta la lista.
+3. Si algún color no aplica a ciertas prendas, cuáles.
+4. Fase 2: ¿se abre el selector libre de color? Depende de si puedes conseguir
+   cualquier tono y en cuánto tiempo.
