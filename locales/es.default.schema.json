@@ -234,6 +234,59 @@
         "name": "Texto destacado"
       }
     },
+    "essence": {
+      "name": "Esencia de la marca",
+      "settings": {
+        "eyebrow": {
+          "label": "Etiqueta sobre el encabezado"
+        },
+        "heading": {
+          "label": "Encabezado",
+          "default": "Por qué bordamos a mano"
+        },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca."
+        },
+        "text": {
+          "label": "Texto",
+          "default": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+        },
+        "image": {
+          "label": "Imagen",
+          "info": "Opcional. Va al lado del texto, con esquinas redondeadas y proporción 4:5. Sin imagen, el texto ocupa todo el ancho."
+        }
+      },
+      "blocks": {
+        "feature": {
+          "name": "Característica",
+          "settings": {
+            "icon": {
+              "label": "Ícono",
+              "options__1": {
+                "label": "Marca de verificación"
+              },
+              "options__2": {
+                "label": "Más"
+              },
+              "options__3": {
+                "label": "Búsqueda"
+              },
+              "options__4": {
+                "label": "Carrito"
+              }
+            },
+            "title": {
+              "label": "Título",
+              "info": "Una frase corta. Escribe solo lo que la marca pueda demostrar. No hay texto por defecto."
+            },
+            "text": {
+              "label": "Texto"
+            }
+          }
+        }
+      }
+    },
     "main-collection": {
       "name": "Colección",
       "settings": {

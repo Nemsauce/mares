@@ -25,10 +25,14 @@
       "block_order": ["descanso", "dia"],
       "settings": {}
     },
+    "essence": {
+      "type": "essence",
+      "settings": {}
+    },
     "closing": {
       "type": "text-feature",
       "settings": {}
     }
   },
-  "order": ["hero", "lines", "closing"]
+  "order": ["hero", "lines", "essence", "closing"]
 }
