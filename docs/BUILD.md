@@ -1,7 +1,10 @@
-# Mares: Shopify theme architecture plan
+# Mares: how the theme is built
 
-Status: planning only. No theme code exists yet (the repo holds only this plan, the design docs and the repo config files). This file is the contract every later commit prompt refers to.
+Reference for the Shopify theme: the rules it follows, the file tree, how design tokens become CSS, the CSS and JavaScript approach, the sections that exist and the risks that remain. It replaces `THEME_PLAN.md` and `TOKENS.md`. The design values are in `docs/DESIGN.md` and `docs/design/tokens.json`; the words are in `docs/BRAND.md`; the configurator is in `docs/CONFIGURATOR.md`.
+
 Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, no build step required to deploy.
+
+---
 
 ## 0. Ground rules
 
@@ -10,8 +13,8 @@ Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, n
 | Tag | Meaning |
 | --- | --- |
 | `[T]` | Comes from `docs/design/tokens.json` (wins over everything). |
-| `[G]` | Comes from `docs/design/guia-web.md`. |
-| `[R]` | Comes from `docs/design/README.md`. |
+| `[G]` | Comes from the former web guide, now part of `docs/DESIGN.md`. |
+| `[R]` | Comes from the former design README, now part of `docs/DESIGN.md` (voice and copy rules: `docs/BRAND.md`). |
 | `[P]` | **Proposal.** The design docs are silent. Needs owner confirmation before it ships. Never treated as design truth. |
 | `[V]` | Shopify platform behavior to verify against current Shopify docs before the commit that depends on it. |
 
@@ -19,72 +22,82 @@ Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, n
 
 1. Layout is fluid and responsive at every width. Only two breakpoints exist, 600px and 1024px `[G]`. The 375px viewport is the first mandatory test width, but CSS is not written as a "mobile only, then patch" exercise: every component is checked at 320, 375, 600, 768, 1023, 1024, 1280, 1440 and 1920px.
 2. Every color, font size, spacing, radius and shadow comes from a token. No hex anywhere except `assets/tokens.css` (section 2).
-3. Checkout is not customized in code. Branding only, set in the Shopify admin (section 9, R-2).
+3. Checkout is not customized in code. Branding only, set in the Shopify admin (section 8, R-2).
 4. Nothing is gateway-specific. No dynamic checkout buttons, no payment icons, no gateway names in code or copy.
 5. The theme exposes **no raw color, font or spacing settings** in the theme editor. The editor can pick a *line* (Descanso / Día), never a hex. This protects the tokens from the merchant.
-6. Copy comes only from `README.md` / `guia-web.md`. Anything else is a placeholder in `locales/es.default.json`, marked `TODO(copy)`, and listed for the owner.
+6. Copy comes only from `docs/BRAND.md`. Anything else is a placeholder in `locales/es.default.json`, marked `TODO(copy)`, and listed for the owner.
 
 ### Resolved decisions (2026-10-22)
 
 Owner decisions that replace earlier proposals and open questions. If any other part of this plan disagrees with this list, this list wins.
 
-- **R-4, control borders.** Borders of fields, chips and other controls use `--control-border: var(--color-ink-muted)` instead of `line`. Accessibility wins over the guide's wording ("borde 1px `line`"): `ink-muted` is 5.21:1 on `bg` and 5.86:1 on `bg-raised`, against the 3:1 required for control borders, while `line` is 1.32:1 and 1.48:1. `line` stays for dividers (header underline, footer rule, skeleton). `guia-web.md` should be updated to match later; `docs/design/*` is read-only here, so it is not touched now.
+- **R-4, control borders.** Borders of fields, chips and other controls use `--control-border: var(--color-ink-muted)` instead of `line`. Accessibility wins over the guide's wording ("borde 1px `line`"): `ink-muted` is 5.21:1 on `bg` and 5.86:1 on `bg-raised`, against the 3:1 required for control borders, while `line` is 1.32:1 and 1.48:1. `line` stays for dividers (header underline, footer rule, skeleton). The former web guide said `line`; `docs/DESIGN.md` replaces it.
 - **R-6, focus ring.** Inside `[data-line]` surfaces, `--focus-ring-color: var(--color-ink)`. Everywhere else it stays `var(--color-focus)`. Reason: the `focus` ring is 2.49:1 on turquoise and 2.95:1 on coral, under the 3:1 minimum; `ink` is 4.68:1 or better on all six line colors.
 - **Q-12, token script.** `scripts/build-tokens.mjs` is approved. Node built-ins only, no packages. The generated `assets/tokens.css` is committed.
 - **Q-2, card density.** The product grid defaults to 2 cards per row on mobile. At 375px that is 163px cards and the card name may wrap to two lines; this is accepted.
 - **Q-7, personalization pricing.** Personalization carries no extra cost in phase 1. No surcharge logic is built.
-- **Q-3, fonts (partially resolved).** Font placeholders stay for now and `fonts_ready` remains `false` until the real WOFF2 files arrive. Still open: whether to keep Nunito 600 (Q-3 in section 9.1).
+- **Q-3, fonts (partially resolved).** Font placeholders stay for now and `fonts_ready` remains `false` until the real WOFF2 files arrive. Still open: whether to keep Nunito 600 (Q-3 in section 8.1).
+
+### Definition of done for every commit
+
+`shopify theme check` clean; `scripts/check-no-hex.sh` clean; checked at 375px and 1280px, plus the width list in decision 1 for layout commits; keyboard-only pass for anything interactive; only the files named in the commit prompt are changed; no store-touching command without explicit approval.
 
 ---
 
 ## 1. Theme file tree
 
-Shopify `assets/` is **flat** (no subfolders), so file groups are expressed as name prefixes. `docs/` and `scripts/` are excluded from upload via `.shopifyignore`.
+Shopify `assets/` is **flat** (no subfolders), so file groups are expressed as name prefixes. `docs/` and `scripts/` are excluded from upload via `.shopifyignore`. This is the tree as it exists; what the plan once listed and is not built yet is under "Not built yet".
 
 ```
 .gitignore                      Ignore OS/editor junk, .shopify/ local state.
 .shopifyignore                  Keep docs/ and scripts/ out of theme uploads.
 .theme-check.yml                Theme Check config (severity, ignore rules we accept).
-docs/                           Design docs (read-only) + this plan + later notes.
+docs/
+  README.md                     What each document is for.
+  DESIGN.md                     The design system (owner's).
+  BRAND.md                      Voice, copy of every section, products, policies, pending list.
+  BUILD.md                      This file.
+  CONFIGURATOR.md               The embroidery configurator (paused).
+  design/tokens.json            The only source of design values. Read by scripts/build-tokens.mjs.
 scripts/
   build-tokens.mjs              tokens.json -> assets/tokens.css. Node built-ins only, no packages.
   check-no-hex.sh               Fails if a color literal or stray breakpoint appears outside its allowed file.
 
 layout/
-  theme.liquid                  Document shell: head assets, skip link, header group, <main>, footer group, scripts.
+  theme.liquid                  Document shell: head assets, skip link, live region, header group, <main>, footer group.
   password.liquid               Minimal shell for the password page (store not yet public).
 
 templates/                      All JSON. Templates only list sections; no markup.
-  index.json                    Home: lines-entry + featured-collection (general colors only).
+  index.json                    Home: hero-home, lines-entry, featured-collection, essence (general colors only).
   collection.json               Neutral collection page (no line): main-collection only.
   collection.descanso.json      hero-line (line = descanso) + main-collection.
   collection.dia.json           hero-line (line = dia) + main-collection.
-  list-collections.json         All collections.
   product.json                  main-product (blocks decide the content).
   cart.json                     main-cart.
   page.json                     Generic content page (policies, care, contact copy).
-  search.json                   Search results using product cards.
   404.json                      Not found, with links to both lines.
   password.json                 Password page content.
-  (no customers/*, no gift_card.liquid in phase 1: see Q-10)
 
 sections/
-  header-group.json             Section group: header.
+  header-group.json             Section group: announcement-bar, header.
   footer-group.json             Section group: footer.
-  header.liquid                 Logo left, cart right, 1px line below, 64px tall on mobile.
-  footer.liquid                 Link lists, text, brand line, copyright. body-sm.
+  announcement-bar.liquid       One line above the header (free shipping).
+  header.liquid                 Logo left, cart right, menu, 1px line below.
+  footer.liquid                 Link groups, brand, newsletter, copyright. body-sm.
+  hero-home.liquid              Home hero: headline, text, the page's one primary button.
   hero-line.liquid              Line hero block (one per line) with line color set.
-  lines-entry.liquid            Home: one neutral card per line linking to its collection.
-  featured-collection.liquid    Home: a row/grid of product cards from a picked collection.
+  lines-entry.liquid            Home: one card per line linking to its collection.
+  featured-collection.liquid    Home: a row/grid of product cards from a picked collection, optional tabs by type.
+  essence.liquid                Home: why the brand does what it does, three short features, an image.
+  text-feature.liquid           Home: a heading and a paragraph.
   main-collection.liquid        Collection grid, sorting, pagination.
   main-product.liquid           Product page shell: media + info column that accepts theme blocks.
   main-cart.liquid              Cart page.
   main-page.liquid              Page content.
-  main-search.liquid            Search results.
-  main-list-collections.liquid  Collection list.
   main-404.liquid               404 content.
+  main-password.liquid          Password page content.
 
-blocks/                         Theme blocks, used inside main-product (and reusable later).
+blocks/                         Theme blocks, used inside main-product.
   product-title.liquid          Product name (h1, display-sm).
   product-price.liquid          Price + compare-at.
   variant-picker.liquid         Size chips and other options.
@@ -93,57 +106,59 @@ blocks/                         Theme blocks, used inside main-product (and reus
   product-description.liquid    Rich description.
   accordion.liquid              Policies, care, shipping (details/summary).
   shipping-note.liquid          Shipping cost / delivery estimate text.
-  embroidery-configurator.liquid  Phase 1 configurator slot (added late, section 7).
-  _line-tag.liquid              Private: collection tag chip.
 
 snippets/
   head-assets.liquid            Order of <link>/<style>/preloads in <head>.
   fonts.liquid                  @font-face + font preloads (placeholders until files exist).
-  meta-tags.liquid              Title, description, Open Graph, canonical.
   icon.liquid                   Inline SVG icons (Lucide subset, 24px, 2px stroke, round caps).
   button.liquid                 Primary / secondary button or link-button.
   image.liquid                  Responsive image: srcset, sizes, width/height, lazy/eager, fetchpriority.
-  price.liquid                  Price, compare-at (struck, ink-muted), unit price if present.
+  price.liquid                  Price, compare-at (struck, ink-muted).
   product-card.liquid           The product card.
   collection-tag.liquid         Collection tag chip (sea-glass / turquoise).
+  section-header.liquid         Optional motif, eyebrow, two-tone heading, subtitle: how a home section introduces itself.
   embroidery-motif.liquid       One-line SVG motifs (placeholder art first).
-  embroidery-divider.liquid     Section separator in the embroidery stroke.
+  embroidery-divider.liquid     Stitch line between home sections.
   pagination.liquid             Numeric pagination.
   cart-line-item.liquid         One cart line (also used by Section Rendering responses).
   cart-count.liquid             Cart count bubble.
 
 assets/
   tokens.css                    GENERATED from tokens.json. Only file allowed to contain color literals.
-  base.css                      Reset, element defaults, type classes, focus ring, reduced motion, utilities.
+  base.css                      Reset, element defaults, type classes, focus ring, depth and motion tokens, reduced motion, utilities.
   base-lines.css                Semantic aliases + [data-line] mapping (var() only, no literals).
   grid.css                      Container, 4/8/12 grid, section spacing.
-  component-*.css               button, field, chip, tag, icon, price, card-product, skeleton, accordion, pagination.
-  section-*.css                 header, footer, hero-line, lines-entry, collection, product, cart, page.
+  component-*.css               accordion, button, card-product, chip, field, icon, pagination, price, section-header, skeleton, tag.
+  section-*.css                 announcement-bar, cart, collection, divider, essence, featured-collection, footer, header, hero-home, hero-line, lines-entry, page, product, text-feature.
   core.js                       Namespace, routes, fetch helper, cart API wrapper, live-region announcer.
   cart-items.js                 <cart-items> custom element (quantity, remove).
   product-form.js               <product-form> custom element (Ajax add to cart).
   variant-picker.js             <variant-picker> custom element (option change, URL update, section render).
   header-menu.js                <header-menu> custom element (mobile <dialog> menu).
   media-gallery.js              <media-gallery> (thumbnail sync for the scroll-snap gallery).
-  configurator.js               Phase 1 configurator (written late, section 7).
-  fraunces-600.woff2            Placeholder until supplied.
-  nunito-400.woff2              Placeholder until supplied.
-  nunito-600.woff2              Placeholder until supplied (see Q-3).
-  nunito-700.woff2              Placeholder until supplied.
+  featured-tabs.js              <featured-tabs> (filter the featured cards by product type).
+  reveal.js                     Sections rise in once when they scroll into view; shows everything without the script.
 
 config/
-  settings_schema.json          theme_info, favicon, links to the returns and care pages. No color/font settings.
+  settings_schema.json          theme_info, favicon, links to the returns and care pages, social links. No color/font settings.
   settings_data.json            Defaults and presets.
 
 locales/
-  es.default.json               Storefront strings (Español de Colombia, tuteo) [R].
-  es.default.schema.json        Theme editor labels.
+  es.default.json               Storefront strings (Español de Colombia, tuteo).
+  es.default.schema.json        Theme editor labels and defaults.
 ```
+
+**Not built yet** (named by the plan, no file exists):
+- `templates/search.json`, `templates/list-collections.json`, `sections/main-search.liquid`, `sections/main-list-collections.liquid` (search and collection list; Q-9).
+- `snippets/meta-tags.liquid` (title, description, Open Graph, canonical; with structured data, the SEO commit).
+- `blocks/_line-tag.liquid` (the line tag is a snippet, `collection-tag.liquid`, instead).
+- `blocks/embroidery-configurator.liquid`, `assets/configurator.js`, `assets/component-configurator.css` (the configurator, paused: `docs/CONFIGURATOR.md`).
+- `assets/fraunces-600.woff2`, `nunito-400.woff2`, `nunito-600.woff2`, `nunito-700.woff2` (placeholders until the owner supplies them, Q-3).
 
 Rules for the tree:
 - A section/snippet that needs CSS loads only its own file with `stylesheet_tag`. Global CSS is limited to `tokens`, `base`, `base-lines`, `grid`.
 - Each commit adds only the locale keys it uses.
-- Logo: README mentions `assets/Logos`. That path cannot exist inside a Shopify theme (flat assets). Until the final logo arrives, the header renders the word "Mares" in Fraunces 600 `brand` `[R]`. The final logo is uploaded through the `logo` image setting (R-9).
+- Logo: the design docs mention `assets/Logos`. That path cannot exist inside a Shopify theme (flat assets). Until the final logo arrives, the header renders the word "Mares" in Fraunces 600 `brand` `[R]`. The final logo is uploaded through the `logo` image setting (R-9).
 
 ---
 
@@ -204,6 +219,21 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 - **Settings:** the theme schema never uses `color` settings or hex `default` values.
 - **Documented exceptions (not code):** (a) hex values typed into the Shopify admin (checkout branding, notification emails) must be copied from `tokens.json`; (b) thread-color swatches in the configurator come from merchant data, injected as a CSS variable from the data value (section 7); (c) `<meta name="theme-color">` is omitted in phase 1 because it needs a literal.
 
+### 2.8 Regenerating tokens
+
+```
+node scripts/build-tokens.mjs
+```
+
+Node built-ins only, no install step. The output is deterministic: running it twice leaves the file byte-identical. The script exits with an error naming the token if a value is missing or has an unsupported shape.
+
+When `tokens.json` changes:
+1. Edit `docs/design/tokens.json` (design owner only; never edit `tokens.css` by hand).
+2. Run `node scripts/build-tokens.mjs`.
+3. Review the `assets/tokens.css` diff and commit both files together.
+4. If the script rejects a new shape (a new token group, a new value type), extend the script in the same commit instead of working around it.
+5. Check the derived `--color-brand-hover` still makes sense for the new `brand` values.
+
 ---
 
 ## 3. Font loading (Fraunces and Nunito)
@@ -253,7 +283,7 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 
 - **Vanilla JS, ES2020, classic scripts with `defer`.** No framework, no jQuery, no bundler, no polyfills, no libraries. Reason: no build step, `defer` guarantees execution order, widest support for mobile traffic from ads `[G]`. (An import map with ES modules is the alternative; rejected for older-iOS risk. Revisit only if a file exceeds what is comfortable to keep standalone.)
 - **Progressive enhancement:** every flow works without JS first. The add-to-cart form posts to `/cart/add`; the cart quantity form posts to `/cart`; JS only upgrades them.
-- **Structure:** one Custom Element per feature (`<product-form>`, `<variant-picker>`, `<cart-items>`, `<header-menu>`, `<media-gallery>`), one file each, registered with `customElements.define`. Shared code lives only in `core.js`, under a single namespace `window.Mares`.
+- **Structure:** one Custom Element per feature (`<product-form>`, `<variant-picker>`, `<cart-items>`, `<header-menu>`, `<media-gallery>`, `<featured-tabs>`), one file each, registered with `customElements.define`. Shared code lives only in `core.js`, under a single namespace `window.Mares`.
 - **`core.js` provides:** `Mares.routes` (from Liquid `routes`: cart add/change/update/url, root), `Mares.fetchJson()` (AbortController, JSON parse, error normalization), `Mares.cart.{get, add, change, update}`, `Mares.announce(text)` (a single `aria-live="polite"` region in `theme.liquid`).
 - **Cart, Shopify Ajax Cart API only:** `/cart.js`, `/cart/add.js` (accepts `items[].properties`), `/cart/change.js` (by line `key`), `/cart/update.js`. Rerender with the **Section Rendering API** (`sections` parameter on the same request) so prices stay server-formatted as `$89.900` `[R]`. **No money formatting in JS.** `/cart/clear.js` is unused.
 - **Events:** DOM `CustomEvent` on `document`: `mares:cart:updated` (`detail: { cart }`), `mares:cart:error`. The header count listens; nothing else is coupled.
@@ -262,7 +292,7 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 - **Header menu on mobile:** native `<dialog>` (built-in focus trap and Esc) driven by a tiny `<header-menu>`.
 - **Gallery:** CSS `scroll-snap`; `<media-gallery>` only syncs thumbnails. No auto zoom `[G]`.
 - **Loading:** `core.js` first on every page, then only what the template uses. Scripts attach `defer`, never block render.
-- **Budget `[P]`:** phase 1 JS (everything except the configurator) under 15 KB gzipped.
+- **Budget `[P]`:** phase 1 JS (everything except the configurator) under 15 KB gzipped. Measure with `cat assets/*.js | gzip -c | wc -c`; it was 9,472 bytes when this was written.
 
 ---
 
@@ -336,120 +366,32 @@ In `<head>`, in this order, via `snippets/head-assets.liquid`:
 - `featured-collection`: heading + product cards. Editable: `heading`, `collection`, `max_products`.
 - `main-page`, `main-search`, `main-list-collections`, `main-404`: minimal, reusing the same components.
 
----
+### 6.8 Added after the plan
 
-## 7. Embroidery configurator (high level only)
+These exist in the theme and were not in the plan above. Where one changes a 6.x entry, the entry is amended here.
 
-Scope `[G]`: phase 1 is a configurator **without AI**: embroidery motif, name or initial, thread color, preview on the garment. AI generation is phase 2 with a per-customer attempt limit.
-
-**Approach**
-- A theme block `embroidery-configurator` inside `main-product`, shown only when the product is flagged personalizable (metafield `mares.personalizable`, `[P]`, Q-4). Unflagged products are unaffected.
-- **Line item properties.** Choices are sent with `/cart/add.js` as `properties`. Visible keys (human-readable Spanish, also shown in cart, checkout and the order in admin): `Motivo`, `Nombre o inicial`, `Color de hilo`. Hidden helper keys use a leading underscore (e.g. `_config_version`) `[V]`. Values are names (e.g. "Ola suave", the thread color's name), never hex.
-- Same variant with different properties becomes separate cart lines (Shopify behavior), which is what we want.
-- Motif list comes from `[R]`: 3 Descanso motifs, 4 Día motifs. A product offers only its own line's motifs (one line per page).
-- **Thread colors** are data (a metaobject list with name + color), not tokens. Their swatches are the only colors not coming from tokens (documented exception, section 2.7). Palette is an owner input (Q-6).
-- **Preview on the garment:** client-side only. A layered SVG over the variant's garment photo: motif stroke tinted with the thread color, plus the name text. Needs a per-product "embroidery zone" (position and size) stored as data. A live-region text alternative describes the selection. Includes a short "approximate preview" note (copy from owner). The preview image is **not** saved in the order.
-- Controls use the same field/chip components, 44px targets, visible labels, errors by text `[G]`.
-- Validation: client-side only (length limit, letters including ñ and tildes). Server-side enforcement is not available in theme code (R-8).
-
-**Out of scope for phase 1**
-- AI generation and attempt limits (phase 2 `[G]`).
-- Customer image uploads; saving the preview image on the order; production-file export.
-- Free drag/resize/rotate of the motif; several embroidery locations; stitch simulation.
-- Editing a configured line in the cart (customer removes and re-adds).
-- Embroidery price surcharge or any pricing logic (decided: personalization carries no extra cost in phase 1, Q-7).
-- Server-side validation (Cart/Checkout Validation Function), saved designs, accounts.
-- Translations other than `es`.
-
-A separate `docs/CONFIGURATOR_PLAN.md` will detail the data model and preview geometry before any code (commit G0).
+- **Announcement bar** (`sections/announcement-bar.liquid`, group `header-group.json`, above the header). One editable line, default "Envío gratis a todo el país"; blank hides it. A filled `brand` band with `on-brand` text at body-lg (5.18 to 1 light, 8.21 to 1 dark). Not dismissible, on purpose. What sticks is a decision: the header sticks at every width; the bar sticks with it only from 1024px, so a phone keeps its screen (the CSS lives in `section-announcement-bar.css` and finds the header group wrappers with `:has()`). **Editable:** `text`.
+- **Header** (amends 6.1). Two more settings, `link_gifts` and `link_personalization`, render after the menu links with locale labels, only when set; both unset by default. **Editable:** `menu`, `link_gifts`, `link_personalization`; the logo comes from the theme setting `logo`.
+- **Footer** (amends 6.2). Three link groups are built in and render right after the brand block: Tienda (the two line collections and all products), Ayuda (FAQ page, returns, care) and Escríbenos (the social links that are set). A group with nothing to link is not rendered. Blocks are `menu`, `text`, `brand` and `newsletter` (heading and text default to the brand's copy). **Editable:** `page_faq`, `show_copyright`, blocks.
+- **Hero per line** (amends 6.3). The image sits beside the text from 1024px, is a cropped band from 600px and is hidden on phones, so the first product shows without scrolling at 1280x800 and 375x667.
+- **Home hero** (`hero-home.liquid`): the page's h1, one line of text, the single primary button, an optional photograph behind a text panel and up to three trust notes (no default text: the brand has not confirmed what it can claim).
+- **Essence** (`essence.liquid`) and **text-feature** (`text-feature.liquid`): the section header, a paragraph, up to three features with an icon (essence), and an image. Defaults are the closing copy in `docs/BRAND.md`.
+- **Featured collection** (amends 6.7b): optional tabs by product type (`show_tabs`, off by default). A row of toggle buttons (`aria-pressed`) filters the cards without a reload; without JavaScript the buttons are absent and every product renders.
+- **Section header snippet** (`snippets/section-header.liquid`): optional embroidery `motif` above the eyebrow, in ink-muted, centered like the header; a two-tone heading whose gap is printed by an output tag (see the whitespace trap note in the file).
+- **Stitch dividers**: each home section can lay `embroidery-divider` on its top seam (`show_divider`, default on); `assets/section-divider.css`.
+- **Depth and motion**: shadows at rest, two gradients, alternating bands (`--surface-sunk`) and the entrance reveal (`reveal.js`) are described in `docs/DESIGN.md`.
 
 ---
 
-## 8. Ordered commits
+## 7. The embroidery configurator
 
-**Definition of done for every commit:** `shopify theme check` clean; `scripts/check-no-hex.sh` clean (once it exists); checked at 375px and 1280px, plus the width list in section 0 for layout commits; keyboard-only pass for anything interactive; only the files named in the commit prompt are changed; no store-touching command without explicit approval.
-
-Models: **S-med** = Sonnet 5.5 medium, **S-high** = Sonnet 5.5 high, **O-high** = Opus high.
-
-### Phase A: repository and config
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| A1 | chore: ignore files and Theme Check config | `.gitignore`, `.shopifyignore`, `.theme-check.yml` | S-med |
-| A2 | feat(config): theme settings schema and data | `config/settings_schema.json`, `config/settings_data.json` | S-med |
-| A3 | feat(locales): default Spanish locale skeleton | `locales/es.default.json`, `locales/es.default.schema.json` | S-med |
-
-### Phase B: design foundation
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| B1 | feat(tokens): generator and `tokens.css` (light, dark, derived) | `scripts/build-tokens.mjs`, `assets/tokens.css` | S-high |
-| B2 | chore(guard): no-hex and breakpoint check script | `scripts/check-no-hex.sh` | S-med |
-| B3 | feat(layout): `theme.liquid` shell, head assets, live region, skip link | `layout/theme.liquid`, `snippets/head-assets.liquid` | S-high |
-| B4 | feat(fonts): `fonts.liquid` with placeholder flag | `snippets/fonts.liquid` | S-med |
-| B5 | feat(css): base reset, type classes, focus ring, reduced motion, utilities | `assets/base.css` | S-high |
-| B6 | feat(css): container, 4/8/12 grid, section spacing, line aliases | `assets/grid.css`, `assets/base-lines.css` | S-high |
-| B7 | feat(snippets): icon snippet (Lucide subset) | `snippets/icon.liquid`, `assets/component-icon.css` | S-med |
-| B8 | feat(components): button (primary, secondary, disabled, loading) | `snippets/button.liquid`, `assets/component-button.css` | S-high |
-| B9 | feat(components): form field, chip, tag, skeleton | `assets/component-field.css`, `component-chip.css`, `component-tag.css`, `component-skeleton.css`, `snippets/collection-tag.liquid` | S-high |
-| B10 | feat(snippets): responsive image and price | `snippets/image.liquid`, `snippets/price.liquid`, `assets/component-price.css` | S-med |
-
-### Phase C: global chrome and generic pages
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| C1 | feat(header): header section and group (no JS) | `sections/header.liquid`, `header-group.json`, `assets/section-header.css` | S-high |
-| C2 | feat(header): mobile menu dialog | `assets/header-menu.js`, header edits | S-high |
-| C3 | feat(footer): footer section and group | `sections/footer.liquid`, `footer-group.json`, `assets/section-footer.css` | S-med |
-| C4 | feat(pages): `page`, `404`, `password` templates and layout | `templates/page.json`, `404.json`, `password.json`, `layout/password.liquid`, `sections/main-page.liquid`, `main-404.liquid` | S-med |
-
-### Phase D: catalog
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| D1 | feat(card): product card snippet and CSS | `snippets/product-card.liquid`, `assets/component-card-product.css` | S-high |
-| D2 | feat(collection): grid section, sorting, pagination, neutral template | `sections/main-collection.liquid`, `templates/collection.json`, `snippets/pagination.liquid`, `assets/section-collection.css`, `component-pagination.css` | S-high |
-| D3 | feat(embroidery): placeholder motif and divider snippets (7 motifs) | `snippets/embroidery-motif.liquid`, `embroidery-divider.liquid` | S-med |
-| D4 | feat(hero): hero-line section and the two line collection templates | `sections/hero-line.liquid`, `templates/collection.descanso.json`, `collection.dia.json`, `assets/section-hero-line.css` | S-high |
-| D5 | feat(home): lines-entry, featured collection, home template | `sections/lines-entry.liquid`, `featured-collection.liquid`, `templates/index.json`, CSS | S-high |
-| D6 | feat(search): search and collection list | `templates/search.json`, `list-collections.json`, sections | S-med |
-
-### Phase E: product and cart
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| E1 | feat(product): `main-product` shell, gallery (scroll-snap), title/price/description/quantity/buy blocks, native form | `sections/main-product.liquid`, `blocks/*`, `templates/product.json`, `assets/section-product.css` | O-high |
-| E2 | feat(product): variant picker block (size chips, sold-out, disabled states) | `blocks/variant-picker.liquid`, CSS | S-high |
-| E3 | feat(js): `core.js` namespace + Ajax add to cart with errors and live region | `assets/core.js`, `assets/product-form.js` | O-high |
-| E4 | feat(js): variant change without reload (URL update, section rendering) | `assets/variant-picker.js` | O-high |
-| E5 | feat(product): accordion and shipping-note blocks (returns, care, shipping) | `blocks/accordion.liquid`, `shipping-note.liquid`, `assets/component-accordion.css` | S-med |
-| E6 | feat(product): gallery thumbnail sync | `assets/media-gallery.js` | S-med |
-| E7 | feat(cart): cart page, line items, empty state (no JS) | `sections/main-cart.liquid`, `snippets/cart-line-item.liquid`, `templates/cart.json`, `assets/section-cart.css` | S-high |
-| E8 | feat(js): Ajax quantity and remove through Section Rendering | `assets/cart-items.js` | O-high |
-| E9 | feat(header): live cart count | `snippets/cart-count.liquid`, header edits | S-med |
-| E10 | feat(cart): shipping cost and delivery notice (estimator only if R-3 is confirmed) | `sections/main-cart.liquid` | S-high |
-
-### Phase F: quality and handover
-F1 is not blocked on R-4: control borders are decided (`--control-border` = `ink-muted`), so the audit checks the implemented choice.
-
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| F1 | chore(a11y): audit and fixes (contrast script, focus, 44px targets, landmarks, headings, alt text) | various | O-high |
-| F2 | perf: LCP and CLS pass (image priority, preloads, font fallbacks with real files, CSS split) | various | O-high |
-| F3 | feat(seo): meta tags, Open Graph, structured data | `snippets/meta-tags.liquid`, product section | S-med |
-| F4 | docs: dev workflow and Theme Check notes | `docs/DEV.md` | S-med |
-| F5 | docs: checkout branding checklist (values copied from tokens) | `docs/CHECKOUT_BRANDING.md` | S-med |
-
-### Phase G: configurator (after F)
-| # | Commit | Files | Model |
-| --- | --- | --- | --- |
-| G0 | docs: configurator design (data model, preview geometry, validation) | `docs/CONFIGURATOR_PLAN.md` | O-high |
-| G1 | feat(locales,docs): configurator strings and admin data setup notes | locales, docs | S-med |
-| G2 | feat(configurator): block UI for motif, name, thread color (no preview) | `blocks/embroidery-configurator.liquid`, CSS | S-high |
-| G3 | feat(configurator): garment preview rendering | `assets/configurator.js` | O-high |
-| G4 | feat(configurator): line item properties wired to add to cart and cart display | `product-form.js`, `cart-line-item.liquid` | S-high |
-| G5 | chore(configurator): validation, a11y and performance pass | various | S-high |
+Phase 1 is a configurator without AI: embroidery motif, name or initial, thread color, position and a preview on the garment. It is paused and has its own document, `docs/CONFIGURATOR.md`: data model, preview geometry, validation, the commits to build it and the owner's admin checklist. Nothing in this theme depends on it; products without the `mares.personalizable` flag are unaffected.
 
 ---
 
-## 9. Open questions and risks
+## 8. Open questions and risks
 
-### 9.1 Questions for the owner (design gaps and decisions)
+### 8.1 Questions for the owner (design gaps and decisions)
 Q-2, Q-7, Q-12 and part of Q-3 are decided (see Resolved decisions in section 0). The remaining questions keep their numbers.
 
 - **Q-1 Missing specs.** Not in the docs, planned as `[P]`: grid gutter; tablet (600 to 1023px) section spacing and hero title size; header height on desktop; main navigation and its mobile pattern; footer design; garment-color selector; product page column split.
@@ -463,24 +405,24 @@ Q-2, Q-7, Q-12 and part of Q-3 are decided (see Resolved decisions in section 0)
 - **Q-11 Brand name casing.** `[G]` lists "nombre en título, minúscula o mayúscula" as pending.
 - **Q-13 Hover.** "Oscurece `brand` un 8%" is not defined precisely; plan mixes with black.
 
-### 9.2 Accessibility risks (found by computing WCAG ratios from tokens.json)
+### 8.2 Accessibility risks (found by computing WCAG ratios from tokens.json)
 Targets from `[G]`: 4.5:1 normal text, 3:1 for 24px+ text, icons and control borders, visible focus, 44px targets.
 
 - **R-1 What passes (light):** `ink` on `bg` 9.72, on `bg-raised` 10.93; `ink-muted` on `bg` 5.21; `brand` on `bg` 5.18, on `bg-raised` 5.83; `on-brand` on `brand` 5.18; `error` on `bg` 4.84; `success` on `bg` 5.57; `ink` on sea-glass 6.44, lavender 6.24, blush 7.42, turquoise 4.68, coral 5.53, sun 7.77. The numbers quoted in `tokens.json` (9.7, 5.2, 5.2) check out. `ink` on turquoise (4.68) is the thinnest margin and applies to the 13px `label`.
-- **R-4 Control borders (decided).** `[G]` specified a 1px `line` border for fields and chips while also requiring 3:1 for control borders. `line` on `bg` is 1.32:1, on `bg-raised` 1.48:1, and the white field on pearl is 1.12:1. Decision: `--control-border` is `var(--color-ink-muted)` (5.21 on `bg`, 5.86 on `bg-raised`). `guia-web.md` should be updated to match later. F1 audits this choice; it is not blocked.
+- **R-4 Control borders (decided).** `[G]` specified a 1px `line` border for fields and chips while also requiring 3:1 for control borders. `line` on `bg` is 1.32:1, on `bg-raised` 1.48:1, and the white field on pearl is 1.12:1. Decision: `--control-border` is `var(--color-ink-muted)` (5.21 on `bg`, 5.86 on `bg-raised`). The former web guide said `line`; `docs/DESIGN.md` replaces it. The accessibility audit checks this choice; it is not blocked.
 - **R-5 Dark mode and line colors.** Line colors have one value for both themes. In dark, `ink` on them is 1.2 to 2.0:1 (fail), while `on-brand` (dark) is 6.9 to 11.4:1. The alias `--color-on-line` flips it. Dark stays off until that alias exists (section 2.3). The R-6 focus rule has the same dark problem (`ink` on line colors in dark); the dark-mode commit must switch the in-surface ring to `--color-on-line` as well.
 - **R-6 Focus ring on line colors (decided).** The `focus` ring (`brand`) on turquoise is 2.49:1 and on coral 2.95:1 (both under 3:1); sea-glass 3.43, lavender 3.32, blush 3.95, sun 4.14 pass. Decision: inside `[data-line]` surfaces `--focus-ring-color` is `var(--color-ink)` (4.68 or better on all six line colors); elsewhere it stays `var(--color-focus)`. The same numbers show `brand` text on any line color fails 4.5:1 (best case 4.14), so no brand-colored text or secondary buttons over line colors.
 - **R-7 Other:** color never as the only signal (errors, selected chip, sold out, disabled); icon-only buttons need accessible names; one `h1` per page; skip link; `prefers-reduced-motion`; alt text depends on merchant data entry; `label` uppercase done by CSS so screen readers read normal text.
 
-### 9.3 Performance risks (target LCP < 2.5s on 4G mobile `[G]`)
+### 8.3 Performance risks (target LCP < 2.5s on 4G mobile `[G]`)
 - LCP is the hero block/image or the first product image. It must be eager with `fetchpriority="high"`, correct `srcset`/`sizes`, explicit `width`/`height`, and never lazy.
-- Fonts: swap prevents invisible text; real fonts cause layout shift unless fallback metrics are adjusted (F2). Preload only two faces.
+- Fonts: swap prevents invisible text; real fonts cause layout shift unless fallback metrics are adjusted (the performance pass). Preload only two faces.
 - Render-blocking CSS must stay small (budget in section 4). No carousel or animation libraries.
 - Third-party code (analytics/ad pixels for the ad traffic `[G]`, any apps) can sink LCP and is outside the theme. Measure with and without. Each app block must be justified.
 - Images: merchant uploads must be sized sensibly; Shopify CDN formats `[V]`.
-- Measure with Lighthouse mobile throttled, on a published dev theme, at F2 and after real photos arrive.
+- Measure with Lighthouse mobile throttled, on a published dev theme, at the performance pass and after real photos arrive.
 
-### 9.4 Platform and business risks
+### 8.4 Platform and business risks
 - **R-2 Checkout (non-Plus).** No checkout code. Only branding in the checkout editor (logo, colors, fonts, corner radius and similar) `[V]`. Branding values must be typed by hand from `tokens.json`, so the cart-to-checkout visual jump is accepted. Configurator choices appear in checkout as plain property lines. The gateway is undecided and nothing in the theme depends on it. Checkout address fields (department and city as lists, 10-digit mobile `[G]`) follow what Shopify provides for Colombia `[V]`, not the theme.
 - **R-3 Shipping before payment `[G]`.** Shopify normally calculates shipping at checkout. A cart estimator (`/cart/shipping_rates.json`) must be verified for current support and Colombian addresses `[V]`. Fallback: static text from `shipping_note`.
 - **R-8 Personalization correctness.** Line item properties are not validated by Shopify. Bad input (long names, odd characters) reaches the order. Mitigation: client-side limits now, manual review in production, validation Function later (out of scope).
@@ -489,7 +431,9 @@ Targets from `[G]`: 4.5:1 normal text, 3:1 for 24px+ text, icons and control bor
 - **R-11 Copy.** Several UI strings (sold out, remove, quantity, etc.) are not in the docs. Placeholders in the locale file, reviewed by the owner against the tone rules in `[R]` (no false urgency, no diminutives in every sentence).
 - **R-12 No store connection yet.** Visual verification needs `shopify theme dev` against a development theme later. That touches the store and needs approval at that time.
 
-### 9.5 Contradictions and ambiguities found in the design docs
+### 8.5 Contradictions and ambiguities found in the design docs
+
+Found in the former design README and web guide, now merged into `docs/DESIGN.md`. Check each against it before relying on it.
 1. **Font weights.** README: both fonts at 400/600/700. Guide: Fraunces 600, Nunito 400/600/700. tokens.json: Fraunces 600 only; Nunito 400 and 700 only (no token uses Nunito 600). `type.fonts` is empty.
 2. **Control borders** (R-4, resolved): guide requires 3:1 but specifies `line` (1.32:1); the `line` token says not to use it alone. The plan uses `ink-muted`; the guide still says `line` until updated.
 3. **Dark values** (R-5): README says `ink` on line colors is fine; dark `ink` fails there.
