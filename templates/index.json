@@ -132,14 +132,14 @@
           "type": "step_3",
           "settings": {
             "title": "Se revisa cada prenda",
-            "text": "Revisamos cada prenda."
+            "text": "Damos vuelta la prenda y revisamos por dentro. El revés queda plano, sin nudos que le molesten la piel."
           }
         },
         "step_4": {
           "type": "step_4",
           "settings": {
             "title": "Se empaca",
-            "text": "La empacamos una por una."
+            "text": "La empacamos a mano, una por una, y revisamos que vaya la talla y el nombre que pediste."
           }
         }
       },

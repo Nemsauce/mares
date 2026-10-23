@@ -109,15 +109,17 @@ mejilla, no entra.
 La máquina borda parejo y firme, que es lo que hace que un nombre dure.
 
 **Paso 3. Se revisa cada prenda**
-Revisamos cada prenda.
+Damos vuelta la prenda y revisamos por dentro. El revés queda plano, sin nudos
+que le molesten la piel.
 
 **Paso 4. Se empaca**
-La empacamos una por una.
+La empacamos a mano, una por una, y revisamos que vaya la talla y el nombre que
+pediste.
 
-PENDIENTE: la versión anterior tenía dos pasos que ya no se pueden decir tal
-cual: cómo se pasa el motivo a la tela y cómo queda el revés. Se quitaron hasta
-que el taller diga qué es cierto. Si quieres volver a contar cualquiera de los
-dos, dime cómo es en tu máquina.
+PENDIENTE: la versión anterior tenía un paso que ya no se puede decir tal cual:
+cómo se pasa el motivo a la tela. Se quitó hasta que el taller diga qué es
+cierto. Si quieres volver a contarlo, dime cómo es en tu máquina. (Cómo queda el
+revés ya está dicho en el paso 3.)
 
 ### 5. Las manos detrás
 
@@ -203,6 +205,9 @@ PENDIENTE: ciudad, y si hay opción de recoger en persona.
 
 **¿Cómo les escribo?**
 PENDIENTE: correo o WhatsApp.
+
+**Botón al final de la sección** (lleva a la página de preguntas frecuentes)
+Ver todas las preguntas
 
 ---
 
@@ -439,7 +444,7 @@ Todos los PENDIENTE del archivo, en un solo lugar. Cada uno dice dónde aparece.
 2. Medidas en centímetros de las dos mantas.
 3. Precios finales (los del catálogo son propuestas).
 4. Si el nombre va "Mares" o "mares" en los títulos.
-5. Confirmar o quitar dos frases de producto que hablan de cómo se hace la prenda y que el taller no ha confirmado: "con el revés plano" (pijama) y "con el hilo remetido por dentro" (enterizo caballito de mar).
+5. Confirmar o quitar una frase de producto que habla de cómo se hace la prenda y que el taller no ha confirmado: "con el hilo remetido por dentro" (enterizo caballito de mar). El revés plano de la pijama ya está dicho en "Cómo nace cada prenda", paso 3.
 
 **Políticas y contacto**
 
@@ -451,7 +456,7 @@ Todos los PENDIENTE del archivo, en un solo lugar. Cada uno dice dónde aparece.
 
 **Secciones nuevas**
 
-11. Los dos pasos de "Cómo nace cada prenda" que se quitaron: cómo se pasa el motivo a la tela y cómo queda el revés. Se vuelven a contar solo si el taller dice cómo es en su máquina.
+11. El paso de "Cómo nace cada prenda" que se quitó: cómo se pasa el motivo a la tela. Se vuelve a contar solo si el taller dice cómo es en su máquina.
 12. Las frases de tu mamá, la foto de sus manos y el titular de "Las manos detrás".
 13. Si ofreces empaque de regalo o nota escrita (sección "Un regalo que se guarda").
 

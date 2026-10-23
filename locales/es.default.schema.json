@@ -102,14 +102,14 @@
           "name": "Paso 3",
           "settings": {
             "title": { "default": "Se revisa cada prenda" },
-            "text": { "default": "Revisamos cada prenda." }
+            "text": { "default": "Damos vuelta la prenda y revisamos por dentro. El revés queda plano, sin nudos que le molesten la piel." }
           }
         },
         "step_4": {
           "name": "Paso 4",
           "settings": {
             "title": { "default": "Se empaca" },
-            "text": { "default": "La empacamos una por una." }
+            "text": { "default": "La empacamos a mano, una por una, y revisamos que vaya la talla y el nombre que pediste." }
           }
         }
       }

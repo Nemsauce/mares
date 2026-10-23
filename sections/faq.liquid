@@ -19,7 +19,8 @@
   read another's: the `sections` object is empty in a section's Liquid (checked on a dev
   theme with a probe), so the page is picked here too and the template points both at the
   same page. When it is not set, no link renders: a missing link is better than a dead one.
-  Its text is the existing locale string footer.help.faq.
+  Its text is the locale string faq.all_questions ("Ver todas las preguntas"); it is not the
+  section heading's words, which it used to repeat.
 
   Layout: one centered column, no wider than 720px. No line colors, no motion of its own
   beyond the shared reveal. Without the script, or under reduced motion, it is simply shown.
@@ -35,7 +36,7 @@
 <script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
 {%- assign faq_page = section.settings.page_faq -%}
-{%- assign faq_link_label = 'footer.help.faq' | t -%}
+{%- assign faq_link_label = 'faq.all_questions' | t -%}
 <section class="faq{% if section.settings.show_divider %} section--divided{% endif %}">
   {%- if section.settings.show_divider -%}
     <div class="container section-divider" aria-hidden="true">{% render 'embroidery-divider' %}</div>
