@@ -6,6 +6,10 @@ Si algo aquí contradice `docs/design/README.md`, manda el README.
 Estado: versión 1. Los precios son propuestas para que las ajustes. Lo marcado
 como PENDIENTE solo lo puedes llenar tú.
 
+**El bordado es trabajo de máquina, hecho en la máquina propia del taller. A mano
+se hace escoger la tela, revisar cada prenda y empacarla.** Ningún texto de la
+tienda presenta el bordado como trabajo manual.
+
 ## Cómo usar este archivo
 
 - Es la única fuente del texto de la tienda. Nada de copy se inventa en el código.
@@ -28,7 +32,7 @@ diminutivos en cada frase.
 Hecha con amor para las que más amamos
 
 **Texto bajo el titular**
-Ropa de bebé bordada a mano, suave para su piel y pensada para durar.
+Ropa de bebé bordada, suave para su piel y pensada para durar.
 
 **Botón principal**
 Ver la línea Descanso
@@ -49,11 +53,12 @@ sacan una sonrisa.
 Enlace: Ver la línea Día
 
 **Sección de cierre (encabezado)**
-Por qué bordamos a mano
+Por qué cada prenda pasa por nuestras manos
 
 **Texto de cierre**
-Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se
-nota: el hilo queda firme, el revés queda plano y nada raspa su piel.
+La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás
+lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una
+por una.
 
 ---
 
@@ -82,10 +87,10 @@ Seis productos, tres por línea. Tallas por edad. Precio en COP, sin decimales.
 - Texto alternativo de la foto principal: Pijama azul verdoso con una ola bordada en el pecho
 
 **Descripción corta (para la tarjeta y el meta)**
-Enterizo de manga larga con una ola bordada a mano en el pecho.
+Enterizo de manga larga con una ola bordada en el pecho.
 
 **Descripción larga (página de producto)**
-Un enterizo para las noches largas. La ola va bordada a mano sobre el pecho, con
+Un enterizo para las noches largas. La ola va bordada sobre el pecho, con
 el revés plano para que no le roce la piel. Abre al frente, así que puedes
 cambiarla sin despertarla del todo.
 
@@ -100,7 +105,7 @@ PENDIENTE: composición de la tela y cuidados específicos.
 - Texto alternativo: Manta color perla con una luna y una línea de mar bordadas en una esquina
 
 **Descripción corta**
-Manta liviana con una luna bordada a mano en la esquina.
+Manta liviana con una luna bordada en la esquina.
 
 **Descripción larga**
 La manta que termina de cerrar el día. La luna y la línea del mar van bordadas
@@ -118,10 +123,10 @@ PENDIENTE: composición de la tela y medidas.
 - Texto alternativo: Gorro lavanda con tres conchas bordadas sobre el borde
 
 **Descripción corta**
-Gorro de borde doblado con tres conchas bordadas a mano.
+Gorro de borde doblado con tres conchas bordadas.
 
 **Descripción larga**
-Tres conchas sobre el borde, bordadas a mano. El borde va doblado para que el
+Tres conchas bordadas sobre el borde. El borde va doblado para que el
 elástico no le marque la frente. Combina con la pijama y con la manta de la
 misma línea.
 
@@ -136,7 +141,7 @@ PENDIENTE: composición de la tela.
 - Texto alternativo: Body blanco de manga corta con una estrella de mar bordada en coral
 
 **Descripción corta**
-Body de manga corta con una estrella de mar bordada a mano.
+Body de manga corta con una estrella de mar bordada.
 
 **Descripción larga**
 El body que se pone solo. La estrella va bordada en coral sobre el pecho, y los
@@ -154,7 +159,7 @@ PENDIENTE: composición de la tela.
 - Texto alternativo: Enterizo turquesa de manga corta con un caballito de mar bordado en el pecho
 
 **Descripción corta**
-Enterizo de manga corta con un caballito de mar bordado a mano.
+Enterizo de manga corta con un caballito de mar bordado.
 
 **Descripción larga**
 Para los días de salir. El caballito va bordado sobre el pecho, con el hilo
@@ -172,7 +177,7 @@ PENDIENTE: composición de la tela.
 - Texto alternativo: Manta color perla con una palma bordada en verde y amarillo en una esquina
 
 **Descripción corta**
-Manta liviana con una palma bordada a mano en la esquina.
+Manta liviana con una palma bordada en la esquina.
 
 **Descripción larga**
 La manta para el coche y para la sombra. La palma va bordada en una esquina, en

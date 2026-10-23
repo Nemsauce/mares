@@ -13,7 +13,7 @@
       "type": "hero-home",
       "settings": {
         "heading": "Hecha con amor para las que más amamos",
-        "text": "Ropa de bebé bordada a mano, suave para su piel y pensada para durar.",
+        "text": "Ropa de bebé bordada, suave para su piel y pensada para durar.",
         "button_label": "Ver la línea Descanso",
         "button_link": "/collections/descanso",
         "image": "shopify://shop_images/mares-hero-inicio.png"
@@ -77,7 +77,7 @@
           "type": "feature",
           "settings": {
             "icon": "spool",
-            "title": "Bordada con cuidado"
+            "title": "Bordado parejo"
           }
         },
         "softness": {
@@ -105,9 +105,9 @@
         "motif": "estrella-de-mar",
         "show_divider": true,
         "eyebrow": "Hecha con amor",
-        "heading": "Por qué bordamos",
-        "heading_accent": "a mano",
-        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel.",
+        "heading": "Por qué cada prenda",
+        "heading_accent": "pasa por nuestras manos",
+        "text": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una por una.",
         "image": "shopify://shop_images/mares-hero-inicio.png"
       }
     }

@@ -85,7 +85,7 @@ The block shows, top to bottom `[P]` (layout):
 3. **Nombre o inicial** `[G]`: one text field (C-17) with a visible label, empty and optional. Under it, a hint that states the maximum for this garment and the allowed characters, and a character counter (section 2.6, 5.1).
 4. **Color de hilo** `[G]`: **hidden until a name is typed** (C-1). A labelled group of 23 chips (C-7, C-8), each a small swatch plus the color's name as text, in the order of `[H]`. None selected `[P]` (section 2.4 explains why). Near the group, one line saying that the color on screen is a sample and the real thread can look different `[H]`.
 5. **Ubicación**: **hidden until a name is typed** (C-1). A labelled group of chips, one per position the product allows (C-10, section 2.5): "Centro del pecho" and "Pecho izquierdo" on the pijama, the enterizo and the body; "Borde" on the gorro; "Esquina" on both mantas. A product with a single position shows that one chip already selected (script) so the customer is not asked a question with one answer.
-6. **The delivery notice**, always visible, with the words of the owner: "Las prendas personalizadas se bordan a mano y tardan al menos 3 días más en salir." (C-13, `[D]`). It is said here, before adding to the cart, and not in the checkout.
+6. **The delivery notice**, always visible, with the words of the owner: "Las prendas personalizadas se bordan y tardan al menos 3 días más en salir." (C-13, `[D]`). It is said here, before adding to the cart, and not in the checkout.
 7. **The no-exchange notice**, always visible, copied from the returns policy `[C]`: personalized garments with a name or initial have no exchange because they are embroidered only for the customer. Under it, **a required checkbox** with the sense "Entiendo que las prendas personalizadas no tienen cambio" (C-15), **hidden until a name is typed**. Its label wording is finalized in G1.
 8. The preview panel is **not shown yet** `[P]`. It appears after the customer's first interaction with the block (section 8.3). Before that, the gallery above already shows the garment.
 
@@ -572,7 +572,7 @@ Notes:
 | Name errors | Not allowed character; too long (with the limit); no letter |
 | Thread | The screen-sample line `[H]`; missing-color error |
 | Position | Missing-position error. Position names come from data, not locale |
-| Notices | Delivery notice, verbatim: "Las prendas personalizadas se bordan a mano y tardan al menos 3 días más en salir." `[D]` C-13; the no-exchange notice from the policy `[C]`; the checkbox label; missing-acceptance error |
+| Notices | Delivery notice, verbatim: "Las prendas personalizadas se bordan y tardan al menos 3 días más en salir." `[D]` C-13; the no-exchange notice from the policy `[C]`; the checkbox label; missing-acceptance error |
 | Preview | The approximate-preview note; the summary sentence with and without name |
 | Announcements | Motif, thread, position chosen; groups appearing; groups hidden (no name); "n problems" on submit |
 

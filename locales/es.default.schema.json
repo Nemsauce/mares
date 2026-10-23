@@ -169,7 +169,7 @@
         },
         "text": {
           "label": "Texto bajo el titular",
-          "default": "Ropa de bebé bordada a mano, suave para su piel y pensada para durar."
+          "default": "Ropa de bebé bordada, suave para su piel y pensada para durar."
         },
         "button_label": {
           "label": "Texto del botón",
@@ -316,7 +316,7 @@
       "settings": {
         "heading": {
           "label": "Encabezado",
-          "default": "Por qué bordamos a mano"
+          "default": "Por qué cada prenda pasa por nuestras manos"
         },
         "heading_accent": {
           "label": "Segunda parte del encabezado",
@@ -327,7 +327,7 @@
         },
         "text": {
           "label": "Texto",
-          "default": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+          "default": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una por una."
         }
       },
       "presets": {
@@ -342,7 +342,7 @@
         },
         "heading": {
           "label": "Encabezado",
-          "default": "Por qué bordamos a mano"
+          "default": "Por qué cada prenda pasa por nuestras manos"
         },
         "heading_accent": {
           "label": "Segunda parte del encabezado",
@@ -350,7 +350,7 @@
         },
         "text": {
           "label": "Texto",
-          "default": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+          "default": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una por una."
         },
         "image": {
           "label": "Imagen",
