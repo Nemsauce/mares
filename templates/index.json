@@ -110,12 +110,140 @@
         "text": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una por una.",
         "image": "shopify://shop_images/mares-hero-inicio.png"
       }
+    },
+    "process": {
+      "type": "process",
+      "blocks": {
+        "step_1": {
+          "type": "step_1",
+          "settings": {
+            "title": "Se escoge la tela",
+            "text": "Buscamos telas suaves, que no aprieten ni raspen. Si no pasa la prueba de la mejilla, no entra."
+          }
+        },
+        "step_2": {
+          "type": "step_2",
+          "settings": {
+            "title": "Se borda en la máquina",
+            "text": "La máquina borda parejo y firme, que es lo que hace que un nombre dure."
+          }
+        },
+        "step_3": {
+          "type": "step_3",
+          "settings": {
+            "title": "Se revisa cada prenda",
+            "text": "Revisamos cada prenda."
+          }
+        },
+        "step_4": {
+          "type": "step_4",
+          "settings": {
+            "title": "Se empaca",
+            "text": "La empacamos una por una."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "motif": "conchitas-nacaradas",
+        "show_divider": true,
+        "eyebrow": "El proceso",
+        "heading": "Cómo nace",
+        "heading_accent": "cada prenda",
+        "text": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros."
+      }
+    },
+    "gift": {
+      "type": "gift",
+      "blocks": {
+        "note_1": {
+          "type": "note_1",
+          "settings": {
+            "title": "Para el baby shower.",
+            "text": "Llega antes de que ella llegue."
+          }
+        },
+        "note_2": {
+          "type": "note_2",
+          "settings": {
+            "title": "Para los primeros meses.",
+            "text": "Cuando todo es nuevo y todo se necesita."
+          }
+        },
+        "note_3": {
+          "type": "note_3",
+          "settings": {
+            "title": "Para la familia lejos.",
+            "text": "Un nombre bordado dice más que una tarjeta."
+          }
+        }
+      },
+      "block_order": [
+        "note_1",
+        "note_2",
+        "note_3"
+      ],
+      "settings": {
+        "motif": "caballito-de-mar",
+        "show_divider": true,
+        "eyebrow": "Para regalar",
+        "heading": "Un regalo",
+        "heading_accent": "que se guarda",
+        "text": "La ropa de bebé dura meses. Una prenda bordada con su nombre dura en el cajón mucho después de que ya no le sirva. Eso es lo que estás regalando."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q_size": {
+          "type": "q_size",
+          "settings": {
+            "question": "¿Cómo sé qué talla pedir?",
+            "answer": "Las tallas van por edad: 0-3, 3-6, 6-12 y 12-18 meses. Si tu bebé está entre dos tallas, pide la más grande. Crece más rápido de lo que uno cree."
+          }
+        },
+        "q_wash": {
+          "type": "q_wash",
+          "settings": {
+            "question": "¿Cómo lavo una prenda bordada?",
+            "answer": "A mano o en ciclo delicado, con agua fría y la prenda al revés. Jabón neutro, sin blanqueador. Secar a la sombra y extendida. Si planchas, hazlo por el revés."
+          }
+        },
+        "q_embroidery": {
+          "type": "q_embroidery",
+          "settings": {
+            "question": "¿El bordado se despega o se destiñe?",
+            "answer": "El hilo va cosido a la tela, no pegado. Lavándola como arriba, el bordado dura lo que dure la prenda."
+          }
+        }
+      },
+      "block_order": [
+        "q_size",
+        "q_wash",
+        "q_embroidery"
+      ],
+      "settings": {
+        "motif": "none",
+        "show_divider": true,
+        "eyebrow": "Dudas",
+        "heading": "Preguntas",
+        "heading_accent": "frecuentes",
+        "page_faq": "preguntas-frecuentes-mares"
+      }
     }
   },
   "order": [
     "hero",
     "lines",
     "featured",
-    "essence"
+    "essence",
+    "process",
+    "gift",
+    "faq"
   ]
 }
