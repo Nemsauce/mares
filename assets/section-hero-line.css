@@ -1,28 +1,50 @@
 /* section-hero-line.css: line hero (docs/THEME_PLAN.md 4 and 6.3). Tokens only.
-   Background is --line-main, which data-line on the section provides (base-lines.css). */
+   Background is --line-main, which data-line on the section provides (base-lines.css).
+
+   Height rule: on a line collection page the first product must show without scrolling at
+   1280x800 and at 375x667. So the image does not stack under the text everywhere:
+     from 1024px  image beside the text (two columns), text left aligned
+     600 to 1023  stacked, the image is a short cropped band
+     below 600    no image; the text alone already fills most of a phone screen */
 
 @layer sections {
   .hero-line {
-    /* PROPOSAL: the docs give no space around the block. space-6 above and below. */
-    padding-block: var(--space-6);
+    /* PROPOSAL: the docs give no space around the block. space-6 above, none below: the
+       collection section that follows has its own top padding. */
+    padding-block: var(--space-6) 0;
   }
 
   .hero-line__block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-4);
     border-radius: var(--radius-lg);
     background: var(--line-main);
     color: var(--color-ink);
     text-align: center;
-    /* PROPOSAL (plan 4): below 1024px the block has space-12 vertical and space-8 inside. */
-    padding: var(--space-12) var(--space-8);
+    /* PROPOSAL (plan 4): below 1024px the block has space-8 vertical and space-8 inside
+       (space-12 vertical before: it cost 32px of a 667px screen). */
+    padding: var(--space-8);
   }
 
-  /* ink-muted, not a line color: a line color would vanish on the same-colored block. */
+  .hero-line__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  /* ink-muted, not a line color: a line color would vanish on the same-colored block.
+     The markup asks for 96px; below 1024px it is drawn at 56px (the svg has a viewBox). */
   .hero-line__motif {
     color: var(--color-ink-muted);
+  }
+
+  .hero-line__motif .embroidery-motif {
+    inline-size: 56px;
+    block-size: 56px;
   }
 
   /* Type style swap: display-lg below 1024px, display-xl from 1024px. Both from the
@@ -35,25 +57,72 @@
     text-wrap: balance;
   }
 
+  /* Same ink and same alignment as the heading, over the full width of the text column
+     (the old 52ch cap left it as a narrow centered strip under a large title). */
   .hero-line__text {
-    max-inline-size: 52ch; /* PROPOSAL: readable measure */
+    max-inline-size: 56ch; /* PROPOSAL: readable measure */
+    text-wrap: pretty;
   }
 
+  /* Hidden below 600px (see the header note). It is lazy, so a hidden image is not fetched. */
   .hero-line__media {
+    display: none;
     inline-size: 100%;
     border-radius: var(--radius-md);
     overflow: hidden;
   }
 
+  .hero-line__media img {
+    flex: none;
+  }
+
+  @media (min-width: 600px) {
+    /* A band: the image keeps its 16:9 and the box crops it around the middle. */
+    .hero-line__media {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-block-size: 200px; /* PROPOSAL */
+    }
+  }
+
   @media (min-width: 1024px) {
     .hero-line__block {
+      gap: var(--space-8);
       padding-block: var(--space-24);
+    }
+
+    .hero-line__body {
+      gap: var(--space-6);
+    }
+
+    .hero-line__motif .embroidery-motif {
+      inline-size: 96px;
+      block-size: 96px;
     }
 
     .hero-line__heading {
       font-size: var(--type-display-xl-size);
       line-height: var(--type-display-xl-line);
       font-weight: var(--type-display-xl-weight);
+    }
+
+    /* With an image: text column 7/12, image column 5/12, both centered on the same axis.
+       Without one the block stays a single centered column. */
+    .hero-line__block--image {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      text-align: start;
+    }
+
+    .hero-line__block--image .hero-line__body {
+      align-items: flex-start;
+    }
+
+    .hero-line__block--image .hero-line__media {
+      display: block;
+      max-block-size: none;
     }
   }
 }

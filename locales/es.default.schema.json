@@ -402,7 +402,7 @@
         },
         "image": {
           "label": "Imagen",
-          "info": "Opcional."
+          "info": "Opcional. Va al lado del texto en pantallas grandes, como franja recortada en tabletas, y no se muestra en celulares para que se vean los productos sin bajar."
         }
       }
     },

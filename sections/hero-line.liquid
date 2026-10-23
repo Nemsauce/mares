@@ -17,6 +17,13 @@
 
   Text fallback: when the text setting is empty, the line's description from the locale
   file (source: docs/content/catalogo-y-copy.md) is shown.
+
+  Height: the first product must show without scrolling (1280x800 and 375x667), so the
+  image never stacks under the text on a phone.
+    from 1024px  the image sits beside the text (two columns), text left aligned.
+    600 to 1023  stacked, the image is a short cropped band under the text.
+    below 600    no image: the text alone already fills most of a 667px screen.
+  The image is lazy for that reason: where it is hidden it is never fetched.
 {%- endcomment -%}
 
 {{ 'section-hero-line.css' | asset_url | stylesheet_tag }}
@@ -52,35 +59,36 @@
 
 <section class="hero-line" data-line="{{ hero_line }}">
   <div class="container">
-    <div class="hero-line__block">
-      {%- if hero_motif != blank and hero_motif != 'none' -%}
-        {%- comment -%} PROPOSAL: 96px, larger than the 48px default; the docs give no hero motif size. {%- endcomment -%}
-        <div class="hero-line__motif">
-          {% render 'embroidery-motif', name: hero_motif, size: 96 %}
-        </div>
-      {%- endif -%}
+    <div class="hero-line__block{% if section.settings.image != blank %} hero-line__block--image{% endif %}">
+      <div class="hero-line__body">
+        {%- if hero_motif != blank and hero_motif != 'none' -%}
+          {%- comment -%} PROPOSAL: 96px, larger than the 48px default; the docs give no hero motif size. {%- endcomment -%}
+          <div class="hero-line__motif">
+            {% render 'embroidery-motif', name: hero_motif, size: 96 %}
+          </div>
+        {%- endif -%}
 
-      {%- if hero_heading != blank -%}
-        <h1 class="hero-line__heading text-display-lg">{{ hero_heading }}</h1>
-      {%- endif -%}
+        {%- if hero_heading != blank -%}
+          <h1 class="hero-line__heading text-display-lg">{{ hero_heading }}</h1>
+        {%- endif -%}
 
-      {%- if hero_text != blank -%}
-        <p class="hero-line__text text-body-lg">{{ hero_text }}</p>
-      {%- endif -%}
+        {%- if hero_text != blank -%}
+          <p class="hero-line__text text-body-lg">{{ hero_text }}</p>
+        {%- endif -%}
 
-      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-        {% render 'button', label: section.settings.button_label, url: section.settings.button_link %}
-      {%- endif -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          {% render 'button', label: section.settings.button_label, url: section.settings.button_link %}
+        {%- endif -%}
+      </div>
 
       {%- if section.settings.image != blank -%}
         <div class="hero-line__media">
           {% render 'image',
             image: section.settings.image,
             alt: section.settings.image.alt,
-            sizes: '(min-width: 1024px) 1136px, 100vw',
-            widths: '600, 900, 1200, 1600',
-            aspect_ratio: '16 / 9',
-            eager: true
+            sizes: '(min-width: 1024px) 480px, (min-width: 600px) 100vw, 1px',
+            widths: '480, 720, 960, 1440',
+            aspect_ratio: '16 / 9'
           %}
         </div>
       {%- endif -%}
