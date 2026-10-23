@@ -134,6 +134,12 @@
     }
   },
   "featured_collection": {
-    "empty_editor": "Elige una colección con productos para mostrar esta sección."
+    "empty_editor": "Elige una colección con productos para mostrar esta sección.",
+    "tabs_label": "Filtrar por tipo de prenda",
+    "tabs_all": "Todas",
+    "tabs_result": {
+      "one": "Mostrando {{ count }} producto",
+      "other": "Mostrando {{ count }} productos"
+    }
   }
 }

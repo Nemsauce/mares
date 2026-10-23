@@ -18,6 +18,22 @@
   data-reveal: the content rises in once, when it scrolls into view (assets/reveal.js).
   Without the script it is simply shown.
 
+  Tabs by product type (show_tabs, off by default): a row of filter chips above the cards.
+  A chip shows the products of one type (the first max_products of it); "Todas" shows the
+  first max_products of the collection. It is a set of toggle buttons (aria-pressed), not an
+  ARIA tabs widget: there is one list, not one panel per tab, and native buttons already work
+  with Tab, Enter and Space. No page reload; assets/featured-tabs.js hides and shows the cards
+  and announces how many are shown.
+  So that a type has products to show, tabs read up to 24 products of the collection, not
+  just max_products. A type comes from product.type; products without one only appear under
+  "Todas". With fewer than two types there is nothing to filter and no chips render.
+
+  Without JavaScript (chosen on purpose): the chips are rendered hidden and the script shows
+  them, so they are absent, never buttons that do nothing, and every one of the (up to 24)
+  products renders. The alternatives were chips that link to a filtered collection URL (a page
+  load, and a filter the collection page does not have yet) and hiding all but max_products
+  on the server (then a type's products would be unreachable without the script).
+
   Nothing renders when the collection is missing or empty, except in the theme editor,
   where a short note says why the section is blank.
 
@@ -45,6 +61,42 @@
     assign fc_shown = fc_columns
   endif
 
+  # Tabs by type. The types are collected from up to 24 products, in the order they first
+  # appear, as parallel arrays of handles (the data-type value) and labels (the chip text).
+  assign fc_pool = fc_limit
+  assign fc_use_tabs = false
+  assign fc_type_keys = '' | split: ','
+  assign fc_type_labels = '' | split: ','
+  if section.settings.show_tabs and fc_collection != blank
+    for product in fc_collection.products limit: 24
+      assign type_key = product.type | handleize
+      if type_key != blank
+        unless fc_type_keys contains type_key
+          assign one_key = type_key | split: ','
+          assign one_label = product.type | strip | split: '|||'
+          assign fc_type_keys = fc_type_keys | concat: one_key
+          assign fc_type_labels = fc_type_labels | concat: one_label
+        endunless
+      endif
+    endfor
+    if fc_type_keys.size > 1
+      assign fc_use_tabs = true
+      assign fc_pool = 24
+      assign fc_count = fc_collection.products_count
+      if fc_count > fc_pool
+        assign fc_count = fc_pool
+      endif
+      assign fc_columns = 3
+      if fc_count >= 4
+        assign fc_columns = 4
+      endif
+      assign fc_shown = fc_count
+      if fc_shown > fc_columns
+        assign fc_shown = fc_columns
+      endif
+    endif
+  endif
+
   assign fc_link = section.settings.link
   if fc_link == blank and fc_collection != blank
     assign fc_link = fc_collection.url
@@ -64,6 +116,10 @@
   {%- if section.settings.show_divider -%}
     {{ 'section-divider.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
+  {%- if fc_use_tabs -%}
+    {{ 'component-chip.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'featured-tabs.js' | asset_url }}" defer></script>
+  {%- endif -%}
   <script src="{{ 'reveal.js' | asset_url }}" defer></script>
 
   <section class="featured-collection{% if section.settings.show_divider %} section--divided{% endif %}">
@@ -81,13 +137,36 @@
         class: 'featured-collection__header'
       %}
 
+      {%- if fc_use_tabs -%}
+        <featured-tabs
+          class="featured-collection__tabbed"
+          data-limit="{{ fc_limit }}"
+          data-columns="{{ fc_columns }}"
+          data-text-one="{{ 'featured_collection.tabs_result.one' | t: count: '[count]' }}"
+          data-text-other="{{ 'featured_collection.tabs_result.other' | t: count: '[count]' }}"
+        >
+          <div
+            class="featured-collection__tabs"
+            role="group"
+            aria-label="{{ 'featured_collection.tabs_label' | t }}"
+            data-tabs
+            hidden
+          >
+            <button type="button" class="chip" data-tab="all" aria-pressed="true">{{ 'featured_collection.tabs_all' | t }}</button>
+            {%- for type_key in fc_type_keys -%}
+              <button type="button" class="chip" data-tab="{{ type_key }}" aria-pressed="false">{{ fc_type_labels[forloop.index0] }}</button>
+            {%- endfor -%}
+          </div>
+      {%- endif -%}
+
       <ul
         class="featured-collection__list"
         role="list"
         style="--fc-columns: {{ fc_columns }}; --fc-count: {{ fc_shown }};"
+        {% if fc_use_tabs %}data-tabs-list{% endif %}
       >
-        {%- for product in fc_collection.products limit: fc_limit -%}
-          <li class="featured-collection__item">
+        {%- for product in fc_collection.products limit: fc_pool -%}
+          <li class="featured-collection__item"{% if fc_use_tabs %} data-type="{{ product.type | handleize }}"{% endif %}>
             {% render 'product-card',
               product: product,
               sizes: fc_sizes,
@@ -98,6 +177,10 @@
           </li>
         {%- endfor -%}
       </ul>
+
+      {%- if fc_use_tabs -%}
+        </featured-tabs>
+      {%- endif -%}
 
       {%- if section.settings.link_label != blank and fc_link != blank -%}
         <div class="featured-collection__footer">
@@ -180,6 +263,13 @@
       "max": 8,
       "step": 1,
       "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "t:sections.featured-collection.settings.show_tabs.label",
+      "info": "t:sections.featured-collection.settings.show_tabs.info",
+      "default": false
     },
     {
       "type": "checkbox",

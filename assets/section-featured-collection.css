@@ -47,6 +47,26 @@
     scroll-snap-align: start;
   }
 
+  /* Tabs by type (optional, see the section). The wrapper is a custom element, so it is
+     made a block. The chip row is rendered hidden and the script shows it. It wraps and
+     is centered under the header. Chip colors are component-chip.css (selected = brand
+     fill with on-brand text). */
+  .featured-collection__tabbed {
+    display: block;
+  }
+
+  .featured-collection__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-block-end: var(--space-6);
+  }
+
+  .featured-collection__tabs[hidden] {
+    display: none;
+  }
+
   .featured-collection__footer {
     display: flex;
     justify-content: center;

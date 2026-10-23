@@ -289,7 +289,12 @@
           "info": "Se muestran sus productos en el orden de la colección. Si la cambias, cambia también la etiqueta, el encabezado y el texto del enlace."
         },
         "max_products": {
-          "label": "Cantidad máxima de productos"
+          "label": "Cantidad máxima de productos",
+          "info": "Con las pestañas encendidas es la cantidad que se ve en cada pestaña."
+        },
+        "show_tabs": {
+          "label": "Pestañas por tipo de producto",
+          "info": "Muestra una fila de botones sobre los productos para ver un tipo a la vez, sin recargar la página. Enciéndelas cuando la colección tenga unos 12 productos o más y al menos 3 o 4 de cada tipo: con pocos productos cada pestaña queda casi vacía. El tipo se escribe en cada producto, en el campo Tipo. Si hay menos de dos tipos, no se muestran. Sin JavaScript se ven todos los productos y los botones no aparecen."
         },
         "show_tag": {
           "label": "Mostrar la etiqueta de la línea",
