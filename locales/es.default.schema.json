@@ -199,7 +199,7 @@
             },
             "image": {
               "label": "Imagen",
-              "info": "Opcional."
+              "info": "Opcional. Va arriba de la tarjeta en proporción 16:9, como las fotos de las líneas."
             }
           }
         },
@@ -223,9 +223,50 @@
             },
             "image": {
               "label": "Imagen",
-              "info": "Opcional."
+              "info": "Opcional. Va arriba de la tarjeta en proporción 16:9, como las fotos de las líneas."
             }
           }
+        }
+      }
+    },
+    "featured-collection": {
+      "name": "Colección destacada",
+      "settings": {
+        "eyebrow": {
+          "label": "Etiqueta sobre el encabezado",
+          "default": "Línea Descanso"
+        },
+        "heading": {
+          "label": "Encabezado",
+          "default": "Para dormir"
+        },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca.",
+          "default": "tranquila"
+        },
+        "subtitle": {
+          "label": "Texto bajo el encabezado"
+        },
+        "collection": {
+          "label": "Colección",
+          "info": "Se muestran sus productos en el orden de la colección. Si la cambias, cambia también la etiqueta, el encabezado y el texto del enlace."
+        },
+        "max_products": {
+          "label": "Cantidad máxima de productos"
+        },
+        "show_tag": {
+          "label": "Mostrar la etiqueta de la línea",
+          "info": "Déjala apagada en el inicio: es una página general y no lleva colores de línea."
+        },
+        "link_label": {
+          "label": "Texto del enlace",
+          "info": "Di a dónde lleva, por ejemplo «Ver la línea Descanso». Si lo dejas vacío, no hay enlace.",
+          "default": "Ver la línea Descanso"
+        },
+        "link": {
+          "label": "Enlace",
+          "info": "Si lo dejas vacío, lleva a la colección elegida."
         }
       }
     },
@@ -272,7 +313,7 @@
         },
         "image": {
           "label": "Imagen",
-          "info": "Opcional. Va al lado del texto, con esquinas redondeadas y proporción 4:5. Sin imagen, el texto ocupa todo el ancho."
+          "info": "Opcional. Va al lado del texto, con esquinas redondeadas y proporción 4:3. Sin imagen, el texto ocupa todo el ancho."
         }
       },
       "blocks": {

@@ -1,5 +1,6 @@
 /* section-lines-entry.css: entry to the two lines (docs/THEME_PLAN.md 6.7b).
-   General page: bg-raised cards, ink text, brand link. No line colors. */
+   General page: bg-raised cards, ink text, brand link. No line colors.
+   The card images are 16:9, the ratio of the line photographs in the store. */
 
 @layer sections {
   .lines-entry {
@@ -8,20 +9,35 @@
 
   /* The heading itself is snippets/section-header.liquid; this is only the space under it. */
   .lines-entry__header {
-    margin-block-end: var(--space-8);
+    margin-block-end: var(--space-6);
   }
 
+  /* Below 600px: one horizontal row with scroll snap, the second card peeking in. Two
+     stacked cards with their images would push the featured products under the hero
+     past two phone screens. The row bleeds to the screen edges like the featured row.
+     From 600px: two columns (4 of 8, then 6 of 12). */
   .lines-entry__grid {
-    row-gap: var(--grid-gap);
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%; /* PROPOSAL */
     margin: 0;
-    padding: 0;
+    margin-inline: calc(-1 * var(--page-margin));
+    padding: 0 var(--page-margin);
     list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--page-margin);
+    scrollbar-width: none;
   }
 
-  /* Stacked below 600px; two columns from 600px (4 of 8, then 6 of 12). */
+  .lines-entry__grid::-webkit-scrollbar {
+    display: none;
+  }
+
   .lines-entry__card {
     position: relative; /* anchors the stretched link */
-    grid-column: span 4;
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     border-radius: var(--radius-md);
@@ -43,8 +59,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-3);
-    padding: var(--space-6); /* PROPOSAL: the docs only give the product card padding */
+    gap: var(--space-2);
+    /* The product card padding below 600px, so the row stays short; space-6 from 600px. */
+    padding: var(--space-4);
   }
 
   .lines-entry__title {
@@ -70,6 +87,31 @@
   @media (hover: hover) {
     .lines-entry__card:hover {
       box-shadow: var(--shadow-soft);
+    }
+  }
+
+  @media (min-width: 600px) {
+    .lines-entry__header {
+      margin-block-end: var(--space-8);
+    }
+
+    .lines-entry__grid {
+      grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+      grid-auto-flow: row;
+      row-gap: var(--grid-gap);
+      margin-inline: 0;
+      padding: 0;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .lines-entry__card {
+      grid-column: span 4;
+    }
+
+    .lines-entry__body {
+      gap: var(--space-3);
+      padding: var(--space-6); /* PROPOSAL: the docs only give the product card padding */
     }
   }
 

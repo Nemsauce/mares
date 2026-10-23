@@ -28,7 +28,8 @@
             "title": "Descanso",
             "text": "Para dormir tranquila. Verdes de agua, lavanda y rosa arena, en prendas que abrazan sin apretar.",
             "link_label": "Ver la línea Descanso",
-            "link": "/collections/descanso"
+            "link": "/collections/descanso",
+            "image": "shopify://shop_images/mares-hero-descanso.png"
           }
         },
         "dia": {
@@ -37,7 +38,8 @@
             "title": "Día",
             "text": "Para jugar y descubrir. Turquesa, coral y amarillo sol, con bordados que sacan una sonrisa.",
             "link_label": "Ver la línea Día",
-            "link": "/collections/dia"
+            "link": "/collections/dia",
+            "image": "shopify://shop_images/mares-hero-dia.png"
           }
         }
       },
@@ -49,6 +51,19 @@
         "heading": "Dos formas de mirar",
         "heading_accent": "el mar",
         "eyebrow": "Las dos líneas"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Línea Descanso",
+        "heading": "Para dormir",
+        "heading_accent": "tranquila",
+        "collection": "descanso",
+        "max_products": 4,
+        "show_tag": false,
+        "link_label": "Ver la línea Descanso",
+        "link": "/collections/descanso"
       }
     },
     "essence": {
@@ -86,13 +101,15 @@
         "eyebrow": "Hecha con amor",
         "heading": "Por qué bordamos",
         "heading_accent": "a mano",
-        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel.",
+        "image": "shopify://shop_images/mares-hero-inicio.png"
       }
     }
   },
   "order": [
     "hero",
     "lines",
+    "featured",
     "essence"
   ]
 }

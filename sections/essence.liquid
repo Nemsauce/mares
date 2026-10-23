@@ -5,6 +5,8 @@
 
   Stacked below 1024px; two columns from 1024px. The image is second in the DOM, so the
   text is read first in every layout. Without an image the text takes the full width.
+  The image box is 4:3: the store's photographs are landscape, and at 4:3 the image is
+  about as tall as the text column beside it, so neither half is left mostly empty.
 
   Defaults for the heading and the paragraph are the closing copy of
   docs/content/catalogo-y-copy.md ("Por qué bordamos a mano"), verbatim, through t: keys in
@@ -60,7 +62,7 @@
             alt: section.settings.image.alt,
             sizes: '(min-width: 1024px) min(50vw, 576px), 100vw',
             widths: '400, 600, 800, 1200',
-            aspect_ratio: '4 / 5'
+            aspect_ratio: '4 / 3'
           %}
         </div>
       {%- endif -%}

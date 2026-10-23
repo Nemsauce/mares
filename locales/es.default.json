@@ -130,5 +130,8 @@
     "dia": {
       "description": "La playa a mediodía. Estrellas de mar, caballitos y palmas, bordados en colores que acompañan el juego."
     }
+  },
+  "featured_collection": {
+    "empty_editor": "Elige una colección con productos para mostrar esta sección."
   }
 }

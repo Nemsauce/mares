@@ -1,0 +1,79 @@
+/* section-featured-collection.css: featured collection on the home page
+   (docs/THEME_PLAN.md 6.7b). Tokens only. The cards are component-card-product.css;
+   the heading is component-section-header.css.
+
+   Below 1024px: one horizontal row with scroll snap that bleeds to the screen edges.
+   From 1024px: a grid of --fc-columns (3 or 4, written by Liquid) whose columns line up
+   with the 12-column grid (span 4 or span 3), with --fc-count tracks centered. */
+
+@layer sections {
+  .featured-collection {
+    padding-block: var(--section-gap);
+  }
+
+  .featured-collection__header {
+    margin-block-end: var(--space-6);
+  }
+
+  .featured-collection__list {
+    display: grid;
+    grid-auto-flow: column;
+    /* PROPOSAL: the next card peeks in, so the row reads as scrollable. */
+    grid-auto-columns: 66%;
+    gap: var(--grid-gap);
+    margin: 0;
+    /* Full bleed: the row runs to the screen edges, the first card lines up with the
+       page margin, and snapping keeps that margin. */
+    margin-inline: calc(-1 * var(--page-margin));
+    padding: 0 var(--page-margin);
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--page-margin);
+    scrollbar-width: none;
+  }
+
+  .featured-collection__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured-collection__item {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .featured-collection__footer {
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--space-8);
+  }
+
+  @media (min-width: 600px) {
+    .featured-collection__list {
+      grid-auto-columns: 40%; /* PROPOSAL: two and a half cards */
+    }
+
+    .featured-collection__header {
+      margin-block-end: var(--space-8);
+    }
+  }
+
+  /* Grid: track width is one column of a --fc-columns grid, so 3 products fill a
+     3-column row and 2 products sit centered instead of leaving a gap. */
+  @media (min-width: 1024px) {
+    .featured-collection__list {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(
+        var(--fc-count),
+        calc((100% - (var(--fc-columns) - 1) * var(--grid-gap)) / var(--fc-columns))
+      );
+      justify-content: center;
+      row-gap: var(--grid-gap);
+      margin-inline: 0;
+      padding: 0;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+  }
+}

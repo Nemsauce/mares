@@ -6,6 +6,9 @@
 
   The home page is a general page: bg-raised cards, ink text, brand link. No line colors
   and no data-line attribute here, not even for the two lines.
+
+  Below 600px the cards are a horizontal scroll-snap row (section-lines-entry.css), so the
+  featured products that follow stay within two phone screens of the top.
 {%- endcomment -%}
 
 {{ 'section-lines-entry.css' | asset_url | stylesheet_tag }}
@@ -28,10 +31,10 @@
               <div class="lines-entry__media">
                 {{
                   block.settings.image
-                  | image_url: width: 800
+                  | image_url: width: 1100
                   | image_tag:
-                    widths: '400, 600, 800',
-                    sizes: '(min-width: 1024px) 560px, (min-width: 600px) 50vw, 100vw',
+                    widths: '400, 600, 800, 1100',
+                    sizes: '(min-width: 1024px) 588px, (min-width: 600px) 50vw, 85vw',
                     class: 'lines-entry__image',
                     loading: 'lazy'
                 }}
