@@ -6,20 +6,22 @@
 
   Seen without shouting: a filled brand band with on-brand text at body-lg. Contrast is
   on-brand on brand, 5.18 to 1 in the light theme and 8.21 to 1 in the dark one (4.5 needed).
-  The bar and the header stay at the top of the screen on scroll, together: the CSS makes
-  both header group wrappers sticky and sets the header's offset to the bar's fixed height.
+  Sticking (see section-announcement-bar.css): the header always sticks, on purpose, and is
+  styled from this section's CSS because header.liquid is not touched. The bar sticks with
+  it only from 1024px; below that it scrolls away, so a phone keeps its screen. The CSS is
+  loaded even when the line is blank, so the header stays sticky then too.
   The text is one line; a longer one is cut with an ellipsis rather than growing the bar.
 
   NOT dismissible, on purpose. Closing it would need a script and somewhere to remember the
   choice (a cookie or localStorage), the bar would flash on every page until that ran, and
-  the line is information the customer is glad to see again on the cart. The cost is 44px at
-  the top of every screen, the bar being fixed in place; if the bar ever carries something
-  temporary, revisit this.
+  the line is information the customer is glad to see again on the cart. The cost is 44px
+  at the top of a desktop screen, where the bar is fixed in place; if the bar ever carries
+  something temporary, revisit this.
 {%- endcomment -%}
 
-{%- if section.settings.text != blank -%}
-  {{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+{{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
 
+{%- if section.settings.text != blank -%}
   <div class="announcement-bar">
     <p class="announcement-bar__text text-body-lg container">{{ section.settings.text }}</p>
   </div>

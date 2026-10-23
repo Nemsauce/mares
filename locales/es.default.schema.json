@@ -69,7 +69,7 @@
       "settings": {
         "text": {
           "label": "Texto",
-          "info": "Una sola línea corta, sobre el encabezado, en todas las páginas; se queda fija arriba al bajar. Escribe solo hechos que la tienda pueda cumplir, sin signos de exclamación ni urgencia. Si es muy larga se corta con puntos suspensivos. Si lo dejas vacío, la barra no se muestra.",
+          "info": "Una sola línea corta, sobre el encabezado, en todas las páginas. En pantallas grandes se queda fija arriba al bajar; en celulares se va con la página y solo el encabezado queda fijo. Escribe solo hechos que la tienda pueda cumplir, sin signos de exclamación ni urgencia. Si es muy larga se corta con puntos suspensivos. Si lo dejas vacío, la barra no se muestra.",
           "default": "Envío gratis a todo el país"
         }
       }
