@@ -1,16 +1,51 @@
 /* section-announcement-bar.css: the line above the header (sections/announcement-bar.liquid).
-   Tokens only. Quiet on purpose: body-sm, centered, no color accent, no motion.
-   Text on the deeper pearl (base.css): ink 9.10 to 1. */
+   Tokens only. A filled band, so it is seen, but plain in tone: one line, no motion.
+
+   Colors: --color-brand fill with --color-on-brand text, the pair the primary button uses.
+   Contrast 5.18 to 1 in the light theme and 8.21 to 1 in the dark theme, computed from the
+   token values; 4.5 to 1 needed. No state changes the colors.
+
+   Sticky: Shopify wraps every section of the header group in an element with the class
+   shopify-section-group-header-group. Both wrappers stick to the top of the viewport; the
+   second one (the header) is offset by the bar's height, so the two stack instead of
+   overlapping. The height is fixed on purpose (see the text rule), which is what lets one
+   number be the offset. */
 
 @layer sections {
-  .announcement-bar {
-    background: var(--surface-sunk);
-    color: var(--color-ink);
+  :root {
+    /* One line of body-lg plus space-2 above and below: 44px. */
+    --announcement-bar-height: calc(var(--type-body-lg-line) + 2 * var(--space-2));
   }
 
+  .shopify-section-group-header-group {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+  }
+
+  .shopify-section-group-header-group + .shopify-section-group-header-group {
+    inset-block-start: var(--announcement-bar-height);
+  }
+
+  /* Anchors and focused controls scroll out from under the stuck bar and header
+     (44px bar + 64px header + 1px line). */
+  html {
+    scroll-padding-block-start: calc(var(--announcement-bar-height) + 65px);
+  }
+
+  .announcement-bar {
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  /* One line: a longer text is cut with an ellipsis, so the bar keeps the height the
+     header offset relies on. */
   .announcement-bar__text {
     margin: 0;
     padding-block: var(--space-2);
+    overflow: hidden;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
