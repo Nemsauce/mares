@@ -1,0 +1,46 @@
+{%- comment -%}
+  Shipping note (docs/THEME_PLAN.md 6.6): the shipping cost and delivery time text at
+  body-sm. Both come from block settings. The guide requires the customer to see them, so a
+  blank shipping text falls back to the locale string (docs/content/catalogo-y-copy.md). A
+  blank delivery estimate shows nothing (the content file has no copy yet).
+{%- endcomment -%}
+
+{%- assign shipping_note = block.settings.shipping_note -%}
+
+<div class="shipping-note text-body-sm" {{ block.shopify_attributes }}>
+  {%- if shipping_note != blank -%}
+    {{ shipping_note }}
+  {%- else -%}
+    <p>{{ 'cart.shipping_notice' | t }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.delivery_estimate != blank -%}
+    <p><strong>{{ 'products.delivery_time' | t }}</strong> {{ block.settings.delivery_estimate }}</p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.shipping-note.name",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "shipping_note",
+      "label": "t:blocks.shipping-note.settings.shipping_note.label",
+      "info": "t:blocks.shipping-note.settings.shipping_note.info",
+      "default": "t:blocks.shipping-note.settings.shipping_note.default"
+    },
+    {
+      "type": "text",
+      "id": "delivery_estimate",
+      "label": "t:blocks.shipping-note.settings.delivery_estimate.label",
+      "info": "t:blocks.shipping-note.settings.delivery_estimate.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.shipping-note.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+/* component-accordion.css: native details and summary (docs/THEME_PLAN.md 6.6).
+   Opens and closes with no script. State comes from the [open] attribute.
+
+   Markup:
+     <details class="accordion">
+       <summary class="accordion__summary"><span class="accordion__heading">...</span> <svg class="icon">...</svg></summary>
+       <div class="accordion__content">...</div>
+     </details>
+
+   The chevron turns when open, with no transition, so there is no motion to switch off.
+   Focus ring: the global :focus-visible rule in base.css. */
+
+@layer components {
+  .accordion {
+    inline-size: 100%;
+    border-block-end: 1px solid var(--color-line); /* divider, the one use of line (R-4) */
+  }
+
+  .accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 48px; /* same target height as a button */
+    padding-block: var(--space-3);
+    color: var(--color-ink);
+    cursor: pointer;
+    list-style: none; /* hides the default marker in Firefox and current browsers */
+  }
+
+  /* Safari's marker. */
+  .accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion__heading {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .accordion__summary .icon {
+    flex: none;
+  }
+
+  .accordion[open] .accordion__summary .icon {
+    transform: rotate(180deg);
+  }
+
+  /* Rich text from the admin (a page body or the block's text). */
+  .accordion__content {
+    padding-block-end: var(--space-4);
+    color: var(--color-ink);
+    max-inline-size: 65ch; /* PROPOSAL: readable measure */
+  }
+
+  .accordion__content > * + * {
+    margin-block-start: var(--space-3);
+  }
+
+  .accordion__content ul,
+  .accordion__content ol {
+    padding-inline-start: var(--space-6);
+  }
+
+  .accordion__content a {
+    color: var(--color-brand);
+  }
+}

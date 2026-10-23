@@ -363,6 +363,36 @@
     },
     "variant-picker": {
       "name": "Selector de variante"
+    },
+    "accordion": {
+      "name": "Acordeón",
+      "settings": {
+        "heading": {
+          "label": "Título"
+        },
+        "page": {
+          "label": "Página",
+          "info": "Si la página tiene contenido, se muestra ese. Si no, se usa el texto."
+        },
+        "text": {
+          "label": "Texto",
+          "info": "Se usa cuando no hay página. Si no hay página ni texto, el bloque no se muestra."
+        }
+      }
+    },
+    "shipping-note": {
+      "name": "Aviso de envío",
+      "settings": {
+        "shipping_note": {
+          "label": "Aviso de envío",
+          "info": "Si lo dejas vacío, se muestra el aviso por defecto.",
+          "default": "<p>Verás el costo de envío antes de pagar.</p>"
+        },
+        "delivery_estimate": {
+          "label": "Tiempo estimado de entrega",
+          "info": "Por ejemplo, el rango de días. Si lo dejas vacío, no se muestra."
+        }
+      }
     }
   }
 }

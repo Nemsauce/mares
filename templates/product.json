@@ -21,11 +21,26 @@
         "buy": {
           "type": "buy-buttons"
         },
+        "shipping": {
+          "type": "shipping-note"
+        },
         "description": {
           "type": "product-description"
+        },
+        "returns": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Cambios"
+          }
+        },
+        "care": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Cuidado de la prenda"
+          }
         }
       },
-      "block_order": ["title", "price", "picker", "quantity", "buy", "description"],
+      "block_order": ["title", "price", "picker", "quantity", "buy", "shipping", "description", "returns", "care"],
       "settings": {}
     }
   },
