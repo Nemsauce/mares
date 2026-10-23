@@ -3,6 +3,12 @@
   underneath. Navigation comes from the `menu` link list and shows inline from 1024px.
   Below that a <header-menu> custom element opens a native <dialog> with the same links.
 
+  Two more links come from settings, after the menu links, so the brand's two selling
+  angles are always reachable whatever the store menu holds: gifts (link_gifts) and
+  personalization (link_personalization). Their labels are locale strings (general.nav_gifts,
+  general.nav_personalization), not editable text: the link is what the owner chooses. Each
+  shows only when its link is set, and both are unset by default.
+
   Heading rule: the logo is a plain link on every page and is never a heading. The one
   h1 of each page belongs to the page content: the hero headline on the home page, the
   title on every other page.
@@ -32,6 +38,16 @@
       <a class="header__link text-body" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
     </li>
   {%- endfor -%}
+  {%- if section.settings.link_gifts != blank -%}
+    <li>
+      <a class="header__link text-body" href="{{ section.settings.link_gifts }}"{% if request.path == section.settings.link_gifts %} aria-current="page"{% endif %}>{{ 'general.nav_gifts' | t }}</a>
+    </li>
+  {%- endif -%}
+  {%- if section.settings.link_personalization != blank -%}
+    <li>
+      <a class="header__link text-body" href="{{ section.settings.link_personalization }}"{% if request.path == section.settings.link_personalization %} aria-current="page"{% endif %}>{{ 'general.nav_personalization' | t }}</a>
+    </li>
+  {%- endif -%}
 {%- endcapture -%}
 
 {%- assign brand_name = 'general.brand_name' | t -%}
@@ -129,6 +145,18 @@
       "label": "t:sections.header.settings.menu.label",
       "info": "t:sections.header.settings.menu.info",
       "default": "main-menu"
+    },
+    {
+      "type": "url",
+      "id": "link_gifts",
+      "label": "t:sections.header.settings.link_gifts.label",
+      "info": "t:sections.header.settings.link_gifts.info"
+    },
+    {
+      "type": "url",
+      "id": "link_personalization",
+      "label": "t:sections.header.settings.link_personalization.label",
+      "info": "t:sections.header.settings.link_personalization.info"
     }
   ]
 }

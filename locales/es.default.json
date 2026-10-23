@@ -18,6 +18,8 @@
     "view_line_descanso": "Ver la línea Descanso",
     "view_line_dia": "Ver la línea Día",
     "menu": "Menú",
+    "nav_gifts": "Regalos",
+    "nav_personalization": "Personalizadas",
     "search": "Buscar",
     "back_to_home": "Volver al inicio",
     "copyright": "© {{ year }} {{ shop_name }}"

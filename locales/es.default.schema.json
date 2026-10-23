@@ -80,6 +80,14 @@
         "menu": {
           "label": "Menú",
           "info": "Los enlaces que se muestran en el encabezado."
+        },
+        "link_gifts": {
+          "label": "Enlace de regalos",
+          "info": "Se muestra al final del menú con el nombre «Regalos». Elige la página o la colección para quien busca un regalo (baby shower, recién nacidas, familia lejos). Si lo dejas vacío, no se muestra."
+        },
+        "link_personalization": {
+          "label": "Enlace de personalizadas",
+          "info": "Se muestra al final del menú con el nombre «Personalizadas». Elige la página o la colección donde se puede pedir el nombre o la inicial bordados. Si lo dejas vacío, no se muestra."
         }
       }
     },
