@@ -501,7 +501,7 @@
         "shipping_note": {
           "label": "Aviso de envío",
           "info": "Se muestra sobre el botón de pago. Si lo dejas vacío, se muestra el aviso por defecto.",
-          "default": "<p>Verás el costo de envío antes de pagar.</p>"
+          "default": "<p>Envío gratis a todo el país.</p>"
         },
         "delivery_estimate": {
           "label": "Tiempo estimado de entrega",
@@ -572,7 +572,7 @@
         "shipping_note": {
           "label": "Aviso de envío",
           "info": "Si lo dejas vacío, se muestra el aviso por defecto.",
-          "default": "<p>Verás el costo de envío antes de pagar.</p>"
+          "default": "<p>Envío gratis a todo el país.</p>"
         },
         "delivery_estimate": {
           "label": "Tiempo estimado de entrega",
