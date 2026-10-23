@@ -1,0 +1,44 @@
+/* component-section-header.css: eyebrow, heading and subtitle that open a home page section
+   (snippets/section-header.liquid). General surfaces only (bg, bg-raised): ink for text,
+   brand for the eyebrow and the heading accent. Tokens only.
+
+   Markup:
+     <div class="section-header section-header--center">
+       <p class="section-header__eyebrow text-label">...</p>
+       <h2 class="section-header__heading text-display-md">... <span class="section-header__accent">...</span></h2>
+       <p class="section-header__subtitle text-body-lg">...</p>
+     </div> */
+
+@layer components {
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .section-header--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .section-header--left {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .section-header__eyebrow,
+  .section-header__accent {
+    color: var(--color-brand);
+  }
+
+  .section-header__heading {
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .section-header__subtitle {
+    max-inline-size: 60ch; /* PROPOSAL: readable measure */
+    color: var(--color-ink);
+  }
+}

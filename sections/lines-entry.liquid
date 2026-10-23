@@ -12,9 +12,13 @@
 
 <section class="lines-entry">
   <div class="container">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="lines-entry__heading text-display-md">{{ section.settings.heading }}</h2>
-    {%- endif -%}
+    {% render 'section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_accent: section.settings.heading_accent,
+      level: 2,
+      class: 'lines-entry__header'
+    %}
 
     {%- if section.blocks.size > 0 -%}
       <ul class="grid lines-entry__grid" role="list">
@@ -62,6 +66,17 @@
       "id": "heading",
       "label": "t:sections.lines-entry.settings.heading.label",
       "default": "t:sections.lines-entry.settings.heading.default"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "t:sections.lines-entry.settings.heading_accent.label",
+      "info": "t:sections.lines-entry.settings.heading_accent.info"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.lines-entry.settings.eyebrow.label"
     }
   ],
   "blocks": [

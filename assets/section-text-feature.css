@@ -1,27 +1,10 @@
 /* section-text-feature.css: heading and paragraph on a bg-raised band.
-   General page surfaces only. Tokens only. */
+   General page surfaces only. Tokens only. The heading and paragraph styles are in
+   component-section-header.css. */
 
 @layer sections {
   .text-feature {
     padding-block: var(--section-gap);
     background: var(--color-bg-raised);
-  }
-
-  .text-feature__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-    text-align: center;
-  }
-
-  .text-feature__heading {
-    color: var(--color-ink);
-    text-wrap: balance;
-  }
-
-  .text-feature__text {
-    max-inline-size: 60ch; /* PROPOSAL: readable measure */
-    color: var(--color-ink);
   }
 }

@@ -6,9 +6,9 @@
     padding-block: var(--section-gap);
   }
 
-  .lines-entry__heading {
+  /* The heading itself is snippets/section-header.liquid; this is only the space under it. */
+  .lines-entry__header {
     margin-block-end: var(--space-8);
-    text-wrap: balance;
   }
 
   .lines-entry__grid {

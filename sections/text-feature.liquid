@@ -1,19 +1,21 @@
 {%- comment -%}
   Reusable heading and paragraph on a bg-raised band. Used for the closing section of
-  the home page. Defaults are t: keys in locales/es.default.schema.json
+  the home page. The heading and the paragraph (the header's subtitle) come from
+  snippets/section-header.liquid. Defaults are t: keys in locales/es.default.schema.json
   (source: docs/content/catalogo-y-copy.md).
 {%- endcomment -%}
 
 {{ 'section-text-feature.css' | asset_url | stylesheet_tag }}
 
 <section class="text-feature">
-  <div class="container text-feature__inner">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="text-feature__heading text-display-md">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-    {%- if section.settings.text != blank -%}
-      <p class="text-feature__text text-body-lg">{{ section.settings.text }}</p>
-    {%- endif -%}
+  <div class="container">
+    {% render 'section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_accent: section.settings.heading_accent,
+      subtitle: section.settings.text,
+      level: 2
+    %}
   </div>
 </section>
 
@@ -26,6 +28,17 @@
       "id": "heading",
       "label": "t:sections.text-feature.settings.heading.label",
       "default": "t:sections.text-feature.settings.heading.default"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "t:sections.text-feature.settings.heading_accent.label",
+      "info": "t:sections.text-feature.settings.heading_accent.info"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.text-feature.settings.eyebrow.label"
     },
     {
       "type": "textarea",

@@ -136,6 +136,13 @@
         "heading": {
           "label": "Encabezado",
           "default": "Dos formas de mirar el mar"
+        },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca."
+        },
+        "eyebrow": {
+          "label": "Etiqueta sobre el encabezado"
         }
       },
       "blocks": {
@@ -195,6 +202,13 @@
         "heading": {
           "label": "Encabezado",
           "default": "Por qué bordamos a mano"
+        },
+        "heading_accent": {
+          "label": "Segunda parte del encabezado",
+          "info": "Se muestra a continuación del encabezado, en el color de la marca."
+        },
+        "eyebrow": {
+          "label": "Etiqueta sobre el encabezado"
         },
         "text": {
           "label": "Texto",

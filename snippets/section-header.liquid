@@ -1,0 +1,62 @@
+{%- comment -%}
+  Section header: an optional small label (eyebrow), a heading and an optional subtitle.
+  One place for how a home page section introduces itself, so the sections read as one page.
+
+  Parameters:
+    eyebrow         (optional) small label above the heading, label style, brand color.
+    heading         (optional) the heading text.
+    heading_accent  (optional) a second part of the heading, shown after a space in the brand
+                    color. Plain text: both parts are separate settings, no markup in copy.
+    subtitle        (optional) paragraph under the heading, body-lg, ink.
+    level           (optional) heading level, 1 to 6. Default 2. The size does not change with
+                    the level: the caller picks the level that fits the page outline.
+    align           (optional) 'center' (default) or 'left'.
+    class           (optional) extra classes for spacing, never for color.
+
+  Nothing renders when eyebrow, heading, heading_accent and subtitle are all blank.
+  The brand color is used for text on bg and bg-raised only (5.2 to 1 on bg, more on
+  bg-raised), never on a line color or on a photograph.
+
+  Usage:
+    {% render 'section-header', heading: section.settings.heading, level: 2 %}
+    {% render 'section-header', eyebrow: 'x', heading: 'y', heading_accent: 'z', align: 'left' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign header_level = level | default: 2 | plus: 0
+  if header_level < 1 or header_level > 6
+    assign header_level = 2
+  endif
+
+  assign header_align = 'center'
+  if align == 'left'
+    assign header_align = 'left'
+  endif
+
+  assign header_classes = 'section-header section-header--' | append: header_align
+  if class != blank
+    assign header_classes = header_classes | append: ' ' | append: class
+  endif
+-%}
+
+{%- if eyebrow != blank or heading != blank or heading_accent != blank or subtitle != blank -%}
+  {{ 'component-section-header.css' | asset_url | stylesheet_tag }}
+
+  <div class="{{ header_classes }}">
+    {%- if eyebrow != blank -%}
+      <p class="section-header__eyebrow text-label">{{ eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if heading != blank or heading_accent != blank -%}
+      <h{{ header_level }} class="section-header__heading text-display-md">
+        {%- if heading != blank -%}{{ heading }}{%- endif -%}
+        {%- if heading != blank and heading_accent != blank %} {% endif -%}
+        {%- if heading_accent != blank -%}<span class="section-header__accent">{{ heading_accent }}</span>{%- endif -%}
+      </h{{ header_level }}>
+    {%- endif -%}
+
+    {%- if subtitle != blank -%}
+      <p class="section-header__subtitle text-body-lg">{{ subtitle }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
