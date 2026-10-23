@@ -1,9 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-home",
       "settings": {
-        "button_link": "/collections/descanso"
+        "heading": "Hecha con amor para las que más amamos",
+        "text": "Ropa de bebé bordada a mano, suave para su piel y pensada para durar.",
+        "button_label": "Ver la línea Descanso",
+        "button_link": "/collections/descanso",
+        "image": "shopify://shop_images/mares-hero-inicio.png"
       }
     },
     "lines": {
@@ -12,27 +25,55 @@
         "descanso": {
           "type": "line_descanso",
           "settings": {
+            "title": "Descanso",
+            "text": "Para dormir tranquila. Verdes de agua, lavanda y rosa arena, en prendas que abrazan sin apretar.",
+            "link_label": "Ver la línea Descanso",
             "link": "/collections/descanso"
           }
         },
         "dia": {
           "type": "line_dia",
           "settings": {
+            "title": "Día",
+            "text": "Para jugar y descubrir. Turquesa, coral y amarillo sol, con bordados que sacan una sonrisa.",
+            "link_label": "Ver la línea Día",
             "link": "/collections/dia"
           }
         }
       },
-      "block_order": ["descanso", "dia"],
-      "settings": {}
+      "block_order": [
+        "descanso",
+        "dia"
+      ],
+      "settings": {
+        "heading": "Dos formas de mirar el mar",
+        "heading_accent": "",
+        "eyebrow": ""
+      }
     },
     "essence": {
       "type": "essence",
-      "settings": {}
+      "settings": {
+        "eyebrow": "",
+        "heading": "Por qué bordamos a mano",
+        "heading_accent": "",
+        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+      }
     },
     "closing": {
       "type": "text-feature",
-      "settings": {}
+      "settings": {
+        "heading": "Por qué bordamos a mano",
+        "heading_accent": "",
+        "eyebrow": "",
+        "text": "Cada prenda pasa por un bastidor antes de llegar a tus manos. Es más lento, y se nota: el hilo queda firme, el revés queda plano y nada raspa su piel."
+      }
     }
   },
-  "order": ["hero", "lines", "essence", "closing"]
+  "order": [
+    "hero",
+    "lines",
+    "essence",
+    "closing"
+  ]
 }

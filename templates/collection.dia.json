@@ -4,7 +4,8 @@
       "type": "hero-line",
       "settings": {
         "line": "dia",
-        "motif_dia": "sol"
+        "motif_dia": "sol",
+        "image": "shopify://shop_images/mares-hero-dia.png"
       }
     },
     "main": {

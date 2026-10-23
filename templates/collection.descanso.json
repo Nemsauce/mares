@@ -4,7 +4,8 @@
       "type": "hero-line",
       "settings": {
         "line": "descanso",
-        "motif_descanso": "ola-suave"
+        "motif_descanso": "ola-suave",
+        "image": "shopify://shop_images/mares-hero-descanso.png"
       }
     },
     "main": {
