@@ -1,5 +1,5 @@
 /* reveal.js: elements marked [data-reveal] fade in and rise a little the first time they
-   enter the viewport (docs/design/README.md, "Profundidad y movimiento").
+   enter the viewport (docs/DESIGN.md, "Forma, profundidad y movimiento").
 
    Progressive enhancement: the CSS starting state is fully visible. This script opts an
    element in by adding .reveal (hidden and lowered, base.css) and adds .is-revealed when

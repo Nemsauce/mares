@@ -1,6 +1,6 @@
 /* section-hero-home.css: home hero (docs/BUILD.md 4 and 6.7b). General page:
    bg, bg-raised, ink, brand. Tokens only. One gradient: the scrim over the photograph
-   (docs/design/README.md, "Profundidad y movimiento").
+   (docs/DESIGN.md, "Forma, profundidad y movimiento").
 
    Two looks. Without an image: type only, centered, on bg. With an image
    (.hero-home--image): full bleed photograph with the text on a panel. */

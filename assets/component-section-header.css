@@ -31,7 +31,7 @@
   /* Decorative embroidery motif above the eyebrow. It takes the header's alignment:
      centered in the default header, at the start in a left aligned one, where a centered
      drawing over left aligned text would float.
-     ink-muted, never a line color (README, "Bordado como motivo"): 4.88 to 1 on the deeper
+     ink-muted, never a line color (docs/DESIGN.md, "Bordado e ilustración"): 4.88 to 1 on the deeper
      pearl, more on bg and bg-raised (3 to 1 needed for artwork). */
   .section-header__motif {
     color: var(--color-ink-muted);

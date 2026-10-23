@@ -214,3 +214,80 @@ Lo que sí hay que hacer siempre: si cambias un valor, cámbialo en
 `tokens.json` y regenera. Si cambias una recomendación, escríbela aquí. Un
 documento que no refleja lo que hace el código deja de servir y vuelve a aparecer
 la confusión.
+
+---
+
+## Lo que traían los documentos anteriores
+
+Lo que el README de diseño y la guía web decían y este documento no cubría, y
+que sigue valiendo. Tiene el mismo trato: recomendaciones, salvo lo que ya es
+una de las cinco reglas.
+
+### Dos momentos del mar
+
+Mares es una sola familia visual con dos momentos del mar. **Descanso** es el
+mar sereno: calma, abrazo, silencio, en `sea-glass`, `lavender`, `blush` y
+perla. **Día** es la playa paradisiaca: luz, alegría, juego, en `turquoise`,
+`coral` y `sun`.
+
+### Qué va sobre qué
+
+- Texto sobre `bg`: `ink` o `ink-muted`. Sobre `brand`: `on-brand`.
+- Sobre los colores de línea, `ink`. **Ojo con `turquoise`:** ahí solo `ink`,
+  nunca texto blanco.
+- El perla más hondo es `bg` mezclado con un 25% de `line` (`--surface-sunk`).
+- Los motivos de bordado van en `ink-muted` o en el color de su línea. **Ojo:**
+  sobre un bloque del mismo color de línea el trazo desaparece, y ahí va
+  `ink-muted`.
+- Íconos de interfaz en `ink`, o en `brand` si son interactivos.
+
+### Degradados, el detalle
+
+**Funcionan** en el velo de `bg` a transparente sobre la foto del hero, para
+fundirla con el panel de texto, y en los bloques grandes de color de línea, del
+principal al acento **de esa misma línea**. **Recomendado:** que un degradado
+nunca mezcle las dos líneas. **Suele fallar** detrás de texto pequeño y en las
+tarjetas de producto.
+
+### Movimiento, el detalle
+
+**Recomendado:** que botones, tarjetas y enlaces respondan al pasar el cursor
+(solo escritorio) y al presionar, y que si el script de entrada no corre el
+contenido se vea completo. **Por qué:** una sección que solo existe cuando
+corre un script deja a la persona sin ella cuando el script falla. Las sombras
+se derivan de `ink`; `shadow-soft` sirve para el hover y para los menús
+desplegables.
+
+### Estados de los controles
+
+| Estado | Cómo se ve |
+| --- | --- |
+| Hover (solo escritorio) | El botón principal oscurece `brand` un 8%. La tarjeta gana sombra, sube un poco y su foto crece apenas. |
+| Foco | Anillo de 2px con 2px de separación, en todos los controles (regla 3). |
+| Deshabilitado | Opacidad 50% y cursor `not-allowed`, con un texto cerca que explique el motivo. |
+| Error | Borde de 2px `error` y un mensaje de texto debajo del campo (regla 4). |
+| Carga | Esqueleto en `line` sobre `bg-raised`, con animaciones de no más de 1.2s. |
+
+### Dos componentes y unas medidas que faltaban
+
+| Componente | Medidas |
+| --- | --- |
+| Encabezado | Fondo `bg`, logo a la izquierda, carrito a la derecha, línea inferior de 1px `line`, 64px de alto en móvil. |
+| Hero de línea | Bloque `radius-lg` en el color principal de la línea, que puede pasar en degradado a su acento. Título `display-xl` (`display-lg` en móvil) en `ink`. |
+| Botón (medidas) | Relleno `space-3` y `space-6`, estilo de texto `button`. |
+| Etiqueta de colección (medidas) | Fondo `sea-glass` (Descanso) o `turquoise` (Día), texto `ink`, relleno `space-1` y `space-3`. |
+
+Las tallas van en chips con borde 1px `--control-border`; el seleccionado se
+rellena con `brand` y `on-brand`.
+
+### Pantallas
+
+**Recomendado:** probar primero a 375px de ancho. **Por qué:** la mayoría del
+tráfico llegará del celular, desde anuncios. En escritorio el hero lleva
+`space-24` de aire arriba y abajo.
+
+### Texto alternativo
+
+**Recomendado:** que cada imagen de producto lleve un texto alternativo que la
+describa, por ejemplo «Pijama azul verdoso con ola bordada». **Por qué:** es lo
+que escucha quien no ve la foto, y completa la regla 4.
