@@ -30,10 +30,24 @@
 
     {%- comment -%}
       Single polite live region for cart and error announcements. It must stay
-      in the DOM from first load; scripts only change its text. The announcer
-      arrives with core.js in E3.
+      in the DOM from first load; scripts only change its text, through
+      Mares.announce in assets/core.js.
     {%- endcomment -%}
     <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    {%- comment -%}
+      Routes for assets/core.js, as data (type application/json is never executed).
+      Liquid routes carry the locale prefix, so scripts never hard-code /cart.
+    {%- endcomment -%}
+    <script type="application/json" id="mares-routes">
+      {
+        "root": {{ routes.root_url | json }},
+        "cart": {{ routes.cart_url | json }},
+        "cartAdd": {{ routes.cart_add_url | json }},
+        "cartChange": {{ routes.cart_change_url | json }},
+        "cartUpdate": {{ routes.cart_update_url | json }}
+      }
+    </script>
 
     {% sections 'header-group' %}
 
@@ -44,7 +58,9 @@
     {% sections 'footer-group' %}
 
     {%- comment -%}
-      No <script> tags yet. core.js and the other deferred scripts arrive in E3.
+      No script tags here. core.js is loaded by sections/header.liquid (the first section
+      on every page, so it runs before every other deferred script); each section loads
+      only the scripts it uses.
     {%- endcomment -%}
   </body>
 </html>

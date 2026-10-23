@@ -18,6 +18,12 @@
 
 {{ 'section-header.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  core.js (window.Mares) loads here because the header is the first section on every page:
+  deferred scripts run in document order, so it runs before any section script that needs it.
+{%- endcomment -%}
+<script src="{{ 'core.js' | asset_url }}" defer></script>
+
 {%- assign menu = section.settings.menu -%}
 
 {%- capture header_links -%}
