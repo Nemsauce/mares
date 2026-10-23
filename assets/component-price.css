@@ -1,4 +1,4 @@
-/* component-price.css: current price and struck compare-at price (docs/THEME_PLAN.md 6.4).
+/* component-price.css: current price and struck compare-at price (docs/BUILD.md 6.4).
    The type styles come from the token classes; the previous price is ink-muted [T]. */
 
 @layer components {

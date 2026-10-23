@@ -1,5 +1,5 @@
 /* product-form.js: <product-form> upgrades the add to cart form in blocks/buy-buttons.liquid
-   (docs/THEME_PLAN.md section 5). It posts the same form data to /cart/add.js instead of
+   (docs/BUILD.md section 5). It posts the same form data to /cart/add.js instead of
    loading the cart page, announces the result once and dispatches mares:cart:updated.
 
    While the request is pending the button gets aria-disabled and the loading look of

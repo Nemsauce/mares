@@ -1,4 +1,4 @@
-/* component-tag.css: collection tag (docs/THEME_PLAN.md section 4 and 6.4).
+/* component-tag.css: collection tag (docs/BUILD.md section 4 and 6.4).
    The background is var(--line-main), which only exists inside a data-line surface
    (base-lines.css). A tag must therefore sit inside an element with
    data-line="descanso" or data-line="dia". Outside one it has no background. */

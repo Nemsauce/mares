@@ -1,4 +1,4 @@
-/* section-collection.css: collection page (docs/THEME_PLAN.md 6.5). Tokens only.
+/* section-collection.css: collection page (docs/BUILD.md 6.5). Tokens only.
    Liquid writes --span-mobile, --span-tablet and --span-desktop on the grid; the grid itself
    (4, 8 or 12 columns) comes from grid.css. */
 

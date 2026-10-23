@@ -1,6 +1,6 @@
 # Mares: how the theme is built
 
-Reference for the Shopify theme: the rules it follows, the file tree, how design tokens become CSS, the CSS and JavaScript approach, the sections that exist and the risks that remain. It replaces `THEME_PLAN.md` and `TOKENS.md`. The design values are in `docs/DESIGN.md` and `docs/design/tokens.json`; the words are in `docs/BRAND.md`; the configurator is in `docs/CONFIGURATOR.md`.
+Reference for the Shopify theme: the rules it follows, the file tree, how design tokens become CSS, the CSS and JavaScript approach, the sections that exist and the risks that remain. It replaces the former theme plan and the tokens note. The design values are in `docs/DESIGN.md` and `docs/design/tokens.json`; the words are in `docs/BRAND.md`; the configurator is in `docs/CONFIGURATOR.md`.
 
 Scope: a custom Online Store 2.0 theme built from scratch, vanilla CSS and JS, no build step required to deploy.
 

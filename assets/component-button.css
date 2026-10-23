@@ -1,4 +1,4 @@
-/* component-button.css: primary and secondary buttons (docs/THEME_PLAN.md section 4).
+/* component-button.css: primary and secondary buttons (docs/BUILD.md section 4).
    Type style comes from the .text-button class (base.css) and is repeated here so the
    button also works without it. Focus ring: the global :focus-visible rule in base.css;
    it is not redefined here.

@@ -1,5 +1,5 @@
 #!/bin/sh
-# check-no-hex.sh: keeps design values in tokens (docs/THEME_PLAN.md, section 2.7).
+# check-no-hex.sh: keeps design values in tokens (docs/BUILD.md, section 2.7).
 #
 # Fails (exit 1) with a per-line report when it finds, in layout, sections,
 # blocks, snippets, templates, assets, config or locales:

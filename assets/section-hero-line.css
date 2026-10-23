@@ -1,4 +1,4 @@
-/* section-hero-line.css: line hero (docs/THEME_PLAN.md 4 and 6.3). Tokens only.
+/* section-hero-line.css: line hero (docs/BUILD.md 4 and 6.3). Tokens only.
    Background is a gradient from --line-main to --line-accent of the same line, which
    data-line on the section provides (base-lines.css). Flat --line-main where gradients
    are not supported.

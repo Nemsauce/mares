@@ -1,5 +1,5 @@
 /* media-gallery.js: <media-gallery> keeps gallery thumbnails in step with the scroll-snap
-   strip of sections/main-product.liquid (docs/THEME_PLAN.md section 5). The strip scrolls
+   strip of sections/main-product.liquid (docs/BUILD.md section 5). The strip scrolls
    and snaps with CSS alone; this script only marks the thumbnail of the visible slide with
    aria-current and scrolls the strip, not the page, when a thumbnail is chosen.
 

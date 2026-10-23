@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Generates assets/tokens.css from docs/design/tokens.json.
 // Node built-ins only. Idempotent: same input, byte-identical output.
-// Naming and rules: docs/THEME_PLAN.md sections 2.2 to 2.4.
+// Naming and rules: docs/BUILD.md sections 2.2 to 2.4.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';

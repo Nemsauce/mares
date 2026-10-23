@@ -1,4 +1,4 @@
-/* grid.css: container, 4/8/12 column grid and section spacing (docs/THEME_PLAN.md 4).
+/* grid.css: container, 4/8/12 column grid and section spacing (docs/BUILD.md 4).
    Breakpoints are exactly 600px and 1024px, as min-width queries. Media queries cannot
    read custom properties, so the literals are repeated here and enforced by
    scripts/check-no-hex.sh.

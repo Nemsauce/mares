@@ -1,5 +1,5 @@
 /* header-menu.js: <header-menu> opens a native <dialog> holding the header links, below
-   1024px only (docs/THEME_PLAN.md section 5). The dialog gives focus handling and Escape
+   1024px only (docs/BUILD.md section 5). The dialog gives focus handling and Escape
    for free, so there is no custom focus trap. Without this script the open button stays
    hidden and a <noscript> navigation is shown instead (see sections/header.liquid). */
 

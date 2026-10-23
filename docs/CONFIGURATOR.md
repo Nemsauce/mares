@@ -547,7 +547,7 @@ Models: **S-med** = Sonnet 5.5 medium effort, **S-high** = Sonnet 5.5 high effor
 
 | # | Commit | Files | Needs | Model |
 | --- | --- | --- | --- | --- |
-| G0 | docs: configurator design (data model, preview, validation), revised with the owner decisions and the position choice | `docs/CONFIGURATOR_PLAN.md` | none | O-high |
+| G0 | docs: configurator design (data model, preview, validation), revised with the owner decisions and the position choice | `docs/CONFIGURATOR.md` | none | O-high |
 | G1 | feat(locales): configurator strings (inventory below) | `locales/es.default.json`, `locales/es.default.schema.json` | none | S-med |
 | G2 | feat(configurator): block markup without script: completeness check, motif chips with the product's own preselected, name field with per-garment limit, hint and counter, 23 thread chips and the screen-sample line, delivery notice and no-exchange notice, `form=`-joined inputs | `blocks/embroidery-configurator.liquid`, `assets/component-configurator.css`, `templates/product.json` | 11 B1, C, and D 1 to 5 for at least one product (thread colors, product fields) | S-high |
 | G2b | feat(configurator): position choice and acceptance without script: position chips from `mares.positions` with `data-` rectangles, acceptance checkbox, `Ubicación`, `Aviso de no cambio`, `_ubicacion` keys | `blocks/embroidery-configurator.liquid`, `assets/component-configurator.css` | 11 B2 (position entries) and D 4 (`mares.positions` on the product) | S-high |

@@ -1,4 +1,4 @@
-# Theme Check configuration for the Mares theme (see docs/THEME_PLAN.md).
+# Theme Check configuration for the Mares theme (see docs/BUILD.md).
 # Run with `shopify theme check` once layout/theme.liquid exists.
 #
 # Approach: start from the recommended set (it catches real errors such as

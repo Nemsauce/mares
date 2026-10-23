@@ -1,5 +1,5 @@
 /* component-chip.css: selectable pill, used for size and other options.
-   (docs/THEME_PLAN.md section 4 and 6.6)
+   (docs/BUILD.md section 4 and 6.6)
 
    Markup, radio pattern (the input stays in the accessibility tree and keyboard flow):
      <input class="chip__input visually-hidden" type="radio" id="x" name="size" value="M">

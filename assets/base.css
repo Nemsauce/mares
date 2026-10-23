@@ -1,6 +1,6 @@
 /* base.css: reset, element defaults, type classes, focus ring, reduced motion, utilities.
    Layers reset, base and utilities (order is declared once in snippets/head-assets.liquid).
-   Design values come from tokens.css only. See docs/THEME_PLAN.md sections 2.2 and 4.
+   Design values come from tokens.css only. See docs/BUILD.md sections 2.2 and 4.
    Breakpoints, defined where used (grid.css): min-width 600px and min-width 1024px only. */
 
 @layer reset {

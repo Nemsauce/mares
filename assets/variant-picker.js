@@ -1,5 +1,5 @@
 /* variant-picker.js: <variant-picker> upgrades the GET form of blocks/variant-picker.liquid
-   (docs/THEME_PLAN.md section 5). A chip still submits the form; the script takes that
+   (docs/BUILD.md section 5). A chip still submits the form; the script takes that
    submit, fetches the product section for the chosen variant through the Section Rendering
    API (?variant=ID&section_id=...) and swaps in the server-rendered parts:
      - the price block (all money stays server formatted),

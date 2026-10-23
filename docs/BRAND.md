@@ -1,6 +1,6 @@
 # Mares: marca y contenido
 
-Esta es la única fuente de la voz de la marca y del texto de la tienda. Reúne lo que antes estaba en `catalogo-y-copy.md` y `secciones-nuevas.md`. Si algo aquí contradice `docs/DESIGN.md`, manda `docs/DESIGN.md`.
+Esta es la única fuente de la voz de la marca y del texto de la tienda. Reúne el antiguo catálogo y copy y el copy de las secciones nuevas. Si algo aquí contradice `docs/DESIGN.md`, manda `docs/DESIGN.md`.
 
 Estado: versión 1. Los precios son propuestas para que las ajustes. Lo marcado como PENDIENTE solo lo puedes llenar tú, y todos los PENDIENTE están reunidos en una sola lista al final.
 

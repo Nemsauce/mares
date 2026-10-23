@@ -1,5 +1,5 @@
 /* section-featured-collection.css: featured collection on the home page
-   (docs/THEME_PLAN.md 6.7b). Tokens only. The cards are component-card-product.css;
+   (docs/BUILD.md 6.7b). Tokens only. The cards are component-card-product.css;
    the heading is component-section-header.css.
 
    Below 1024px: one horizontal row with scroll snap that bleeds to the screen edges.

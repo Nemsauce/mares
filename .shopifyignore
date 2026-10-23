@@ -4,7 +4,7 @@
 # snippets/ templates/. Everything below is repository tooling or documentation.
 
 # --- Project documentation and design source of truth ----------------------
-# docs/design/* is read-only reference material; docs/THEME_PLAN.md is the plan.
+# docs/ holds the documentation (DESIGN, BRAND, BUILD, CONFIGURATOR) and design/tokens.json.
 docs/
 
 # --- Developer scripts -----------------------------------------------------

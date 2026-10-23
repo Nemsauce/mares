@@ -1,5 +1,5 @@
 /* cart-items.js: <cart-items> upgrades the cart page forms of sections/main-cart.liquid
-   (docs/THEME_PLAN.md section 5). Lines, subtotal and empty state always come back server
+   (docs/BUILD.md section 5). Lines, subtotal and empty state always come back server
    rendered: every request carries `sections`, and the returned section HTML replaces the
    element's content. Money is never formatted here.
 

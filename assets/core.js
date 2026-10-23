@@ -1,4 +1,4 @@
-/* core.js: the only shared code, under the single global window.Mares (docs/THEME_PLAN.md
+/* core.js: the only shared code, under the single global window.Mares (docs/BUILD.md
    section 5). Loaded first, with defer, from sections/header.liquid.
 
    - Mares.routes     read from the JSON script #mares-routes in layout/theme.liquid.

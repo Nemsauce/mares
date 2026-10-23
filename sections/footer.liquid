@@ -1,5 +1,5 @@
 {%- comment -%}
-  Footer (docs/THEME_PLAN.md 6.2).
+  Footer (docs/BUILD.md 6.2).
   PROPOSAL (the docs only say "pie de página" in body-sm): bg background, 1px line
   above, blocks in the 4/8/12 grid (1 per row below 600px, 2 per row to 1023px, 4 per
   row from 1024px), then a row with the copyright.
@@ -8,7 +8,7 @@
   Link groups: built in, so the footer is useful before anyone adds a block, and a fresh
   install looks the same as this store (the footer group file lists brand and newsletter,
   and sets the FAQ page; returns and care come from config/settings_data.json).
-  They sit right after the brand block, in this order (copy: docs/content/secciones-nuevas.md):
+  They sit right after the brand block, in this order (copy: docs/BRAND.md):
     Tienda      the two line collections and all products. A collection that does not
                 exist, or is not on the online store, is skipped.
     Ayuda       preguntas frecuentes (section setting), cambios and cuidado de la prenda
@@ -125,7 +125,7 @@
 
               {%- when 'brand' -%}
                 {%- comment -%}
-                  PROVISIONAL line: the README's working phrase (locale key
+                  PROVISIONAL line: the brand's working phrase from docs/BRAND.md (locale key
                   general.brand_tagline), shown until the merchant types their own.
                 {%- endcomment -%}
                 {%- liquid
