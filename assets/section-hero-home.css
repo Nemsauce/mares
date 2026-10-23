@@ -1,5 +1,6 @@
 /* section-hero-home.css: home hero (docs/THEME_PLAN.md 4 and 6.7b). General page:
-   bg, bg-raised, ink, brand. Tokens only. No gradients.
+   bg, bg-raised, ink, brand. Tokens only. One gradient: the scrim over the photograph
+   (docs/design/README.md, "Profundidad y movimiento").
 
    Two looks. Without an image: type only, centered, on bg. With an image
    (.hero-home--image): full bleed photograph with the text on a panel. */
@@ -92,7 +93,16 @@
      The button carries its own surface: on-brand on brand is 5.18 to 1 whatever is behind.
      In the dark theme the same panel (dark bg token, light ink) measures 14.45 to 1 over
      black and 10.28 to 1 over white.
-     A change to the 90% below, or to the colors on the panel, needs the numbers redone. */
+     A change to the 90% below, or to the colors on the panel, needs the numbers redone.
+
+     Scrim (gradient). A veil of bg over the photograph, from 75% on the panel's side to
+     transparent, melts the photograph into the panel and into the pearl page under the
+     hero. It is bg, so it can only lift the darkest case above; the panel stays the
+     guarantee. Measured under the panel, at the darkest and the lightest point:
+       ink, photo black:  7.77 (scrim 0%, gradient end)  to 9.21 (scrim 75%, start)
+       ink, photo white:  9.84 (scrim 0%)                to 9.75 (scrim 75%)
+       brand icons:       4.14 (black, scrim 0%) to 5.24 (white, scrim 0%), 3 to 1 needed
+     Without color-mix() the declaration is dropped: no scrim, the panel alone. */
   .hero-home--image {
     position: relative;
     isolation: isolate;
@@ -108,6 +118,19 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
+  }
+
+  /* Panel side: the bottom below 1024px (the panel sits low), the start from 1024px. */
+  .hero-home__background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-bg) 75%, transparent),
+      transparent 65%
+    );
+    pointer-events: none;
   }
 
   .hero-home__background picture {
@@ -138,6 +161,7 @@
     inline-size: min(100%, 36rem); /* PROPOSAL: a comfortable text column */
     padding: var(--space-6);
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-rest); /* a raised surface over the photograph */
     background: var(--color-bg); /* solid where color-mix is not supported: still passes */
     background: color-mix(in srgb, var(--color-bg) 90%, transparent);
   }
@@ -165,6 +189,14 @@
 
     .hero-home__panel {
       padding: var(--space-8);
+    }
+
+    .hero-home__background::after {
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-bg) 75%, transparent),
+        transparent 60%
+      );
     }
   }
 }

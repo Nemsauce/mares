@@ -3,8 +3,10 @@
    The card images are 16:9, the ratio of the line photographs in the store. */
 
 @layer sections {
+  /* Band 1 of the home rhythm: bg (then featured on surface-sunk, essence on bg-raised). */
   .lines-entry {
     padding-block: var(--section-gap);
+    background: var(--color-bg);
   }
 
   /* The heading itself is snippets/section-header.liquid; this is only the space under it. */
@@ -20,9 +22,10 @@
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 85%; /* PROPOSAL */
-    margin: 0;
-    margin-inline: calc(-1 * var(--page-margin));
-    padding: 0 var(--page-margin);
+    /* The padding gives the card shadow room inside the scroll box, which clips; the
+       negative margin takes the same space back, so the section is no taller. */
+    margin: calc(-1 * var(--space-2)) calc(-1 * var(--page-margin)) calc(-1 * var(--space-6));
+    padding: var(--space-2) var(--page-margin) var(--space-6);
     list-style: none;
     overflow-x: auto;
     overscroll-behavior-x: contain;
@@ -42,6 +45,7 @@
     flex-direction: column;
     border-radius: var(--radius-md);
     background: var(--color-bg-raised);
+    box-shadow: var(--shadow-rest);
     overflow: hidden;
   }
 
@@ -86,7 +90,7 @@
 
   @media (hover: hover) {
     .lines-entry__card:hover {
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow-lift);
     }
   }
 
@@ -99,7 +103,7 @@
       grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
       grid-auto-flow: row;
       row-gap: var(--grid-gap);
-      margin-inline: 0;
+      margin: 0;
       padding: 0;
       overflow: visible;
       scroll-snap-type: none;

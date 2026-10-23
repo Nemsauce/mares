@@ -7,8 +7,11 @@
    with the 12-column grid (span 4 or span 3), with --fc-count tracks centered. */
 
 @layer sections {
+  /* Band 2 of the home rhythm: the deeper pearl, so the white cards stand out.
+     Text on it (base.css): ink 9.10, brand 4.85 (eyebrow, accent, secondary button). */
   .featured-collection {
     padding-block: var(--section-gap);
+    background: var(--surface-sunk);
   }
 
   .featured-collection__header {
@@ -21,11 +24,12 @@
     /* PROPOSAL: the next card peeks in, so the row reads as scrollable. */
     grid-auto-columns: 66%;
     gap: var(--grid-gap);
-    margin: 0;
     /* Full bleed: the row runs to the screen edges, the first card lines up with the
-       page margin, and snapping keeps that margin. */
-    margin-inline: calc(-1 * var(--page-margin));
-    padding: 0 var(--page-margin);
+       page margin, and snapping keeps that margin. The block padding gives the card
+       shadow room inside the scroll box, which clips; the negative block margin takes
+       the same space back, so the section is no taller. */
+    margin: calc(-1 * var(--space-2)) calc(-1 * var(--page-margin)) calc(-1 * var(--space-6));
+    padding: var(--space-2) var(--page-margin) var(--space-6);
     list-style: none;
     overflow-x: auto;
     overscroll-behavior-x: contain;
@@ -70,7 +74,7 @@
       );
       justify-content: center;
       row-gap: var(--grid-gap);
-      margin-inline: 0;
+      margin: 0;
       padding: 0;
       overflow: visible;
       scroll-snap-type: none;

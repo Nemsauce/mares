@@ -1,10 +1,14 @@
 /* section-essence.css: brand essence on the home page (docs/THEME_PLAN.md 6.7b).
    General page: bg, bg-raised, ink, ink-muted, brand. No line colors. Tokens only.
-   The heading is component-section-header.css. */
+   The heading is component-section-header.css.
+
+   Band 3 of the home rhythm: bg-raised. On it: ink 10.93, ink-muted 5.86, brand 5.83;
+   the icons are brand on a bg disc, 5.18 (3 to 1 needed). */
 
 @layer sections {
   .essence {
     padding-block: var(--section-gap);
+    background: var(--color-bg-raised);
   }
 
   /* Stacked below 1024px: the text, then the image. */
@@ -47,7 +51,7 @@
     gap: var(--space-4);
   }
 
-  /* A small raised disc behind the icon. 48px, the same as a control. */
+  /* A small pearl disc behind the icon (the band is white). 48px, the same as a control. */
   .essence__icon {
     display: inline-flex;
     flex: none;
@@ -56,7 +60,7 @@
     inline-size: 48px;
     block-size: 48px;
     border-radius: var(--radius-pill);
-    background: var(--color-bg-raised);
+    background: var(--color-bg);
     color: var(--color-brand);
   }
 
@@ -75,6 +79,7 @@
 
   .essence__media {
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-rest);
     overflow: hidden;
   }
 

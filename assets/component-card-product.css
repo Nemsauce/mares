@@ -8,6 +8,7 @@
     height: 100%;
     border-radius: var(--radius-md);
     background: var(--color-bg-raised);
+    box-shadow: var(--shadow-rest);
     color: var(--color-ink);
     overflow: hidden;
   }
@@ -61,10 +62,10 @@
     }
   }
 
-  /* No shadow at rest; hover only where hover exists. */
+  /* Low shadow at rest (base.css), deeper on hover, where hover exists. */
   @media (hover: hover) {
     .product-card:hover {
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow-lift);
     }
   }
 }

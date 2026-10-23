@@ -88,6 +88,42 @@
 }
 
 @layer base {
+  /* Depth (docs/design/README.md, "Profundidad y movimiento", owner decision of
+     2026-10-23). Aliases built from tokens only; they live here because tokens.css is
+     generated. Where color-mix() is missing, both shadows fall back to shadow-soft and the
+     sunk surface to bg (no tint, so no contrast to re-check).
+       --shadow-rest   low shadow of a card or raised surface at rest (ink at 6 and 7%)
+       --shadow-lift   the same surface hovered: deeper and softer (ink at 6 and 14%)
+       --surface-sunk  a deeper pearl for alternating bands: line 25% into bg.
+                       Measured on it: ink 9.10, ink-muted 4.88, brand 4.85, error 4.53
+                       (all against 4.5 to 1). 30% would put error at 4.47, so 25% is
+                       the deepest tint that keeps every text color passing. */
+  :root {
+    --shadow-rest: var(--shadow-soft);
+    --shadow-lift: var(--shadow-soft);
+    --surface-sunk: var(--color-bg);
+  }
+
+  @supports (color: color-mix(in srgb, currentColor 50%, transparent)) {
+    :root {
+      --shadow-rest:
+        0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
+        0 4px 14px color-mix(in srgb, var(--color-ink) 7%, transparent);
+      --shadow-lift:
+        0 2px 4px color-mix(in srgb, var(--color-ink) 6%, transparent),
+        0 16px 36px color-mix(in srgb, var(--color-ink) 14%, transparent);
+      --surface-sunk: color-mix(in srgb, var(--color-line) 25%, var(--color-bg));
+    }
+  }
+
+  /* Dark is not shipped (plan 2.3). ink is light there, so an ink shadow would glow, and
+     the sunk tint has not been measured: the dark theme uses the token shadow and no tint. */
+  :root[data-theme="dark"] {
+    --shadow-rest: var(--shadow-soft);
+    --shadow-lift: var(--shadow-soft);
+    --surface-sunk: var(--color-bg);
+  }
+
   body {
     min-height: 100vh;
     background: var(--color-bg);

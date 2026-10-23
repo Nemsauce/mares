@@ -2,8 +2,11 @@
    The footer design is not in the docs; everything marked PROPOSAL follows the plan. */
 
 @layer sections {
+  /* The deeper pearl (base.css): ink 9.10, ink-muted 4.88 (copyright, field hint),
+     brand 4.85 (wordmark, secondary button, focus ring), error 4.53 (newsletter error),
+     ink-muted control border 4.88 (3 to 1 needed). */
   .footer {
-    background: var(--color-bg);
+    background: var(--surface-sunk);
     border-block-start: 1px solid var(--color-line); /* PROPOSAL: mirrors the header */
     padding-block: var(--section-gap); /* PROPOSAL: the section rhythm token */
     color: var(--color-ink);

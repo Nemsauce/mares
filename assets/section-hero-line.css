@@ -1,5 +1,22 @@
 /* section-hero-line.css: line hero (docs/THEME_PLAN.md 4 and 6.3). Tokens only.
-   Background is --line-main, which data-line on the section provides (base-lines.css).
+   Background is a gradient from --line-main to --line-accent of the same line, which
+   data-line on the section provides (base-lines.css). Flat --line-main where gradients
+   are not supported.
+
+   Contrast over the gradient, sampled along it in sRGB (the browser's interpolation),
+   darkest and lightest point:
+     Descanso (sea-glass to lavender)
+       ink, heading and text ........ 6.24 to 6.44   (4.5 to 1 needed)
+       ink focus ring ............... 6.24 at least  (3 to 1)
+       ink-muted motif .............. 3.34 to 3.45   (decorative, aria-hidden)
+     Día (turquoise to coral)
+       ink, heading and text ........ 4.65 to 5.53   (4.5 to 1 needed). The lowest point
+                                      is mid-gradient, just under flat turquoise (4.68),
+                                      because sRGB mixing dips there; it still passes.
+       ink focus ring ............... 4.65 at least  (3 to 1)
+       ink-muted motif .............. 2.50 to 2.97   (decorative, aria-hidden; it was
+                                      2.50 on flat turquoise before the gradient)
+     The primary button carries its own surface: on-brand on brand 5.18. */
 
    Height rule: on a line collection page the first product must show without scrolling at
    1280x800 and at 375x667. So the image does not stack under the text everywhere:
@@ -21,6 +38,8 @@
     gap: var(--space-4);
     border-radius: var(--radius-lg);
     background: var(--line-main);
+    /* Main color holds the first 30%, where the heading starts, then turns to the accent. */
+    background: linear-gradient(135deg, var(--line-main) 30%, var(--line-accent));
     color: var(--color-ink);
     text-align: center;
     /* PROPOSAL (plan 4): below 1024px the block has space-8 vertical and space-8 inside
