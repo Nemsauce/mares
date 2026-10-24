@@ -16,7 +16,7 @@
         "text": "Ropa de bebé bordada, suave para su piel y pensada para durar.",
         "button_label": "Ver la línea Descanso",
         "button_link": "/collections/descanso",
-        "image": "shopify://shop_images/mares-hero-inicio.png"
+        "image": "shopify://shop_images/mares-hero-inicio-gorro.png"
       }
     },
     "lines": {
@@ -108,7 +108,7 @@
         "heading": "Por qué cada prenda",
         "heading_accent": "pasa por nuestras manos",
         "text": "La máquina borda parejo y firme, que es lo que hace que un nombre dure. Lo demás lo hacemos nosotros: escogemos la tela, revisamos cada prenda y la empacamos una por una.",
-        "image": "shopify://shop_images/mares-hero-inicio.png"
+        "image": "shopify://shop_images/mares-esencia-revision.png"
       }
     },
     "process": {
